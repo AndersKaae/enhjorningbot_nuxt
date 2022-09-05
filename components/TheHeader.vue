@@ -48,4 +48,8 @@
     transition: transform .8s ease-in-out;
     vertical-align: middle;
 }
+.search-wrappper {
+    position: relative;
+    width: 50%;
+}
 </style>
