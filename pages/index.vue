@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    Page: HOME
+    <TheBody />
   </div>
 </template>
 

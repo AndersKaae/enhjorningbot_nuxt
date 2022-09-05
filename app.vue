@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <TheHeader />
-    <TheBody />
-    <TheFooter />
+  <TheHeader />
+  <NuxtPage />
+  <TheFooter />
 </template>
