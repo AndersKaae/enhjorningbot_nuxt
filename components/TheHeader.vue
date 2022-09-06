@@ -31,7 +31,6 @@
     justify-content: space-between;
     padding: 1.25rem;
     text-align: center;
-    width: 100%;
 }
   .site-logo {
     color: #333;
@@ -51,5 +50,20 @@
 .search-wrappper {
     position: relative;
     width: 50%;
+}
+.search-input {
+    padding: 0.75em;
+    width: 100%;
+}
+.site-logo .beta {
+    color: #888;
+    font-size: 12px;
+    margin-left: 5px;
+}
+.follow-the-unicorn svg {
+    fill: #333;
+    height: 25px;
+    margin-right: 0.75rem;
+    width: 25px;
 }
 </style>

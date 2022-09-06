@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <TheBody />
+    <FeedBody />
   </div>
 </template>
 
