@@ -1,26 +1,33 @@
-<script lang="ts" setup></script>
+<script>
+  export default {
+    props: [
+      'companyData'
+    ]
+  }
+</script>
+
 <template>
   <div class="investment">
     <header class="investment-header">
-      <h2 class="company-name"><a href="#/company/43129481" class="">Dongsgaard ApS</a></h2>
+      <h2 class="company-name"><a href="/company/43129481" class="">{{companyData.name}}</a></h2>
       <div class="investment_date">2022-09-02</div>
     </header>
     <div class="investment__content">
       <div class="investment__investment">
         <h3 class="investment-box-title">Investment</h3>
         <span class="denomination">DKK</span>
-        <span class="values">[6,000,000]</span>
-        <div class="investment__type">[Kontant]</div>
+        <span class="values">{{companyData.increases[companyData.increases.length -1].investment.toLocaleString()}}</span>
+        <div class="investment__type">{{companyData.increases[companyData.increases.length -1].typeIncrease}}</div>
       </div>
       <div class="investment__ownership">
         <h3 class="investment-box-title">Share</h3>
-        <span class="values">[33.333]</span>
+        <span class="values">{{  Number( companyData.increases[companyData.increases.length -1].investment / companyData.increases[companyData.increases.length -1].valuation * 100 ).toLocaleString() }}</span>
         <span class="denomination">%</span>
       </div>
       <div class="investment__valuation">
         <h3 class="investment-box-title">Valuation</h3>
         <span class="denomination">DKK</span>
-        <span class="values">[18,000,000]</span>
+        <span class="values">{{companyData.increases[companyData.increases.length -1].valuation.toLocaleString()}}</span>
       </div>
     </div>
   </div>

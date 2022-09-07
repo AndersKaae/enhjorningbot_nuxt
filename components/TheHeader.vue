@@ -25,7 +25,8 @@
 <style scoped>
   .site-header {
     align-items: center;
-    background-color: #fff;
+    background: #337592;
+    background: linear-gradient(135deg, #337592 0%, #7089ca 44%, #709fb3 100%);
     border-bottom: 1px solid #e2e2e2;
     display: flex;
     justify-content: space-between;
@@ -56,7 +57,7 @@
     width: 100%;
 }
 .site-logo .beta {
-    color: #888;
+    color: #ffff;
     font-size: 12px;
     margin-left: 5px;
 }

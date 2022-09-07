@@ -1,22 +1,21 @@
 <template>
   <!-- you'll need to handle a loading state -->
   <div v-if="pending">
-    <div class="loader">Loading ...</div>
+    <loader />
   </div>
   <div class="container investments" v-else>
-    <div v-for="post in posts['feed']">
-        <feed-card />
+    <div v-for="item in companies['feed']">
+      <feed-card :companyData = "item" />
     </div>
   </div>
 </template>
 
 <script setup>
-  const { pending, data: posts } = useLazyFetch('https://enhjorningbotapi-production.up.railway.app/api/v1/enhjorning/feed?page=1&filtered=true')
-  watch(posts, (newPosts) => {
-    // Because posts starts out null, you won't have access
-    // to its contents immediately, but you can watch it.
-  })
-  </script>
+  const { pending, data: companies } = useLazyFetch('https://enhjorningbotapi-production.up.railway.app/api/v1/enhjorning/feed?page=1&filtered=true')
+  watch(companies, (newPosts) => {
+    console.log(newPosts['feed'].length)
+})
+</script>
 
 <style scoped>
 .container {
@@ -41,10 +40,5 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 1.875rem;
-}
-.loader{
-  font-size: 20px;
-  padding-top: 20px;
-  text-align: center;
 }
 </style>
