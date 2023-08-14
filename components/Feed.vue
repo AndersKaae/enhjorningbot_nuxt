@@ -1,0 +1,79 @@
+<script setup>
+import { ref, onMounted, onBeforeMount, defineProps, defineEmits } from 'vue'
+import axios from "axios";
+import Loader from './Loader.vue'
+import Company from './CompanyCard.vue'
+
+const props = defineProps({
+  loaded: Boolean
+});
+
+// Define the event emitter
+const emit = defineEmits(['changeLoaded']);
+
+const updateLoaded = (value) => {
+  emit('changeLoaded', value);
+};
+
+const companiesList = ref([]);
+
+let offset = 0;
+
+// Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
+const fetchCompanies = async (limit) => {
+  console.log('Fetching companies')
+  let url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/feed?offset=${offset}&limit=${limit}&filtered=true`
+  console.log(url)
+  const response = await axios.get(url, {auth: {username: 'enhjorningbot@gmail.com',password: 'bf7f8df76a4443f2ae6de295f5fd3340'}})  
+  companiesList.value = [...companiesList.value, ...response.data.feed]
+  offset += limit + 1
+  updateLoaded(true)
+}
+
+// Call the function in onMounted
+onMounted(() => {
+  fetchCompanies(100)
+})
+
+const handleScroll = () => {
+  const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+
+  const footerHeight = document.querySelector('.site-footer').offsetHeight;
+  const navbarHeight = document.querySelector('.site-header').offsetHeight;
+  let myScrollHeight = scrollHeight
+  let isMobile = window.matchMedia("only screen and (max-width: 640px)").matches;
+
+  if (isMobile == true) {
+    myScrollHeight = scrollHeight - (footerHeight + navbarHeight) // subtract footer and navbar height from scrollHeight if mobile. Not sure why I have too, but it seems to work.
+  }
+
+  //console.log((scrollTop + clientHeight), myScrollHeight)
+  if (scrollTop + clientHeight >= myScrollHeight) {
+    if (!props.loaded) {
+      return; // already loading data, do nothing
+    }
+    console.log('loading more')
+    fetchCompanies(100);
+  }
+}
+
+// call infinite scroll function
+onBeforeMount(() => {
+  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('touchmove', handleScroll) // Add touchmove event listener for mobile devices
+})
+
+</script>
+
+<template>
+    <div id="feed">
+        <div v-for="company in companiesList" :key="company.name">
+            <Company :company="company"></Company>
+        </div>
+        <Loader v-if="!loaded"></Loader>
+    </div>  
+</template>
+
+<style scoped>
+
+</style>
