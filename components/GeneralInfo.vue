@@ -23,7 +23,7 @@
         box-shadow: 0 0 15px #0000001a;
         position: relative;
         z-index: 2;
-        max-width: 40%;
+        max-width: 45%;
         padding: 0 1.25rem 1.25rem;
         flex: 1;
         margin-right: 50px
