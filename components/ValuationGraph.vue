@@ -1,6 +1,9 @@
 <template>
     <div class="card-wrapper">
-        <Line :data="chartData" :options="chartOptions" />
+        <h2>Valuation:</h2>
+        <div style="height: 80%;">
+            <Line :data="chartData" :options="chartOptions"/>
+        </div>
     </div>
 </template>
 
@@ -77,7 +80,7 @@ const chartOptions = ref({
     position: relative;
     z-index: 2;
     max-width: 100%;
-    height: 300px;
+    height: 400px;
     padding: 0 1.25rem 1.25rem;
     flex: 1;
 }

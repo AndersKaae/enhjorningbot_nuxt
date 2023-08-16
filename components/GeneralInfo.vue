@@ -10,6 +10,7 @@
         <span v-else>
             Website: Not provided
         </span>
+        <p>Number of rounds: {{ company.increases.length -1 }}</p>
         <p>Total Funding Amount: DKK {{ formattedFunding }}</p>
         <p>Adress: [missing from API]</p>
         <p>Employees: [missing from API]</p>

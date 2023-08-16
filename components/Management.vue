@@ -2,7 +2,7 @@
     <div class="card-wrapper">
         <h2>Management:</h2>
         <div class="management-container">
-            <div class="board-container">
+            <div v-if="company.board.length > 0" class="board-container">
                 <h3>Board:</h3>
                 <div v-for="member in company.board" :key="member.name">
                     <span v-if="member.role == 'FORMAND' && member.validTo == 'None'">
@@ -49,10 +49,11 @@
 }
 
 .board-container {
-  width: 50%;
+    width: 50%;
 }
+
 .excutive-container {
-  width: 50%;
+    width: 50%;
 }
 </style>
 

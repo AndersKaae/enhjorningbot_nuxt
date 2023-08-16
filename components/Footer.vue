@@ -3,8 +3,7 @@ import { ref, onMounted, watch, defineProps } from 'vue'
 
 const props = defineProps({
   loaded: {
-    type: Boolean,
-    required: true,
+    type: Boolean
   },
 })
 

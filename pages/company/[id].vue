@@ -7,11 +7,16 @@
                 <GeneralInfo :company="companyData"></GeneralInfo>
                 <Management :company="companyData"></Management>
             </div>
-            <div class="valuation-container">
-                <ValuationGraph :graphData="companyData.increases"></ValuationGraph>
+            <div v-if="companyData.increases.length > 1">
+                <div class="valuation-container">
+                    <ValuationGraph :graphData="companyData.increases"></ValuationGraph>
+                </div>
+                <InvestmentGraph :graphData="companyData.increases"></InvestmentGraph>
             </div>
-            <InvestmentGraph :graphData="companyData.increases"></InvestmentGraph>
-            <p>{{ companyData }}</p>
+            <div v-else>
+                <h2>The company does not have any registered funding.</h2>
+            </div>
+            <Owners :owners="companyData.owner"></Owners>
         </div>
     </div>
 </template>
@@ -23,11 +28,15 @@ const companyData = ref();
 const loading = ref(true);
 const route = useRoute();
 
+const props = defineProps({
+  loaded: Boolean
+});
+
 // Define the event emitter
 const emit = defineEmits(['changeLoaded']);
 
 const updateLoaded = (value) => {
-  emit('changeLoaded', value);
+    emit('changeLoaded', value);
 };
 
 onMounted(() => {
@@ -45,17 +54,18 @@ const fetchCompanies = async () => {
 </script>
 
 <style scoped>
-.container{
+.container {
     padding-left: 2rem;
     padding-right: 2rem;
 }
-.top-row-container{
+
+.top-row-container {
     display: flex;
     width: 100%;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
 }
 
-.valuation-container{
+.valuation-container {
     width: 100%;
     padding-bottom: 50px;
 }
