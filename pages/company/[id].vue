@@ -17,7 +17,6 @@
                 <h2>The company does not have any registered funding.</h2>
             </div>
             <Owners :owners="companyData.owner"></Owners>
-            <FiscalData></FiscalData>
         </div>
     </div>
 </template>

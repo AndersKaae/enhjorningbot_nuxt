@@ -12,8 +12,8 @@
         </span>
         <p>Number of rounds: {{ company.increases.length -1 }}</p>
         <p>Total Funding Amount: DKK {{ formattedFunding }}</p>
-        <p>Adress: [missing from API]</p>
-        <p>Employees: [missing from API]</p>
+        <p>Adress: [To be implemented]</p>
+        <p>Employees: [To be implemented]</p>
     </div>
 </template>
 
