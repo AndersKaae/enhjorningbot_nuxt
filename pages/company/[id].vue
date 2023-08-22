@@ -17,6 +17,7 @@
                 <h2>The company does not have any registered funding.</h2>
             </div>
             <Owners :owners="companyData.owner"></Owners>
+            <FiscalData></FiscalData>
         </div>
     </div>
 </template>
@@ -46,6 +47,7 @@ onMounted(() => {
 const fetchCompanies = async () => {
     loading.value = true;
     let api_url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/company?cvr=` + route.params.id
+    console.log(api_url)
     const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
     companyData.value = response.data;
     loading.value = false;

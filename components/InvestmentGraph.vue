@@ -14,13 +14,15 @@ onBeforeMount(() => {
     populateDates(props.graphData);
     populateTypes(props.graphData);
     populateValues(props.graphData);
-    console.log(chartData.value.datasets);
 });
 
 const populateDates = (graphData) => {
     for (let i = 0; i < graphData.length; i++) {
         // Populating the dates array
-        chartData.value.labels.push(graphData[i].validFrom);
+        if (graphData[i].type != 'decreased')
+        {
+            chartData.value.labels.push(graphData[i].validFrom);
+        }
     }
 };
 
@@ -81,6 +83,9 @@ const populateValues = (graphData) => {
             //console.log('Chart: ' + chartData.value.datasets[j].label)
             let found = false;
             let value = 0;
+            if (graphData[i].type == 'decreased'){
+                continue;
+            }
             for (let k = 0; k < graphData[i].virkIncrease.length; k++) {
                 //console.log('Data: ' + graphData[i].virkIncrease[k].typeIncrease)
                 if (chartData.value.datasets[j].label == graphData[i].virkIncrease[k].typeIncrease) {
@@ -108,6 +113,9 @@ const knownTypes = (type) => {
 
 const populateTypes = (graphData) => {
     for (let i = 1; i < graphData.length; i++) {
+        if (graphData[i].type == 'decreased'){
+            continue;
+        } 
         for (let j = 0; j < graphData[i].virkIncrease.length; j++) {
             // Populating the types array
             if (!knownTypes(graphData[i].virkIncrease[j].typeIncrease)) {

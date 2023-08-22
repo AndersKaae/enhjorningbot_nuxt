@@ -16,11 +16,15 @@ onBeforeMount(() => {
 
 const getDates = (graphData) => {
     for (let i = 0; i < graphData.length; i++) {
-        chartData.value.labels.push(graphData[i].validFrom);
+        if (graphData[i].type != 'decreased') {
+            chartData.value.labels.push(graphData[i].validFrom);
+        }
         if (i == 0) {
             chartData.value.datasets[0].data.push(graphData[i].capital);
         } else {
-            chartData.value.datasets[0].data.push(graphData[i].valuation);
+            if (graphData[i].type != 'decreased'){
+                chartData.value.datasets[0].data.push(graphData[i].valuation);
+            }
         }
     }
 };

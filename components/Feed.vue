@@ -21,9 +21,8 @@ let offset = 0;
 
 // Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
 const fetchCompanies = async (limit) => {
-  console.log('Fetching companies')
+  //console.log('Fetching companies')
   let url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/feed?offset=${offset}&limit=${limit}&filtered=true`
-  console.log(url)
   const response = await axios.get(url, {auth: {username: 'enhjorningbot@gmail.com',password: 'bf7f8df76a4443f2ae6de295f5fd3340'}})  
   companiesList.value = [...companiesList.value, ...response.data.feed]
   offset += limit + 1

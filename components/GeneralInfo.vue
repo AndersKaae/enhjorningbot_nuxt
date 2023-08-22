@@ -47,6 +47,9 @@
     const totalInvestment = () => {
         let total = 0;
         for (let i = 1; i < props.company.increases.length; i++) {
+            if (props.company.increases[i].type == "decreased") {
+                continue;
+            }
             for (let j = 0; j < props.company.increases[i].virkIncrease.length; j++) {
                 total += props.company.increases[i].virkIncrease[j].investment;
             }
