@@ -133,17 +133,17 @@
 
 <style scoped>
 #square {
-    border-radius: 10px;
-    width: 50px;
-    height: 50px;
-    background-color: #337592;
+    border-radius: 4px;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #337592;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 #content {
     text-align: center;
-    color: #f7f7f7;
+    color: #337592;
     font-size: 1,2em;
 }
 </style>

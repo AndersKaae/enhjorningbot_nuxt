@@ -65,14 +65,37 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <div id="feed">
-        <div v-for="company in companiesList" :key="company.name">
-            <Company :company="company"></Company>
-        </div>
-        <Loader v-if="!loaded"></Loader>
+    <div id="feed" class="feed-wrapper">
+      <Loader v-if="!loaded"></Loader>
+      <table class="table--feed">
+        <thead class="feed-header">
+          <tr>
+            <th>Company</th>
+            <th>Investment</th>
+            <th>Valuation</th>
+            <th>Round</th>
+          </tr>
+        </thead> 
+        <tbody class="feed-body">
+          <tr v-for="company in companiesList" :key="company.name">
+              <Company :company="company"></Company>
+          </tr>
+        </tbody>
+      </table>
     </div>  
 </template>
 
 <style scoped>
+  .feed-wrapper{
+    margin: 0 auto 1em;
+    max-width: 700px;
+    width: 100%;
+  }
+
+  .table--feed{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    width: 100%;
+  }
 
 </style>
