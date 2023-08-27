@@ -1,33 +1,56 @@
 <template>
-    <div class="card-wrapper">
-        <h2>Overview:</h2>
-        <p>CVR-no.: {{ company.cvr }}</p>
-        <p>Founded: {{ company.increases[0].validFrom }}</p>
-        <p>Industry: {{ company.businessCode }}</p>
-        <span v-if="company.Website != null">
-        <p>Website: {{ company.Website }}</p>
-        </span>
-        <span v-else>
-            Website: Not provided
-        </span>
-        <p>Number of rounds: {{ company.increases.length -1 }}</p>
-        <p>Total Funding Amount: DKK {{ formattedFunding }}</p>
-        <p>Adress: [missing from API]</p>
-        <p>Employees: [missing from API]</p>
+    <div class="info-box">
+        <span class="company-info-item">CVR-no.: <strong>{{ company.cvr }}</strong></span>
+        <span class="company-info-item">Founded: <strong>{{ company.increases[0].validFrom }}</strong></span>
+        <span class="company-info-item">Industry: <strong>{{ company.businessCode }}</strong></span>
+        <template v-if="company.Website != null">
+            <span class="company-info-item">Website: <strong>{{ company.Website }}</strong></span>
+        </template>
+        <span class="company-info-item">Adress:  <strong>[missing from API]</strong></span>
+        <span class="company-info-item">Employees:  <strong>[missing from API]</strong></span>
     </div>
+
+    <div class="company-stats">
+        <div class="company-total-rounds">
+            <div>
+                <soan class="amount">{{ company.increases.length -1 }}</soan>
+            </div>
+            <div>Rounds</div>
+        </div>
+        <div class="company-total-funding">
+            <div>
+                <span class="denomination">DKK</span>
+                <span class="amount">{{ formattedFunding }}</span> 
+            </div>
+            <div>In total Funding</div>
+        </div>
+    </div>
+
 </template>
 
 <style scoped>
-    .card-wrapper{
-        background-color: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 0 15px #0000001a;
-        position: relative;
-        z-index: 2;
-        max-width: 45%;
-        padding: 0 1.25rem 1.25rem;
-        flex: 1;
-        margin-right: 50px
+
+    .company-stats{
+        display: flex;
+        justify-content: space-around;
+        margin: 2em 0;
+    }
+
+    .company-total-funding,
+    .company-total-rounds{
+        padding: 2em;
+        text-align: center;
+    }
+
+    .amount{
+        color: #337592;
+        font-size: 4rem;
+        font-weight: 700;
+    }
+
+
+    .company-info-item{
+        margin-right: 1em;
     }
 </style>
 

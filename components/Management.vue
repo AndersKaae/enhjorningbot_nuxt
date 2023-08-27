@@ -1,9 +1,8 @@
 <template>
     <div class="card-wrapper">
-        <h2>Management:</h2>
         <div class="management-container">
             <div v-if="company.board.length > 0" class="board-container">
-                <h3>Board:</h3>
+                <h2>Board:</h2>
                 <div v-for="member in company.board" :key="member.name">
                     <span v-if="member.role == 'FORMAND' && member.validTo == 'None'">
                         <p>{{ member.name }} (Chairman)</p>
@@ -16,7 +15,7 @@
                 </div>
             </div>
             <div class="excutive-container">
-                <h3>Executives:</h3>
+                <h2>Executives:</h2>
                 <div v-for="member in company.ceo" :key="member.name">
                     <span v-if="member.role == 'ADM. DIR.' && member.validTo == 'None'">
                         <p>{{ member.name }}</p>
@@ -35,11 +34,8 @@
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 0 15px #0000001a;
-    position: relative;
-    z-index: 2;
-    max-width: 45%;
     padding: 0 1.25rem 1.25rem;
-    flex: 2;
+    width: 45%;
 }
 
 .management-container {

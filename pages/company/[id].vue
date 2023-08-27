@@ -2,10 +2,13 @@
     <div class="container">
         <Loader v-if="loading"></Loader>
         <div v-if="!loading">
-            <h1>{{ companyData.name }}</h1>
+            <h1 class="company-name">{{ companyData.name }}</h1>
             <div class="top-row-container">
                 <GeneralInfo :company="companyData"></GeneralInfo>
+            </div>
+            <div class="relations-container">
                 <Management :company="companyData"></Management>
+                <Owners :owners="companyData.owner"></Owners>
             </div>
             <div v-if="companyData.increases.length > 1">
                 <div class="valuation-container">
@@ -16,7 +19,6 @@
             <div v-else>
                 <h2>The company does not have any registered funding.</h2>
             </div>
-            <Owners :owners="companyData.owner"></Owners>
             <FiscalData></FiscalData>
         </div>
     </div>
@@ -56,15 +58,19 @@ const fetchCompanies = async () => {
 </script>
 
 <style scoped>
+.company-name{
+    font-size: 3rem;
+    margin-bottom: 1rem ;
+}
 .container {
     padding-left: 2rem;
     padding-right: 2rem;
 }
 
-.top-row-container {
+.relations-container{
     display: flex;
-    width: 100%;
-    padding-bottom: 30px;
+    justify-content: space-between;
+    margin-bottom: 2rem;
 }
 
 .valuation-container {

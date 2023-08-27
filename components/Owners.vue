@@ -3,12 +3,8 @@
         <h2>Owners (above 5 %):</h2>
         <div v-for="owner in ownerList" :key="owner.name">
             <span v-if="owner.active == true" class="owner-container">
-                <span class="name-container">
-                    <p>{{ owner.name }}</p>
-                </span>
-                <span class="ownership-container">
-                    <span><p>{{ calculateOwnership(owner.percentage) }} %</p></span>
-                </span>
+                <span class="name-container">{{ owner.name }}</span>
+                <span class="ownership-container">{{ calculateOwnership(owner.percentage) }}%</span>
             </span>
         </div>
     </div>
@@ -19,24 +15,22 @@
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 0 15px #0000001a;
-    position: relative;
-    z-index: 2;
     padding: 0 1.25rem 1.25rem;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    width: 45%;
 }
 .owner-container {
+    border-bottom: 1px solid transparent;
     display: flex;
-    display: inline-flex;
+    padding: .5rem 0;
 }
+
+.owner-container:hover{
+    border-bottom: 1px solid #666;
+}
+
 .name-container {
     flex: 1;
     width: auto;
-}
-
-.owner-container {
-    width: 40%;
-    flex: 2;
 }
 </style>
 
