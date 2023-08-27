@@ -2,13 +2,13 @@
 const props = defineProps(["company"]);
 </script>
 
-<template>    
+<template>
+  <td class="company-date">
+    {{ company.increases[0].validFrom }}
+  </td>
   <td class="company-name">
       <CompanyTypeIcon :code = "company.business_code" ></CompanyTypeIcon>
       <a v-bind:href="'/company/' + company.cvr">{{ company.name }}</a>
-      <!--
-      <div>{{ company.increases[0].validFrom }}</div>
-      -->
   </td>
   <td class="company-investment">
     <div class="values">

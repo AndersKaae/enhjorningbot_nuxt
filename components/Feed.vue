@@ -70,6 +70,7 @@ onBeforeMount(() => {
       <table class="table--feed" v-if="loaded">
         <thead class="feed-header">
           <tr>
+            <th class="col-date">Date</th>
             <th class="col-company">Company</th>
             <th class="col-investment">Investment</th>
             <th class="col-valuation">Valuation</th>
@@ -101,7 +102,8 @@ onBeforeMount(() => {
     padding: .5em;
   }
 
-  .table--feed .col-company{
+  .col-date,
+  .col-company{
     text-align: left;
   }
 
