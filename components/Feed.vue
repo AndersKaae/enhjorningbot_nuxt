@@ -67,13 +67,13 @@ onBeforeMount(() => {
 <template>
     <div id="feed" class="feed-wrapper">
       <Loader v-if="!loaded"></Loader>
-      <table class="table--feed">
+      <table class="table--feed" v-if="loaded">
         <thead class="feed-header">
           <tr>
-            <th>Company</th>
-            <th>Investment</th>
-            <th>Valuation</th>
-            <th>Round</th>
+            <th class="col-company">Company</th>
+            <th class="col-investment">Investment</th>
+            <th class="col-valuation">Valuation</th>
+            <th class="col-round">Round</th>
           </tr>
         </thead> 
         <tbody class="feed-body">
@@ -88,14 +88,27 @@ onBeforeMount(() => {
 <style scoped>
   .feed-wrapper{
     margin: 0 auto 1em;
-    max-width: 700px;
+    max-width: 960px;
     width: 100%;
   }
 
   .table--feed{
-    background-color: #fff;
-    border: 1px solid #ddd;
+    border-collapse: collapse;
     width: 100%;
+  }
+
+  .table--feed th{
+    padding: .5em;
+  }
+
+  .table--feed .col-company{
+    text-align: left;
+  }
+
+  .col-investment,
+  .col-valuation,
+  .col-round{
+    text-align: right;
   }
 
 </style>

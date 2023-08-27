@@ -3,26 +3,26 @@ const props = defineProps(["company"]);
 </script>
 
 <template>    
-  <th class="header">
+  <td class="company-name">
       <CompanyTypeIcon :code = "company.business_code" ></CompanyTypeIcon>
-      <a class="company_name" v-bind:href="'/company/' + company.cvr">{{ company.name }}</a>
+      <a v-bind:href="'/company/' + company.cvr">{{ company.name }}</a>
       <!--
       <div>{{ company.increases[0].validFrom }}</div>
       -->
-  </th>
-  <td>
+  </td>
+  <td class="company-investment">
     <div class="values">
       <span class="denomination">DKK</span>
       <span class="amount">{{ company.increases[company.increases.length -1].investment.toLocaleString() }}</span>
     </div>
   </td>
-  <td>
+  <td class="company-valuation">
     <div class="values">
       <span class="denomination">DKK</span>
       <span class="amount">{{ company.increases[company.increases.length -1].valuation.toLocaleString() }}</span>
     </div>
   </td>
-  <td>
+  <td class="company-round">
     <div class="values">
       <span class="amount">{{  company.increases.length - 1 }}</span><br>
     </div>
@@ -30,61 +30,47 @@ const props = defineProps(["company"]);
 </template>
 
 <style scoped>
-.header {
-  
-}
-.card-wrapper {
-  
-}
-.company_name {
-  display: block;
-  font-size: 1.5em;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  color: #337592;
-  text-decoration: none;
-  font-weight: 300;
-}
-
-.title{
-  font-weight: 350;
-}
-
-.denomination {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
-  color: #7c7c7c;
-}
-
-.amount {
-  
-}
-
-.investment_type {
-  text-align: right;
-}
-
-h3 {
-  font-size: 1.25em;
-  margin-block-start: 0.83em;
-  margin-block-end: 0.83em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: 400;
-}
-
-@media (min-width: 640px) {
-  .wrapper {
-    margin-left: auto;
-    margin-right: auto;
+  tr:hover td{
+    border-bottom-color: #555;
   }
-}
 
-@media (max-width: 639px) {
-  .wrapper {
- 
+  .table--feed td,
+  .table--feed th{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+    padding: 0.5em;
   }
-}
+
+  .table--feed .company-name a{
+    color: #337592;
+    text-decoration: none;
+  }
+
+  .table--feed .company-name a:hover{
+    text-decoration: underline;
+  }
+
+  .company-investment,
+  .company-valuation{
+    text-align: right;
+  }
+
+  .company-round{
+    text-align: center;
+  }
+
+  .denomination{
+    color: #666;
+    font-size: .75em;
+    margin-right: .25em;
+  }
+
+  .amount{
+      font-variant: tabular-nums;
+      -moz-font-feature-settings: "tnum";
+      -webkit-font-feature-settings: "tnum";
+      font-feature-settings: "tnum"
+  }
+
 </style>

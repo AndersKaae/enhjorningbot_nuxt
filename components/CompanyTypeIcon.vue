@@ -124,26 +124,26 @@
 </script>
 
 <template>
-    <div id="square">
-        <div id="content" :title="code_int + ': ' + tooltip">
+    <span class="square">
+        <span class="content" :title="code_int + ': ' + tooltip">
             <font-awesome-icon :icon="icon_name" :title="code_int + ': ' + tooltip"/>
-        </div>
-    </div>
+        </span>
+    </span>
 </template>
 
 <style scoped>
-#square {
+.square {
+    background: #337592;
     border-radius: 4px;
-    width: 36px;
-    height: 36px;
-    border: 1px solid #337592;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#content {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    margin-right: .5em;
+    padding: 4px 2px 0;
     text-align: center;
-    color: #337592;
-    font-size: 1,2em;
+}
+.content {
+    text-align: center;
+    color: #fff;
 }
 </style>
