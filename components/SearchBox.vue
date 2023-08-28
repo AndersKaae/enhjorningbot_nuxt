@@ -42,42 +42,42 @@ const FetchSearchResult = async (name) => {
 </script>
 
 <style>
-.result-link{
-    text-decoration: none;
-    color: black;
-}
+  .result-link{
+      text-decoration: none;
+      color: black;
+  }
 
-.result-item:hover{
-    background-color: #f9eff9;
-    cursor: pointer;
-}
+  .result-item:hover{
+      background-color: #f9eff9;
+      cursor: pointer;
+  }
 
-.result-item{
-    padding: 0.5rem;
-    border-bottom: 1px solid #ddd;
-    font-size: 0.9rem;
-}
+  .result-item{
+      padding: 0.5rem;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.9rem;
+  }
 
-.results-box{
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 0.5rem;
-    margin-top: 0.5rem;
-    text-align: left;
-    position: absolute;
-    width: 30%;
-    z-index: 9;
-    background-color: white;
-}
+  .results-box{
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      text-align: left;
+      position: absolute;
+      z-index: 9;
+      background-color: white;
+  }
 
-.search-wrappper {
-    height: 100%;
-    margin-bottom: 2rem;
-    width: 300px;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: auto;
-    margin-right: auto;
+  .search-wrappper {
+      height: 100%;
+      margin-bottom: 2rem;
+      position: relative;
+      width: 300px;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-left: auto;
+      margin-right: auto;
   }
   .search-input{
     width: 100%;
@@ -89,6 +89,9 @@ const FetchSearchResult = async (name) => {
   @media (max-width: 640px) {
     .search-wrappper {
       margin-bottom: 2rem;
+    }
+    .results-box{
+      width: 100%;
     }
   }
 </style>
