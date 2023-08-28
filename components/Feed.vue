@@ -113,4 +113,10 @@ onBeforeMount(() => {
     text-align: right;
   }
 
+  @media (max-width: 640px) {
+    .feed-wrapper{
+      overflow-x: scroll;
+    }
+  }
+
 </style>
