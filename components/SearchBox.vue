@@ -1,6 +1,11 @@
 <template>
 <div class="search-wrappper">
     <input v-model="message" placeholder="Company name" class="search-input"/>
+    <span
+      v-if="message != ''"
+      class="btn--clear-search-input"
+      v-on:click="clearSearchInput()"
+      >×</span>
     <div v-if="searchResult.length > 0" class="results-box">
         <span v-for="company in searchResult" :key="company.name" >
             <a class="result-link" :href="/company/+ company.cvr">
@@ -30,6 +35,10 @@ watch(message, (name) => {
     searchResult.value = []
   }
 })
+
+function clearSearchInput(){
+  this.message = "";
+}
 
 const FetchSearchResult = async (name) => {
   let url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/search?query=${name}`
@@ -85,6 +94,18 @@ const FetchSearchResult = async (name) => {
     font-size: 1rem;
     border-radius: 5px;
     border: 1px solid #ddd;
+  }
+
+  .btn--clear-search-input{
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 24px;
+    color: #888;
+  }
+  .btn--clear-search-input:hover{
+    color: #222;
+    cursor: pointer;
   }
   @media (max-width: 640px) {
     .search-wrappper {
