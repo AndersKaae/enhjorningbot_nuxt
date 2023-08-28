@@ -19,10 +19,9 @@
         </div>
         <div class="company-total-funding">
             <div>
-                <span class="denomination">DKK</span>
                 <span class="amount">{{ formattedFunding }}</span> 
             </div>
-            <div>In total Funding</div>
+            <div><span class="denomination">DKK</span> in total Funding</div>
         </div>
     </div>
 
@@ -48,9 +47,22 @@
         font-weight: 700;
     }
 
-
     .company-info-item{
         margin-right: 1em;
+    }
+
+    @media (max-width: 640px){
+        .company-stats{
+            flex-direction: column;
+        }
+        .company-info-item{
+            display: block;
+            margin-bottom: .5rem;
+            margin-right: 0;
+        }
+        .amount{
+            font-size: 2.5rem;
+        }
     }
 </style>
 

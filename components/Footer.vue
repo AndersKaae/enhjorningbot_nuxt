@@ -50,31 +50,33 @@ watch(
 </template>
 
 <style scoped>
-.site-footer{
-  background: #337592;
-  background: linear-gradient(
-    135deg,
-    #337592 0%,
-    #7089ca 44%,
-    #709fb3 100%
-  );
-  color: #f7f7f7;
-  padding: 4rem;
-  text-align: center;
-  margin-top: auto;
-}
-.site-footer p{
-  max-width: 100%;
-}
-.site-footer a{
-  color: #f7f7f7;
-}
-
-@media (min-width: 640px) {
-  .site-footer {
-    width: 100%; 
+  .site-footer{
+    background: #337592;
+    background: linear-gradient(
+      135deg,
+      #337592 0%,
+      #7089ca 44%,
+      #709fb3 100%
+    );
+    color: #f7f7f7;
+    margin-top: auto;
+    padding: 4rem;
+    text-align: center;
+    width: 100%;
   }
-}
+  .site-footer p{
+    max-width: 100%;
+  }
+  .site-footer a{
+    color: #f7f7f7;
+  }
+
+  @media (max-width: 640px) {
+    .site-footer{
+      padding: 2rem 1rem;
+    }
+  }
+
 </style>
 
 

@@ -30,27 +30,37 @@
 </template>
 
 <style scoped>
-.card-wrapper {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 15px #0000001a;
-    padding: 0 1.25rem 1.25rem;
-    width: 45%;
-}
+    .card-wrapper {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 15px #0000001a;
+        padding: 0 1.25rem 1.25rem;
+        width: 48%;
+    }
 
-.management-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
+    .management-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
 
-.board-container {
-    width: 50%;
-}
-
-.excutive-container {
-    width: 50%;
-}
+    .board-container,
+    .excutive-container {
+        width: 50%;
+    }
+    @media (max-width: 640px){
+        .card-wrapper{
+            margin-bottom: 2rem;
+            width: 100%;
+        }
+        .management-container{
+            flex-direction: column;
+        }
+        .board-container,
+        .excutive-container{
+            width: 100%;
+        }
+    }
 </style>
 
 <script setup>

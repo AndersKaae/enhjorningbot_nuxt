@@ -10,28 +10,33 @@
     </div>
 </template>
 
-<style scoped>
-.card-wrapper {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 15px #0000001a;
-    padding: 0 1.25rem 1.25rem;
-    width: 45%;
-}
-.owner-container {
-    border-bottom: 1px solid transparent;
-    display: flex;
-    padding: .5rem 0;
-}
+    <style scoped>
+    .card-wrapper {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 15px #0000001a;
+        padding: 0 1.25rem 1.25rem;
+        width: 48%;
+    }
+    .owner-container {
+        border-bottom: 1px solid transparent;
+        display: flex;
+        padding: .5rem 0;
+    }
 
-.owner-container:hover{
-    border-bottom: 1px solid #666;
-}
+    .owner-container:hover{
+        border-bottom: 1px solid #666;
+    }
 
-.name-container {
-    flex: 1;
-    width: auto;
-}
+    .name-container {
+        flex: 1;
+        width: auto;
+    }
+    @media (max-width: 640px){
+        .card-wrapper{
+            width: 100%;
+        }
+    }
 </style>
 
 <script setup>

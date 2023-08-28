@@ -18,82 +18,84 @@
 </template>
 
 <style scoped>
-.search-container {
-  order: 2;
-}
-
-.site-header {
-  align-items: center;
-  background-color: #fff;
-  border-bottom: 1px solid #e2e2e2;
-  display: flex;
-  justify-content: space-between;
-  text-align: center;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  margin-bottom: 20px;
-  height: 80px;
-}
-
-.site-logo {
-  color: #333;
-  font-size: 24px;
-  font-weight: 700;
-  text-decoration: none;
-  vertical-align: middle;
-}
-
-.emoji {
-  display: inline-block;
-  font-size: 2em;
-  line-height: 1em;
-  margin-right: 0.75rem;
-  transition: transform 0.8s ease-in-out;
-  vertical-align: middle;
-}
-
-.site-logo .beta {
-  color: #888;
-  font-size: 12px;
-  margin-left: 5px;
-  vertical-align: middle;
-}
-
-.header-nav {
-  display: flex;
-  order: 3;
-  align-items: center;
-}
-
-.follow-the-unicorn {
-  display: inline-block;
-  padding-right: 10px;
-  color: #333;
-  text-decoration: none;
-}
-
-.follow-the-unicorn svg {
-  fill: #333;
-  width: 24px;
-  height: 24px;
-}
-
-.header-nav {
-  display: flex;
-  padding-right: 2rem;
-}
-
-@media (max-width: 640px) {
-  .header-nav {
-    display: none;
+  .search-container {
+    order: 2;
   }
+
   .site-header {
-    flex-direction: column;
-    padding-left: 0rem;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 1px solid #e2e2e2;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding: 1.25rem;
+    margin-bottom: 20px;
   }
 
   .site-logo {
-    margin-bottom: 1rem;
+    color: #333;
+    font-size: 24px;
+    font-weight: 700;
+    text-decoration: none;
+    vertical-align: middle;
   }
-}
+
+  .emoji {
+    display: inline-block;
+    font-size: 2em;
+    line-height: 1em;
+    margin-right: 0.75rem;
+    transition: transform 0.8s ease-in-out;
+    vertical-align: middle;
+  }
+
+  .site-logo .beta {
+    color: #888;
+    font-size: 12px;
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+
+  .header-nav {
+    display: flex;
+    order: 3;
+    align-items: center;
+  }
+
+  .follow-the-unicorn {
+    display: inline-block;
+    padding-right: 10px;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .follow-the-unicorn svg {
+    fill: #333;
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-nav {
+    display: flex;
+  }
+
+  @media (max-width: 640px) {
+    .header-nav {
+      margin-bottom: 1rem;
+      order: 1;
+      padding: 0;
+    }
+    .site-header {
+      flex-direction: column;
+      padding: 1rem 0 0;
+    }
+
+    .site-logo {
+      margin-bottom: 1rem;
+    }
+    .search-container{
+      width: 80%;
+    }
+  }
 </style>

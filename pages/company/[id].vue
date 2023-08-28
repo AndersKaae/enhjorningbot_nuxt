@@ -58,23 +58,43 @@ const fetchCompanies = async () => {
 </script>
 
 <style scoped>
-.company-name{
-    font-size: 3rem;
-    margin-bottom: 1rem ;
-}
-.container {
-    padding-left: 2rem;
-    padding-right: 2rem;
-}
+    .company-name{
+        font-size: 3rem;
+        margin-bottom: 1rem ;
+    }
+    .container {
+        margin: 0 auto 2rem;
+        max-width: 960px;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        width: 100%;
+    }
 
-.relations-container{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-}
+    .relations-container{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
 
-.valuation-container {
-    width: 100%;
-    padding-bottom: 50px;
-}
+    .valuation-container {
+        width: 100%;
+        padding-bottom: 50px;
+    }
+    @media (max-width: 640px){
+        .container{
+            padding-left: 1rem;
+            padding-right: 1rem;
+            width: 100%;
+        }
+
+        .company-name{
+            font-size: 2rem;
+            margin-top: 1.5em;
+        }
+        .relations-container{
+            flex-direction: column;
+            width: 100%;
+        }
+    }
+
 </style>

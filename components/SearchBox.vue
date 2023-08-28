@@ -89,11 +89,6 @@ const FetchSearchResult = async (name) => {
   @media (max-width: 640px) {
     .search-wrappper {
       margin-bottom: 2rem;
-      width: 85%;
-  
-    }
-    .search-input{
-      width: 85%;
     }
   }
 </style>
