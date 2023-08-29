@@ -1,11 +1,13 @@
 <template>
     <div class="container">
-        <Loader v-if="loading"></Loader>
-        <div v-if="!loading">
-            <h1 class="company-name">{{ companyData.name }}</h1>
             <div class="top-row-container">
-                <GeneralInfo :company="companyData"></GeneralInfo>
+                <GeneralInfo></GeneralInfo>
+                <div v-if="!loading">
+                    <CompanyStats :company="companyData"></CompanyStats>
+                </div>
             </div>
+            <Loader v-if="loading"></Loader> 
+        <div v-if="!loading">
             <div class="relations-container">
                 <Management :company="companyData"></Management>
                 <Owners :owners="companyData.owner"></Owners>
@@ -58,10 +60,7 @@ const fetchCompanies = async () => {
 </script>
 
 <style scoped>
-    .company-name{
-        font-size: 3rem;
-        margin-bottom: 1rem ;
-    }
+
     .container {
         margin: 0 auto 2rem;
         max-width: 960px;

@@ -1,95 +1,50 @@
 <template>
-    <div class="info-box">
-        <span class="company-info-item">CVR-no.: <strong>{{ company.cvr }}</strong></span>
-        <span class="company-info-item">Founded: <strong>{{ company.increases[0].validFrom }}</strong></span>
-        <span class="company-info-item">Industry: <strong>{{ company.businessCode }}</strong></span>
-        <template v-if="company.Website != null">
-            <span class="company-info-item">Website: <strong>{{ company.Website }}</strong></span>
+    <div v-if="generalInfo != ''" class="info-box">
+        <h1 class="company-name">{{ generalInfo.name }}</h1>
+        <span class="company-info-item">CVR-no.: <strong>{{ generalInfo.cvr }}</strong></span>
+        <span class="company-info-item">Founded: <strong>{{ generalInfo.start }}</strong></span>
+        <span class="company-info-item">Industry: <strong>{{ generalInfo.branchekode }}</strong></span>
+        <template v-if="generalInfo.Website != null">
+            <span class="company-info-item">Website: <strong>{{ generalInfo.Website }}</strong></span>
         </template>
-        <span class="company-info-item">Adress:  <strong>[missing from API]</strong></span>
-        <span class="company-info-item">Employees:  <strong>[missing from API]</strong></span>
+        <span class="company-info-item">Adress: <strong>{{ generalInfo.adress }}</strong></span>
     </div>
-
-    <div class="company-stats">
-        <div class="company-total-rounds">
-            <div>
-                <span class="amount">{{ company.increases.length -1 }}</span>
-            </div>
-            <div>Rounds</div>
-        </div>
-        <div class="company-total-funding">
-            <div>
-                <span class="amount">{{ formattedFunding }}</span> 
-            </div>
-            <div><span class="denomination">DKK</span> in total Funding</div>
-        </div>
-    </div>
-
 </template>
 
 <style scoped>
+.company-name {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
 
-    .company-stats{
-        display: flex;
-        justify-content: space-around;
-        margin: 2em 0;
-    }
+.company-info-item {
+    margin-right: 1em;
+}
 
-    .company-total-funding,
-    .company-total-rounds{
-        padding: 2em;
-        text-align: center;
+@media (max-width: 640px) {
+    .company-info-item {
+        display: block;
+        margin-bottom: .5rem;
+        margin-right: 0;
     }
-
-    .amount{
-        color: #337592;
-        font-size: 4rem;
-        font-weight: 700;
-    }
-
-    .company-info-item{
-        margin-right: 1em;
-    }
-
-    @media (max-width: 640px){
-        .company-stats{
-            flex-direction: column;
-        }
-        .company-info-item{
-            display: block;
-            margin-bottom: .5rem;
-            margin-right: 0;
-        }
-        .amount{
-            font-size: 2.5rem;
-        }
-    }
+}
 </style>
 
 <script setup>
+import axios from "axios";
+let generalInfo = ref("");
+const route = useRoute();
 
-    const props = defineProps(["company"]);
-    let total_funding = ref(0);
-    onBeforeMount(() => {
-        totalInvestment();
-    });
+onBeforeMount(() => {
+    getGeneralInfo();
+});
 
-    const formattedFunding = computed(() => {
-        return total_funding.value.toLocaleString();
-    });
-
-    // write an arrow function that loops over the capital increases and return the total investment
-    const totalInvestment = () => {
-        let total = 0;
-        for (let i = 1; i < props.company.increases.length; i++) {
-            if (props.company.increases[i].type == "decreased") {
-                continue;
-            }
-            for (let j = 0; j < props.company.increases[i].virkIncrease.length; j++) {
-                total += props.company.increases[i].virkIncrease[j].investment;
-            }
-        }
-        total_funding.value = total;
-    }
+const getGeneralInfo = async () => {
+    let api_url = `https://virk.oaktoad.dk/api/v1/company_info?cvr=` + route.params.id
+    console.log(api_url)
+    const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
+    generalInfo.value = response.data;
+    console.log(generalInfo.value)
+}
 
 </script>
