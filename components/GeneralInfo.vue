@@ -13,7 +13,7 @@
     <div class="company-stats">
         <div class="company-total-rounds">
             <div>
-                <soan class="amount">{{ company.increases.length -1 }}</soan>
+                <span class="amount">{{ company.increases.length -1 }}</span>
             </div>
             <div>Rounds</div>
         </div>
