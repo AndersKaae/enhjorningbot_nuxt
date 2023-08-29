@@ -7,13 +7,11 @@
       v-on:click="clearSearchInput()"
       >×</span>
     <div v-if="searchResult.length > 0" class="results-box">
-        <span v-for="company in searchResult" :key="company.name" >
+        <div v-for="company in searchResult" :key="company.name" class="result-item">
             <a class="result-link" :href="/company/+ company.cvr">
-                <div class="result-item">
-                    {{ company.name }}
-                </div>
+              {{ company.name }}
             </a>
-        </span>
+        </div>
     </div>
 </div>
 </template>
@@ -67,6 +65,10 @@ const FetchSearchResult = async (name) => {
       font-size: 0.9rem;
   }
 
+  .result-item:last-child{
+    border-bottom: none;
+  }
+
   .results-box{
       border: 1px solid #ddd;
       border-radius: 5px;
@@ -75,7 +77,8 @@ const FetchSearchResult = async (name) => {
       text-align: left;
       position: absolute;
       z-index: 9;
-      background-color: white;
+      background-color: #fff;
+      width: 100%;
   }
 
   .search-wrappper {
