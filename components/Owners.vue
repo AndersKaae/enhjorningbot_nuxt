@@ -1,47 +1,52 @@
 <template>
     <div class="card-wrapper">
         <h2>Owners (above 5 %):</h2>
-        <div v-for="owner in ownerList" :key="owner.name">
-            <span v-if="owner.active == true" class="owner-container">
-                <span class="name-container">{{ owner.name }}</span>
-                <span class="ownership-container">{{ calculateOwnership(owner.percentage) }}%</span>
-            </span>
-        </div>
+        <span v-if="owner != ''">
+            <div v-for="owner in owner.result" :key="owner.name">
+                <div class="owner-container">
+                    <span class="name-container">{{ owner.name }}</span>
+                    <span class="ownership-container">{{ calculateOwnership(owner.value) }}%</span>
+                </div>
+            </div>
+        </span>
     </div>
 </template>
 
-    <style scoped>
+<style scoped>
+.card-wrapper {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 15px #0000001a;
+    padding: 0 1.25rem 1.25rem;
+    width: 48%;
+}
+
+.owner-container {
+    border-bottom: 1px solid transparent;
+    display: flex;
+    padding: .5rem 0;
+}
+
+.owner-container:hover {
+    border-bottom: 1px solid #666;
+}
+
+.name-container {
+    flex: 1;
+    width: auto;
+}
+
+@media (max-width: 640px) {
     .card-wrapper {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        box-shadow: 0 0 15px #0000001a;
-        padding: 0 1.25rem 1.25rem;
-        width: 48%;
+        width: 100%;
     }
-    .owner-container {
-        border-bottom: 1px solid transparent;
-        display: flex;
-        padding: .5rem 0;
-    }
-
-    .owner-container:hover{
-        border-bottom: 1px solid #666;
-    }
-
-    .name-container {
-        flex: 1;
-        width: auto;
-    }
-    @media (max-width: 640px){
-        .card-wrapper{
-            width: 100%;
-        }
-    }
+}
 </style>
 
 <script setup>
-const props = defineProps(["owners"]);
-var ownerList = ref([])
+import axios from "axios";
+let owner = ref("");
+const route = useRoute();
 
 const calculateOwnership = (value) => {
     if (value == 1) {
@@ -62,36 +67,31 @@ const calculateOwnership = (value) => {
     if (value == 0.2) {
         return '20 - 24.99';
     }
-    if (value == 0.15){
+    if (value == 0.15) {
         return '15 - 19.99';
     }
-    if (value == 0.10){
+    if (value == 0.10) {
         return '10 - 14.99';
     }
-    if (value == 0.05){
+    if (value == 0.05) {
         return '5 - 9.99';
     }
-    if (value ) {
+    if (value) {
         return 'Under 5';
     }
     return value;
 };
+
 onBeforeMount(() => {
-    parseOwnerData(props.owners)
+    getOwner();
 });
 
-const parseOwnerData = (ownerData) => {
-    //console.log(ownerData)
-    for (let i = 0; i < ownerData.length; i++) {
-        let ownerObject = {name: ownerData[i].name, percentage: 0, active: false};
-        for (let j = 0; j < ownerData[i].values.length; j++) {
-            if (ownerData[i].values[j].validTo == 'None') {
-                ownerObject.active = true;
-                ownerObject.percentage = ownerData[i].values[j].ownerPercentage;
-            }
-        }
-        ownerList.value.push(ownerObject);
-    }
-};
+const getOwner = async () => {
+    let api_url = `https://virk.oaktoad.dk/api/v1/owners?cvr=` + route.params.id
+    console.log(api_url)
+    const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
+    owner.value = response.data;
+    console.log(owner.value)
+}
 
 </script>

@@ -1,28 +1,26 @@
 <template>
     <div class="container">
-            <div class="top-row-container">
-                <GeneralInfo></GeneralInfo>
-                <div v-if="!loading">
-                    <CompanyStats :company="companyData"></CompanyStats>
-                </div>
-            </div>
-            <Loader v-if="loading"></Loader> 
-        <div v-if="!loading">
-            <div class="relations-container">
-                <Management :company="companyData"></Management>
-                <Owners :owners="companyData.owner"></Owners>
-            </div>
-            <div v-if="companyData.increases.length > 1">
+        <div class="top-row-container">
+            <GeneralInfo></GeneralInfo>
+            <CompanyStats :increases="increases"></CompanyStats>
+            
+        </div>
+        <div class="relations-container">
+            <Management></Management>
+            <Owners></Owners>
+        </div>
+        <span v-if="increases">
+            <div v-if="increases.increases.length > 1">
                 <div class="valuation-container">
-                    <ValuationGraph :graphData="companyData.increases"></ValuationGraph>
+                    <ValuationGraph :graphData="increases.increases"></ValuationGraph>
                 </div>
-                <InvestmentGraph :graphData="companyData.increases"></InvestmentGraph>
+                <InvestmentGraph :graphData="increases.increases"></InvestmentGraph>
             </div>
             <div v-else>
                 <h2>The company does not have any registered funding.</h2>
             </div>
             <FiscalData></FiscalData>
-        </div>
+        </span>
     </div>
 </template>
 
@@ -32,9 +30,10 @@ import { ref, onMounted } from "vue";
 const companyData = ref();
 const loading = ref(true);
 const route = useRoute();
+const increases = ref(null);
 
 const props = defineProps({
-  loaded: Boolean
+    loaded: Boolean
 });
 
 // Define the event emitter
@@ -45,55 +44,52 @@ const updateLoaded = (value) => {
 };
 
 onMounted(() => {
-    fetchCompanies()
-})
-
-const fetchCompanies = async () => {
-    loading.value = true;
-    let api_url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/company?cvr=` + route.params.id
-    console.log(api_url)
-    const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
-    companyData.value = response.data;
-    loading.value = false;
+    fetchIncreases()
     updateLoaded(true)
-}
+})
+const fetchIncreases = async () => {
+    let api_url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/increases?cvr=` + route.params.id
+    const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
+    increases.value = response.data;
+    console.log(api_url)
+};
 </script>
 
 <style scoped>
+.container {
+    margin: 0 auto 2rem;
+    max-width: 960px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100%;
+}
 
+.relations-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.valuation-container {
+    width: 100%;
+    padding-bottom: 50px;
+}
+
+@media (max-width: 640px) {
     .container {
-        margin: 0 auto 2rem;
-        max-width: 960px;
-        padding-left: 2rem;
-        padding-right: 2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
         width: 100%;
     }
 
-    .relations-container{
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 2rem;
+    .company-name {
+        font-size: 2rem;
+        margin-top: 1.5em;
     }
 
-    .valuation-container {
+    .relations-container {
+        flex-direction: column;
         width: 100%;
-        padding-bottom: 50px;
     }
-    @media (max-width: 640px){
-        .container{
-            padding-left: 1rem;
-            padding-right: 1rem;
-            width: 100%;
-        }
-
-        .company-name{
-            font-size: 2rem;
-            margin-top: 1.5em;
-        }
-        .relations-container{
-            flex-direction: column;
-            width: 100%;
-        }
-    }
-
+}
 </style>
