@@ -39,7 +39,7 @@ function clearSearchInput(){
 }
 
 const FetchSearchResult = async (name) => {
-  let url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/search?query=${name}`
+  let url = `https://virk.oaktoad.dk/api/v1/search?query=${name}`
   const response = await axios.get(url, {auth: {username: 'enhjorningbot@gmail.com',password: 'bf7f8df76a4443f2ae6de295f5fd3340'}})  
   console.log(url)
   // save response.data.result to searchResult
