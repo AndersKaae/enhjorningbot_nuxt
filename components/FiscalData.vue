@@ -1,11 +1,12 @@
 <template>
     <div class="card-wrapper">
-        <h2>Fiscal</h2>
+        <h2>Fiscal information:</h2>
         <Loader v-if="!loaded"></Loader>
         <div style="height: 80%;">
+            <span v-if="loaded">
             <Line :data="chartData" :options="chartOptions"/>
+            </span>
         </div>
-        <p>{{ fiscalData }}</p>
     </div>
 </template>
 
@@ -23,11 +24,14 @@ watch(
   () => loaded.value,
   () => {
     console.log(fiscalData.value.results)
+    fiscalData.value.results = fiscalData.value.results.reverse();
     for (let i = 0; i < fiscalData.value.results.length; i++) {
-        
         chartData.value.labels.push(fiscalData.value.results[i].fiscal_end);
+        chartData.value.datasets[0].data.push(fiscalData.value.results[i].parsed_data.result);
+        chartData.value.datasets[1].data.push(fiscalData.value.results[i].parsed_data.revenue);
+        chartData.value.datasets[2].data.push(fiscalData.value.results[i].parsed_data.assets);
+        chartData.value.datasets[3].data.push(fiscalData.value.results[i].parsed_data.ebitda);
     }
-    console.log(chartData.value)
   }
 )
 
@@ -67,21 +71,51 @@ const chartData = ref({
     labels: [],
     datasets: [
         {
-            label: 'Valuation',
-            fill: true,
+            label: 'Result',
+            fill: false,
             borderColor: 'rgba(255, 159, 64, 1)',
             backgroundColor: 'rgba(255, 159, 64, 0.2)',
-            borderWidth: 1,
+            borderWidth: 2,
             pointBackgroundColor: '#f87979',
             data: [],
             tension: 0.1,
         },
+        {
+            label: 'Revenue',
+            fill: false,
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            borderWidth: 2,
+            pointBackgroundColor: '#f87979',
+            data: [],
+            tension: 0.1,
+        },
+        {
+            label: 'Assets',
+            fill: false,
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            borderWidth: 2,
+            pointBackgroundColor: '#f87979',
+            data: [],
+            tension: 0.1,
+        },
+        {
+            label: 'Ebitda',
+            fill: false,
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            borderWidth: 2,
+            pointBackgroundColor: '#f87979',
+            data: [],
+            tension: 0.1,
+        }
     ],
 });
 
 const chartOptions = ref({
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
 });
 
 </script>

@@ -14,8 +14,9 @@
                 <ValuationGraph :graphData="increases"></ValuationGraph>
             </div>
             <InvestmentGraph :graphData="increases"></InvestmentGraph>
-            <FiscalData></FiscalData>
         </span>
+        <FiscalData></FiscalData>
+
     </div>
 </template>
 
@@ -44,7 +45,6 @@ const fetchIncreases = async () => {
     let api_url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/increases?cvr=` + route.params.id
     const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
     increases.value = response.data;
-    console.log(api_url)
 };
 </script>
 

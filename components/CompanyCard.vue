@@ -4,7 +4,7 @@ const props = defineProps(["company"]);
 
 <template>
   <td class="company-date">
-    {{ company.increases[0].validFrom }}
+    {{ company.increases[company.increases.length -1].validFrom }}
   </td>
   <td class="company-name">
       <CompanyTypeIcon :code = "company.business_code" ></CompanyTypeIcon>
