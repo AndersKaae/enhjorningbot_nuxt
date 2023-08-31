@@ -15,15 +15,15 @@ onBeforeMount(() => {
 });
 
 const getDates = (graphData) => {
-    for (let i = 0; i < graphData.length; i++) {
-        if (graphData[i].type != 'decreased') {
-            chartData.value.labels.push(graphData[i].validFrom);
+    for (let i = 0; i < graphData.increases.length; i++) {
+        if (graphData.increases[i].type != 'decreased') {
+            chartData.value.labels.push(graphData.increases[i].validFrom);
         }
         if (i == 0) {
-            chartData.value.datasets[0].data.push(graphData[i].capital);
+            chartData.value.datasets[0].data.push(graphData.increases[i].capital);
         } else {
-            if (graphData[i].type != 'decreased'){
-                chartData.value.datasets[0].data.push(graphData[i].valuation);
+            if (graphData.increases[i].type != 'decreased'){
+                chartData.value.datasets[0].data.push(graphData.increases[i].valuation);
             }
         }
     }

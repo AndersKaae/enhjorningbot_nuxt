@@ -17,11 +17,11 @@ onBeforeMount(() => {
 });
 
 const populateDates = (graphData) => {
-    for (let i = 0; i < graphData.length; i++) {
+    for (let i = 0; i < graphData.increases.length; i++) {
         // Populating the dates array
-        if (graphData[i].type != 'decreased')
+        if (graphData.increases[i].type != 'decreased')
         {
-            chartData.value.labels.push(graphData[i].validFrom);
+            chartData.value.labels.push(graphData.increases[i].validFrom);
         }
     }
 };
@@ -75,23 +75,23 @@ const setColors = (type) => {
 
 const populateValues = (graphData) => {
     // The first entry is not an increase, but the start capital
-    chartData.value.datasets[0].data.push(graphData[0].capital)
+    chartData.value.datasets[0].data.push(graphData.increases[0].capital)
     // Then we loop over the rest of the data
-    for (let i = 1; i < graphData.length; i++) {
+    for (let i = 1; i < graphData.increases.length; i++) {
         //console.log('--')
         for (let j = 0; j < chartData.value.datasets.length; j++) {
             //console.log('Chart: ' + chartData.value.datasets[j].label)
             let found = false;
             let value = 0;
-            if (graphData[i].type == 'decreased'){
+            if (graphData.increases[i].type == 'decreased'){
                 continue;
             }
-            for (let k = 0; k < graphData[i].virkIncrease.length; k++) {
+            for (let k = 0; k < graphData.increases[i].virkIncrease.length; k++) {
                 //console.log('Data: ' + graphData[i].virkIncrease[k].typeIncrease)
-                if (chartData.value.datasets[j].label == graphData[i].virkIncrease[k].typeIncrease) {
+                if (chartData.value.datasets[j].label == graphData.increases[i].virkIncrease[k].typeIncrease) {
                     //console.log('Match: ' + graphData[i].virkIncrease[k].typeIncrease)
                     //console.log('Value: ' + graphData[i].virkIncrease[k].investment)
-                    value = value + graphData[i].virkIncrease[k].investment;
+                    value = value + graphData.increases[i].virkIncrease[k].investment;
                     found = true;
                 }
             }
@@ -112,18 +112,18 @@ const knownTypes = (type) => {
 };
 
 const populateTypes = (graphData) => {
-    for (let i = 1; i < graphData.length; i++) {
-        if (graphData[i].type == 'decreased'){
+    for (let i = 1; i < graphData.increases.length; i++) {
+        if (graphData.increases[i].type == 'decreased'){
             continue;
         } 
-        for (let j = 0; j < graphData[i].virkIncrease.length; j++) {
+        for (let j = 0; j < graphData.increases[i].virkIncrease.length; j++) {
             // Populating the types array
-            if (!knownTypes(graphData[i].virkIncrease[j].typeIncrease)) {
+            if (!knownTypes(graphData.increases[i].virkIncrease[j].typeIncrease)) {
                 chartData.value.datasets.push({
-                    label: graphData[i].virkIncrease[j].typeIncrease,
+                    label: graphData.increases[i].virkIncrease[j].typeIncrease,
                     //backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                    backgroundColor: setColors(graphData[i].virkIncrease[j].typeIncrease).backgroundColor,
-                    borderColor: setColors(graphData[i].virkIncrease[j].typeIncrease).borderColor,
+                    backgroundColor: setColors(graphData.increases[i].virkIncrease[j].typeIncrease).backgroundColor,
+                    borderColor: setColors(graphData.increases[i].virkIncrease[j].typeIncrease).borderColor,
                     borderWidth: 1,
                     data: [0],
                 });

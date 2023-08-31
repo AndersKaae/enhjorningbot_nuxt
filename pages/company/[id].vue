@@ -3,22 +3,17 @@
         <div class="top-row-container">
             <GeneralInfo></GeneralInfo>
             <CompanyStats :increases="increases"></CompanyStats>
-            
+
         </div>
         <div class="relations-container">
             <Management></Management>
             <Owners></Owners>
         </div>
         <span v-if="increases">
-            <div v-if="increases.increases.length > 1">
-                <div class="valuation-container">
-                    <ValuationGraph :graphData="increases.increases"></ValuationGraph>
-                </div>
-                <InvestmentGraph :graphData="increases.increases"></InvestmentGraph>
+            <div class="valuation-container">
+                <ValuationGraph :graphData="increases"></ValuationGraph>
             </div>
-            <div v-else>
-                <h2>The company does not have any registered funding.</h2>
-            </div>
+            <InvestmentGraph :graphData="increases"></InvestmentGraph>
             <FiscalData></FiscalData>
         </span>
     </div>
@@ -27,8 +22,6 @@
 <script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
-const companyData = ref();
-const loading = ref(true);
 const route = useRoute();
 const increases = ref(null);
 
