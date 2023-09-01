@@ -16,6 +16,7 @@ const updateLoaded = (value) => {
 };
 
 const companiesList = ref([]);
+let loadingMore =ref(false);
 
 let offset = 0;
 
@@ -27,11 +28,12 @@ const fetchCompanies = async (limit) => {
   companiesList.value = [...companiesList.value, ...response.data.feed]
   offset += limit + 1
   updateLoaded(true)
+  loadingMore.value = false;
 }
 
 // Call the function in onMounted
 onMounted(() => {
-  fetchCompanies(100)
+  fetchCompanies(150)
 })
 
 const handleScroll = () => {
@@ -52,6 +54,7 @@ const handleScroll = () => {
       return; // already loading data, do nothing
     }
     console.log('loading more')
+    loadingMore.value = true;
     fetchCompanies(100);
   }
 }
@@ -83,6 +86,7 @@ onBeforeMount(() => {
           </tr>
         </tbody>
       </table>
+      <Loader v-if="loadingMore"></Loader>
     </div>  
 </template>
 

@@ -23,7 +23,6 @@ onMounted(() => {
 watch(
   () => loaded.value,
   () => {
-    console.log(fiscalData.value.results)
     fiscalData.value.results = fiscalData.value.results.reverse();
     for (let i = 0; i < fiscalData.value.results.length; i++) {
         chartData.value.labels.push(fiscalData.value.results[i].fiscal_end);
@@ -31,8 +30,20 @@ watch(
         chartData.value.datasets[1].data.push(fiscalData.value.results[i].parsed_data.revenue);
         chartData.value.datasets[2].data.push(fiscalData.value.results[i].parsed_data.assets);
         chartData.value.datasets[3].data.push(fiscalData.value.results[i].parsed_data.ebitda);
+        chartData.value.datasets[4].data.push(fiscalData.value.results[i].parsed_data.gross_result_fortjeneste);
+  }
+  for (let i = 0; i < chartData.value.datasets.length; i++) {
+    let delete_item = true;
+    for (let j = 0; j < chartData.value.datasets[i].data.length; j++) {
+        if (chartData.value.datasets[i].data[j] != null) {
+            delete_item = false;
+        }
+    }
+    if (delete_item == true) {
+        chartData.value.datasets.splice(i, 1);
     }
   }
+}
 )
 
 const fetchFiscalData = async () => {
@@ -73,40 +84,50 @@ const chartData = ref({
         {
             label: 'Result',
             fill: false,
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
             borderWidth: 2,
-            pointBackgroundColor: '#f87979',
+            pointBackgroundColor: 'rgba(75, 192, 192, 0.2)',
             data: [],
             tension: 0.1,
         },
         {
             label: 'Revenue',
             fill: false,
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+            borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 2,
-            pointBackgroundColor: '#f87979',
+            pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
             data: [],
             tension: 0.1,
         },
         {
             label: 'Assets',
             fill: false,
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
             borderWidth: 2,
-            pointBackgroundColor: '#f87979',
+            pointBackgroundColor: 'rgba(54, 162, 235, 0.2)',
             data: [],
             tension: 0.1,
         },
         {
             label: 'Ebitda',
             fill: false,
-            borderColor: 'rgba(255, 159, 64, 1)',
-            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
             borderWidth: 2,
-            pointBackgroundColor: '#f87979',
+            pointBackgroundColor: 'rgba(153, 102, 255, 0.2)',
+            data: [],
+            tension: 0.1,
+        },
+        {
+            label: 'Gross profit',
+            fill: false,
+            backgroundColor: 'rgba(255, 206, 86, 0.2)',
+            borderColor: 'rgba(255, 206, 86, 1)',
+            borderWidth: 2,
+            pointBackgroundColor: 'rgba(255, 206, 86, 0.2)',
             data: [],
             tension: 0.1,
         }

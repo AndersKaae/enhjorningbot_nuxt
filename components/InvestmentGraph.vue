@@ -100,7 +100,6 @@ const populateValues = (graphData) => {
             chartData.value.datasets[j].data.push(value)
         }
     }
-    console.log(chartData.value)
 };
 
 const knownTypes = (type) => {
