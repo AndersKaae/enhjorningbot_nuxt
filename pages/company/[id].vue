@@ -5,16 +5,16 @@
             <CompanyStats :increases="increases"></CompanyStats>
 
         </div>
-        <div class="relations-container">
-            <Management></Management>
-            <Owners></Owners>
-        </div>
-        <span v-if="increases">
+        <div v-if="increases">
             <div class="valuation-container">
                 <ValuationGraph :graphData="increases"></ValuationGraph>
             </div>
             <InvestmentGraph :graphData="increases"></InvestmentGraph>
-        </span>
+        </div>
+        <div class="relations-container">
+            <Management></Management>
+            <Owners></Owners>
+        </div>
         <FiscalData></FiscalData>
 
     </div>
@@ -58,8 +58,6 @@ const fetchIncreases = async () => {
 }
 
 .relations-container {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 2rem;
 }
 

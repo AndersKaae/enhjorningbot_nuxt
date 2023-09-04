@@ -1,6 +1,6 @@
 <template>
-    <div class="card-wrapper">
-        <span v-if="management != ''">
+    <div>
+        <div v-if="management != ''">
             <div class="management-container">
                 <div v-if="management.result.board.length > 0" class="board-container">
                     <h2>Board:</h2>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
             </div>
-        </span>
+        </div>
     </div>
 </template>
 
