@@ -128,6 +128,7 @@ onBeforeMount(() => {
       border: 1px solid #ddd;
       display: block;
       margin-bottom: 1em;
+      padding-bottom: 0.75em;
     }
   }
 

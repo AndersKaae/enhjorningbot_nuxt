@@ -32,19 +32,12 @@
 </template>
 
 <style scoped>
-.card-wrapper {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 0 15px #0000001a;
-    padding: 0 1.25rem 1.25rem;
-    width: 48%;
-    min-height: 200px;
-}
 
 .management-container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 1em;
 }
 
 .board-container,

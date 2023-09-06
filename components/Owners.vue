@@ -18,7 +18,7 @@
     border: 1px solid #ddd;
     box-shadow: 0 0 15px #0000001a;
     padding: 0 1.25rem 1.25rem;
-    width: 48%;
+    width: 100%;
 }
 
 .owner-container {

@@ -22,6 +22,10 @@
 }
 
 @media (max-width: 640px) {
+    .company-name{
+        font-size: 2rem;
+    }
+
     .company-info-item {
         display: block;
         margin-bottom: .5rem;
