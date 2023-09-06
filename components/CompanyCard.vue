@@ -34,8 +34,8 @@ const props = defineProps(["company"]);
     border-bottom-color: #555;
   }
 
-  .table--feed td,
-  .table--feed th{
+  td,
+  th{
     background-color: #fff;
     border: 1px solid #ddd;
     border-collapse: collapse;
@@ -76,11 +76,18 @@ const props = defineProps(["company"]);
   @media (max-width: 640px) {
 
     td{
+      border: none;
       display: block;
       position: relative;
     }
+
     td:not(.company-name){
       text-align: right;
+    }
+
+    td.company-date{
+      font-size: .75em;
+      text-align: left;
     }
 
     .company-investment::before,
@@ -88,7 +95,7 @@ const props = defineProps(["company"]);
     .company-round::before{
       content: attr(data-label);
       display: inline-block;
-      left: 1em;
+      left: .5em;
       position: absolute;
     }
 

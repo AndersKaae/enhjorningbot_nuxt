@@ -125,6 +125,7 @@ onBeforeMount(() => {
       display: none;
     }
     tr{
+      border: 1px solid #ddd;
       display: block;
       margin-bottom: 1em;
     }
