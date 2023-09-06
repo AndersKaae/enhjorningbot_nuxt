@@ -10,19 +10,19 @@ const props = defineProps(["company"]);
       <CompanyTypeIcon :code = "company.business_code" ></CompanyTypeIcon>
       <a v-bind:href="'/company/' + company.cvr">{{ company.name }}</a>
   </td>
-  <td class="company-investment">
+  <td class="company-investment" data-label="Investment">
     <div class="values">
       <span class="denomination">DKK</span>
       <span class="amount">{{ company.increases[company.increases.length -1].investment.toLocaleString() }}</span>
     </div>
   </td>
-  <td class="company-valuation">
+  <td class="company-valuation" data-label="Valuation">
     <div class="values">
       <span class="denomination">DKK</span>
       <span class="amount">{{ company.increases[company.increases.length -1].valuation.toLocaleString() }}</span>
     </div>
   </td>
-  <td class="company-round">
+  <td class="company-round" data-label="Round">
     <div class="values">
       <span class="amount">{{  company.increases.length - 1 }}</span><br>
     </div>
@@ -71,6 +71,27 @@ const props = defineProps(["company"]);
       -moz-font-feature-settings: "tnum";
       -webkit-font-feature-settings: "tnum";
       font-feature-settings: "tnum"
+  }
+
+  @media (max-width: 640px) {
+
+    td{
+      display: block;
+      position: relative;
+    }
+    td:not(.company-name){
+      text-align: right;
+    }
+
+    .company-investment::before,
+    .company-valuation::before,
+    .company-round::before{
+      content: attr(data-label);
+      display: inline-block;
+      left: 1em;
+      position: absolute;
+    }
+
   }
 
 </style>

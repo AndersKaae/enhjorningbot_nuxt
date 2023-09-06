@@ -119,7 +119,14 @@ onBeforeMount(() => {
 
   @media (max-width: 640px) {
     .feed-wrapper{
-      overflow-x: scroll;
+      padding: 0 1em;
+    }
+    thead{
+      display: none;
+    }
+    tr{
+      display: block;
+      margin-bottom: 1em;
     }
   }
 
