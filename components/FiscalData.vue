@@ -39,21 +39,34 @@
                         <tr v-for="year in fiscalData.results">
                             <td>{{ year.fiscal_end }}</td>
                             <td class="text-end">
-                                <span class="denomination">DKK</span>
-                                <span class="amount">{{ year.parsed_data.result.toLocaleString() }}</span>
-                                </td>
+                                <template v-if="year.parsed_data.result != null">
+                                    <span class="denomination">DKK</span>
+                                    <span class="amount">{{ year.parsed_data.result.toLocaleString() }}</span>
+                                </template>
+                                <span v-else>No data</span>
+                            </td>
                             <td class="text-end">
-                                <span class="denomination">DKK</span>
-                                <span class="amount">{{ year.parsed_data.assets.toLocaleString() }}</span>
-                                </td>
+                                <template v-if="year.parsed_data.assets != null">
+                                    <span class="denomination">DKK</span>
+                                    <span class="amount">{{ year.parsed_data.assets.toLocaleString() }}</span>
+                                </template>
+                                <span v-else>No data</span>
+                            </td>
                             <td class="text-end">
-                                <span class="denomination">DKK</span>
-                                <span class="amount">{{ year.parsed_data.ebitda.toLocaleString() }}</span>
-                                </td>
+                                <template v-if="year.parsed_data.ebitda != null">
+                                    <span class="denomination">DKK</span>
+                                    <span class="amount">{{ year.parsed_data.ebitda.toLocaleString() }}</span>
+                                </template>
+                                <span v-else>No data</span>
+                            </td>
                             <td class="text-end">
-                                <span class="denomination">DKK</span>
-                                <span class="amount">{{ year.parsed_data.gross_result_fortjeneste.toLocaleString() }}</span>
-                                </td>
+                                <template v-if="year.parsed_data.gross_result_fortjeneste != null">
+                                    <span class="denomination">DKK</span>
+                                    <span class="amount">{{ year.parsed_data.gross_result_fortjeneste.toLocaleString() 
+                                }}</span>
+                                </template>
+                                <span v-else>No data</span>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
