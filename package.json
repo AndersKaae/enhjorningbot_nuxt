@@ -12,6 +12,7 @@
     "@nuxt/devtools": "latest",
     "@types/node": "^18.17.1",
     "nuxt": "^3.6.5",
+    "nuxt-gtag": "^1.1.1",
     "nuxt-simple-sitemap": "^3.2.6"
   },
   "dependencies": {
