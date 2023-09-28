@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     public: {
-      gtagId: 'G-XXXXXX',
+      gtagId: 'GTM-KJXRVZZP',
     }
   }
 })
