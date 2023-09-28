@@ -17,7 +17,7 @@ const updateLoaded = (value) => {
 
 const companiesList = ref([]);
 let loadingMore =ref(false);
-
+let firstLoad = true;
 let offset = 0;
 
 // Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
@@ -29,6 +29,14 @@ const fetchCompanies = async (limit) => {
   offset += limit + 1
   updateLoaded(true)
   loadingMore.value = false;
+  // This function makes sure that we have enought records to fill the screen
+  if (firstLoad == true) {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    if (clientHeight / 35 > companiesList.value.length && firstLoad == true) {
+    fetchCompanies(100)
+  }
+}
+  firstLoad = false;
 }
 
 // Call the function in onMounted
