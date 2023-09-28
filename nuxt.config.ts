@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['nuxt-simple-sitemap'],
+  sitemap: {
+    // automatically chunk into multiple sitemaps
+    sitemaps: true,
+  },
   site: {
     url: 'https://enhjorning.bot',
   },
@@ -14,4 +18,4 @@ export default defineNuxtConfig({
       gtagId: 'GTM-KJXRVZZP',
     }
   }
-})
+})  
