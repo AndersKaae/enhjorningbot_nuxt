@@ -47,6 +47,9 @@ const getGeneralInfo = async () => {
     let api_url = `https://virk.oaktoad.dk/api/v1/company_info?cvr=` + route.params.id
     const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
     generalInfo.value = response.data;
+    if (generalInfo.value.cvr == 'Not found') {
+        return navigateTo('/404')
+    }
 }
 
 </script>
