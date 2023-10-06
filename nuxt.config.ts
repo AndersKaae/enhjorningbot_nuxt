@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     sitemaps: true,
   },
   site: {
-    url: 'https://enhjorning.bot',
+    url: 'https://www.enhjorning.bot',
   },
   devtools: { enabled: true },
   css: [
