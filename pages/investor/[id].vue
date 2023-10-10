@@ -13,7 +13,7 @@
                 <tr v-for="investment in investments.result" :key="investment.id">
                     <td>{{ investment.earliest_valid_from }}</td>
                     <td><a v-bind:href="'/company/' + investment.target_cvr">{{ investment.target_name }}</a></td>
-                    <td>{{ investment.value }}</td>
+                    <td><FormatPercentage :percentage="investment.value"></FormatPercentage></td>
                 </tr>
             </table>
         </div>
