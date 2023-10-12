@@ -3,8 +3,9 @@
         <Loader v-if="!loaded"></Loader>
         <div v-else>
             <!-- Use optional chaining to avoid errors -->
-            <h1>{{ investments?.result?.[0].investor_name }}</h1>
-            <table>
+            <h1 v-if="investments.result.length > 0">{{ investments?.result?.[0].investor_name }}</h1>
+            <h1 v-else>{{ compantName }}</h1>
+            <table v-if="investments.result.length > 0">
                 <tr>
                     <th>Investment date</th>
                     <th>Target</th>
@@ -16,6 +17,7 @@
                     <td><FormatPercentage :percentage="investment.value"></FormatPercentage></td>
                 </tr>
             </table>
+            <p v-else>No investments found</p>
         </div>
     </div>
 </template>
@@ -24,6 +26,7 @@
     import axios from "axios";
     const route = useRoute();
     const investments = ref(null);
+    const compantName = ref(null);
     
     const props = defineProps({
         loaded: Boolean
@@ -37,6 +40,9 @@
 
     onMounted(async () => {
         await fetchData(); // Wait for data to be fetched
+        if (investments.value.result.length == 0) {
+            await fetchName(); // If no investments, fetch name
+        }
         updateLoaded(true); // Then update loaded state
     });
     
@@ -44,6 +50,12 @@
         let api_url = `https://virk.oaktoad.dk/api/v1/investor_investments?cvr=` + route.params.id;
         const response = await axios.get(api_url);
         investments.value = response.data;
+    };
+
+    const fetchName = async () => {
+        let api_url = `https://virk.oaktoad.dk/api/v1/company_info?cvr=` + route.params.id;
+        const response = await axios.get(api_url);
+        compantName.value = response.data.name;
     };
 </script>
 
