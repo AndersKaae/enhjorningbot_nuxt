@@ -1,21 +1,15 @@
 <template>
     <div class="container">
-        <div class="top-row-container">
-            <GeneralInfo></GeneralInfo>
-            <CompanyStats :increases="increases"></CompanyStats>
-
-        </div>
-        <div v-if="increases">
-            <div class="valuation-container">
-                <ValuationGraph :graphData="increases"></ValuationGraph>
+        <Loader v-if="generalInfoData == null"></Loader>
+        <div v-else>
+            <GeneralInfo :generalInfo="generalInfoData"></GeneralInfo>
+            <InvestmentContainer></InvestmentContainer>
+            <div class="relations-container">
+                <Management></Management>
+                <Owners></Owners>
             </div>
-            <InvestmentGraph :graphData="increases"></InvestmentGraph>
+            <FiscalData></FiscalData>
         </div>
-        <div class="relations-container">
-            <Management></Management>
-            <Owners></Owners>
-        </div>
-        <FiscalData></FiscalData>
     </div>
 </template>
 
@@ -23,7 +17,8 @@
 import axios from "axios";
 import { ref, onMounted } from "vue";
 const route = useRoute();
-const increases = ref(null);
+const generalInfoData = ref(null);
+let loaded = ref(false);
 
 const props = defineProps({
     loaded: Boolean
@@ -41,9 +36,12 @@ onMounted(() => {
     updateLoaded(true)
 })
 const fetchIncreases = async () => {
-    let api_url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/increases?cvr=` + route.params.id
+    let api_url = `https://virk.oaktoad.dk/api/v1/company_info?cvr=` + route.params.id
     const response = await axios.get(api_url, { auth: { username: 'enhjorningbot@gmail.com', password: 'bf7f8df76a4443f2ae6de295f5fd3340' } })
-    increases.value = response.data;
+    generalInfoData.value = response.data;
+        if (generalInfoData.value.cvr == 'Not found') {
+        return navigateTo('/404')
+    }
 };
 </script>
 
