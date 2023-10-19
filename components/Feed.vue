@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onBeforeMount, defineProps, defineEmits } from 'vue'
+import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from "axios";
 import Loader from './Loader.vue'
 import Company from './CompanyCard.vue'
