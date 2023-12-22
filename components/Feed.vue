@@ -2,7 +2,7 @@
 import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from "axios";
 import Loader from './Loader.vue'
-import Company from './CompanyCard.vue'
+import CompanyCard from './CompanyCard.vue'
 
 const props = defineProps({
   loaded: Boolean
@@ -10,6 +10,13 @@ const props = defineProps({
 
 // Define the event emitter
 const emit = defineEmits(['changeLoaded']);
+const checkboxValues = reactive({
+    investmentCompany: true,
+    holdingCompany: true,
+    realestate: true
+});
+
+console.log(checkboxValues)
 
 const updateLoaded = (value) => {
   emit('changeLoaded', value);
@@ -19,6 +26,18 @@ const companiesList = ref([]);
 let loadingMore =ref(false);
 let firstLoad = true;
 let offset = 0;
+
+const handleCheckboxValuesUpdate = (updatedValues) => {
+  // Update each property in the checkboxValues object
+  for (const key in updatedValues) {
+    if (checkboxValues.hasOwnProperty(key)) {
+      checkboxValues[key] = updatedValues[key];
+    }
+  }
+  console.log(checkboxValues)
+  // You may want to perform additional actions such as refetching the company list
+  // based on the updated checkbox values or any other state updates as necessary
+};
 
 // Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
 const fetchCompanies = async (limit) => {
@@ -78,6 +97,9 @@ onBeforeMount(() => {
 <template>
     <div id="feed" class="feed-wrapper">
       <Loader v-if="!loaded"></Loader>
+      <div class="filtering-wrapper">
+        <Filtering :checkboxValues="checkboxValues" @update:checkboxValues="handleCheckboxValuesUpdate"></Filtering>
+      </div>
       <table class="table--feed" v-if="loaded">
         <thead class="feed-header">
           <tr>
@@ -90,7 +112,7 @@ onBeforeMount(() => {
         </thead> 
         <tbody class="feed-body">
           <tr v-for="company in companiesList" :key="company.name">
-              <Company :company="company"></Company>
+            <CompanyCard :company="company" :checkboxValues="checkboxValues"></CompanyCard>
           </tr>
         </tbody>
       </table>
@@ -122,6 +144,9 @@ onBeforeMount(() => {
   .col-investment,
   .col-valuation,
   .col-round{
+    text-align: right;
+  }
+  .filtering-wrapper{
     text-align: right;
   }
 
