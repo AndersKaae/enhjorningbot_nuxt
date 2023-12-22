@@ -1,7 +1,6 @@
 <script setup>
-const { company, checkboxValues } = defineProps({
+const { company } = defineProps({
   company: Object,
-  checkboxValues: Object
 });
 
 const isInvestmentCompany = computed(() => {
@@ -27,26 +26,26 @@ const isInvestmentCompany = computed(() => {
 </script>
 
 <template >
-    <td v-if="isInvestmentCompany" class="company-date">
+    <td class="company-date">
       {{ company.increases[company.increases.length - 1].validFrom }}
     </td>
-    <td v-if="isInvestmentCompany" class="company-name">
+    <td class="company-name">
       <CompanyTypeIcon :code="company.business_code"></CompanyTypeIcon>
       <a v-bind:href="'/company/' + company.cvr">{{ company.name }}</a>
     </td>
-    <td v-if="isInvestmentCompany" class="company-investment" data-label="Investment">
+    <td class="company-investment" data-label="Investment">
       <div class="values">
         <span class="denomination">DKK</span>
         <span class="amount">{{ company.increases[company.increases.length - 1].investment.toLocaleString() }}</span>
       </div>
     </td>
-    <td v-if="isInvestmentCompany" class="company-valuation" data-label="Valuation">
+    <td class="company-valuation" data-label="Valuation">
       <div class="values">
         <span class="denomination">DKK</span>
         <span class="amount">{{ company.increases[company.increases.length - 1].valuation.toLocaleString() }}</span>
       </div>
     </td>
-    <td v-if="isInvestmentCompany" class="company-round" data-label="Round">
+    <td class="company-round" data-label="Round">
       <div class="values">
         <span class="amount">{{ company.increases.length - 1 }}</span><br>
       </div>

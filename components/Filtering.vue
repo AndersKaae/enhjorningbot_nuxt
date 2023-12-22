@@ -12,7 +12,7 @@
                     :checked="checkboxValues.holdingCompany" 
                     @change="updateValue('holdingCompany', $event.target.checked)"
                 />
-                <label for="holding">Holding company</label>
+                <label for="holding">Holding companies</label>
             </div>
             <div class="check-item">
                 <input 
@@ -65,7 +65,7 @@ function updateValue(key, value) {
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    margin: 0 0.5em;
+    margin: 0 0.5em 0.5em;
     padding: 0.5em 1em;
     text-align: center;
     text-decoration: none;

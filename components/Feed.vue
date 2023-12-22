@@ -16,8 +16,6 @@ const checkboxValues = reactive({
     realestate: true
 });
 
-console.log(checkboxValues)
-
 const updateLoaded = (value) => {
   emit('changeLoaded', value);
 };
@@ -34,10 +32,32 @@ const handleCheckboxValuesUpdate = (updatedValues) => {
       checkboxValues[key] = updatedValues[key];
     }
   }
-  console.log(checkboxValues)
-  // You may want to perform additional actions such as refetching the company list
-  // based on the updated checkbox values or any other state updates as necessary
+  let hideList = []
+  if (checkboxValues.realestate == false) {
+    hideList.push(64)
+    hideList.push(65)
+    hideList.push(66)
+  }
+  if (checkboxValues.holdingCompany == false) {
+    hideList.push(68)
+    hideList.push(69)
+  }  
 };
+
+const filteredCompaniesList = computed(() => {
+  let hideList = [];
+  if (!checkboxValues.realestate) {
+    hideList.push(64, 65, 66);
+  }
+  if (!checkboxValues.holdingCompany) {
+    hideList.push(68, 69);
+  }
+
+  return companiesList.value.filter(company => {
+    let code_int = Number(String(company.business_code).substring(0, 2));
+    return !hideList.includes(code_int);
+  });
+});
 
 // Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
 const fetchCompanies = async (limit) => {
@@ -97,7 +117,7 @@ onBeforeMount(() => {
 <template>
     <div id="feed" class="feed-wrapper">
       <Loader v-if="!loaded"></Loader>
-      <div class="filtering-wrapper">
+      <div v-if="loaded" class="filtering-wrapper">
         <Filtering :checkboxValues="checkboxValues" @update:checkboxValues="handleCheckboxValuesUpdate"></Filtering>
       </div>
       <table class="table--feed" v-if="loaded">
@@ -111,8 +131,8 @@ onBeforeMount(() => {
           </tr>
         </thead> 
         <tbody class="feed-body">
-          <tr v-for="company in companiesList" :key="company.name">
-            <CompanyCard :company="company" :checkboxValues="checkboxValues"></CompanyCard>
+          <tr v-for="company in filteredCompaniesList" :key="company.name">
+            <CompanyCard :company="company"></CompanyCard>
           </tr>
         </tbody>
       </table>
