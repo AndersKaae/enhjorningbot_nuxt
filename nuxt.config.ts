@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['nuxt-simple-sitemap'],
+  modules: ['nuxt-simple-sitemap',
+            '@zadigetvoltaire/nuxt-gtm'],
   sitemap: {
     // automatically chunk into multiple sitemaps
     sitemaps: true,
@@ -13,9 +14,7 @@ export default defineNuxtConfig({
     '~/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
   ],
-  runtimeConfig: {
-    public: {
-      gtagId: 'GTM-KJXRVZZP',
-    }
+  gtm: {
+    id: 'GTM-KJXRVZZP',
   }
 })  
