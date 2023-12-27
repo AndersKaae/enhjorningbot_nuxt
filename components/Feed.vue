@@ -33,12 +33,12 @@ const handleCheckboxValuesUpdate = (updatedValues) => {
     }
   }
   let hideList = []
-  if (checkboxValues.realestate == false) {
+  if (checkboxValues.holdingCompany == false) {
     hideList.push(64)
     hideList.push(65)
     hideList.push(66)
   }
-  if (checkboxValues.holdingCompany == false) {
+  if (checkboxValues.realestate == false) {
     hideList.push(68)
     hideList.push(69)
   }  
@@ -46,10 +46,10 @@ const handleCheckboxValuesUpdate = (updatedValues) => {
 
 const filteredCompaniesList = computed(() => {
   let hideList = [];
-  if (!checkboxValues.realestate) {
+  if (!checkboxValues.holdingCompany) {
     hideList.push(64, 65, 66);
   }
-  if (!checkboxValues.holdingCompany) {
+  if (!checkboxValues.realestate) {
     hideList.push(68, 69);
   }
 
