@@ -29,12 +29,14 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <img v-if="!loaded" src="../assets/loader.gif" alt="Loading..."/>
+  <video autoplay muted loop playsinline>
+    <source src="../assets/loader.webm" type="video/webm">
+  </video>
   <p class="loader-text">{{ loaderText }}</p>
 </template>
 
 <style scoped>
-  img {
+  img, video {
     height: 100px;
     width: auto;
     display: block;
