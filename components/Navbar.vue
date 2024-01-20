@@ -31,6 +31,9 @@
     text-align: center;
     padding: 1.25rem;
     margin-bottom: 20px;
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
   }
 
   .site-logo {
