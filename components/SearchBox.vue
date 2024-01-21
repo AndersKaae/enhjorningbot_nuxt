@@ -1,121 +1,171 @@
 <template>
-<div class="search-wrappper">
-    <input v-model="message" placeholder="Company name" class="search-input"/>
-    <span
-      v-if="message != ''"
-      class="btn--clear-search-input"
-      v-on:click="clearSearchInput()"
-      >×</span>
+  <div class="search-wrappper">
+    <input v-model="message" placeholder="Company name" class="search-input" />
+
+    <!-- Spinner Element inside search box -->
+    <div v-if="loading" class="spinner"></div>
+
+    <span v-if="message != ''" class="btn--clear-search-input" v-on:click="clearSearchInput()">×</span>
+
+    <!-- Results or No Results Message -->
     <div v-if="searchResult.length > 0" class="results-box">
-        <div v-for="company in searchResult" :key="company.name" class="result-item">
-            <a class="result-link" :href="/company/+ company.cvr">
-              {{ company.name }}
-            </a>
-        </div>
+      <div v-for="company in searchResult" :key="company.name" class="result-item">
+        <a class="result-link" :href="'/company/' + company.cvr">
+          {{ company.name }}
+        </a>
+      </div>
     </div>
-</div>
+    <div v-if="message != '' && !loading && searchResult.length === 0" class="results-box">
+      <div class="result-item">
+        No company found.
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import axios from "axios";
+import { debounce } from "lodash";
 
-let message = ref("")
-let searchResult = ref([])
-let loading = ref(false)
+let message = ref("");
+let searchResult = ref([]);
+let loading = ref(false);
 
-watch(message, (name) => {
-  if (name.length > 2 && loading.value == false) {
-    loading.value = true
-    FetchSearchResult(name)
+const debouncedFetchSearchResult = debounce((name) => {
+  if (name.length > 2) {
+    loading.value = true;
+    FetchSearchResult(name);
   }
-  if (name.length == 0)
-  {
-    searchResult.value = []
-  }
-})
+}, 500); // 500 ms delay
 
-function clearSearchInput(){
-  this.message = "";
+watch(message, (newValue) => {
+  if (newValue.length == 0) {
+    searchResult.value = [];
+    loading.value = false;
+  } else {
+    debouncedFetchSearchResult(newValue);
+  }
+});
+
+function clearSearchInput() {
+  message.value = "";
 }
 
 const FetchSearchResult = async (name) => {
-  let url = `https://virk.oaktoad.dk/api/v1/search?query=${name}`
-  const response = await axios.get(url, {auth: {username: 'enhjorningbot@gmail.com',password: 'bf7f8df76a4443f2ae6de295f5fd3340'}})  
-  console.log(url)
-  // save response.data.result to searchResult
-    searchResult.value = response.data.result
-    loading.value = false
-}
+  let url = `https://virk.oaktoad.dk/api/v1/search?query=${name}`;
+  try {
+    const response = await axios.get(url);
+    searchResult.value = response.data.result;
+  } catch (error) {
+    // Handle the error appropriately
+    console.error("Error fetching search results:", error);
+  } finally {
+    loading.value = false;
+  }
+};
 </script>
 
 <style>
-  .result-link{
-      text-decoration: none;
-      color: black;
+.search-wrappper {
+  position: relative;
+  /* other styles... */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #09f;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  right: 35px;
+  /* Adjust this value based on the size of your search box */
+  transform: translateY(-50%);
+}
+
+@keyframes spin {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
   }
 
-  .result-item:hover{
-      background-color: #f9eff9;
-      cursor: pointer;
+  100% {
+    transform: translateY(-50%) rotate(360deg);
   }
+}
 
-  .result-item{
-      padding: 0.5rem;
-      border-bottom: 1px solid #ddd;
-      font-size: 0.9rem;
-  }
+.result-link {
+  text-decoration: none;
+  color: black;
+}
 
-  .result-item:last-child{
-    border-bottom: none;
-  }
+.result-item:hover {
+  background-color: #f9eff9;
+  cursor: pointer;
+}
 
-  .results-box{
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      padding: 0.5rem;
-      margin-top: 0.5rem;
-      text-align: left;
-      position: absolute;
-      z-index: 9;
-      background-color: #fff;
-      width: 100%;
-  }
+.result-item {
+  padding: 0.5rem;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+}
 
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.results-box {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  text-align: left;
+  position: absolute;
+  z-index: 9;
+  background-color: #fff;
+  width: 100%;
+}
+
+.search-wrappper {
+  height: 100%;
+  margin-bottom: 2rem;
+  position: relative;
+  width: 300px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f3f3f3;
+}
+
+.btn--clear-search-input {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  font-size: 24px;
+  color: #888;
+}
+
+.btn--clear-search-input:hover {
+  color: #222;
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
   .search-wrappper {
-      height: 100%;
-      margin-bottom: 2rem;
-      position: relative;
-      width: 300px;
-      margin-top: auto;
-      margin-bottom: auto;
-      margin-left: auto;
-      margin-right: auto;
-  }
-  .search-input{
-    width: 100%;
-    padding: 0.75rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ddd;
+    margin-bottom: 2rem;
   }
 
-  .btn--clear-search-input{
-    position: absolute;
-    top: 5px;
-    right: 15px;
-    font-size: 24px;
-    color: #888;
+  .results-box {
+    width: 100%;
   }
-  .btn--clear-search-input:hover{
-    color: #222;
-    cursor: pointer;
-  }
-  @media (max-width: 640px) {
-    .search-wrappper {
-      margin-bottom: 2rem;
-    }
-    .results-box{
-      width: 100%;
-    }
-  }
-</style>
+}</style>
