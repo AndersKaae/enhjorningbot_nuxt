@@ -25,7 +25,7 @@
 
 <script setup>
 import axios from "axios";
-import { debounce } from "lodash";
+import debounce from 'lodash/debounce';
 
 let message = ref("");
 let searchResult = ref([]);
