@@ -3,7 +3,7 @@
         <div class="company-total-rounds">
             <div>
                 <span >
-                    <span v-if="increases != undefined" class="amount">{{ increases.increases.length - 1 }}</span>
+                    <span v-if="increases != undefined && increases.increases.length > 0" class="amount">{{ increases.increases.length - 1 }}</span>
                     <span v-else class="amount">0</span>
                 </span>
             </div>
@@ -29,6 +29,7 @@ const formattedFunding = computed(() => {
 });
 
 const totalInvestment = () => {
+    console.log(props.increases);
     let total = 0;
     if (!props.increases || !props.increases.increases) return total; // Check for potential undefined values
 

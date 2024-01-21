@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(increase, index) in graphData.increases">
+                    <tr v-for="(increase, index) in graphData.increases" :key="increase.id || index">
                         <td>{{index+1}}</td>
                         <td>{{ increase.validFrom}}</td>
                         <td class="valuation">
