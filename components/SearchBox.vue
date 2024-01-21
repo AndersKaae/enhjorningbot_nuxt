@@ -1,6 +1,6 @@
 <template>
   <div class="search-wrappper">
-    <input v-model="message" placeholder="Company name" class="search-input" />
+    <input v-model="message" placeholder="Seach for a company" class="search-input" />
 
     <!-- Spinner Element inside search box -->
     <div v-if="loading" class="spinner"></div>
@@ -126,12 +126,11 @@ const FetchSearchResult = async (name) => {
   background-color: #fff;
   width: 100%;
 }
-
 .search-wrappper {
   height: 100%;
   margin-bottom: 2rem;
   position: relative;
-  width: 300px;
+  width: 500px;
   margin-top: auto;
   margin-bottom: auto;
   margin-left: auto;
@@ -142,9 +141,14 @@ const FetchSearchResult = async (name) => {
   width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
-  border-radius: 5px;
+  border-radius: 20px;
   border: 1px solid #ddd;
   background-color: #f3f3f3;
+  padding-left: 34px; /* Add padding to make space for the icon */
+  background-image: url('magnifying-glass-solid2.svg');
+  background-position: 10px center; /* Position the icon */
+  background-repeat: no-repeat; /* Prevent the icon from repeating */
+  background-size: 16px; /* Adjust the size of the icon */
 }
 
 .btn--clear-search-input {
@@ -163,6 +167,8 @@ const FetchSearchResult = async (name) => {
 @media (max-width: 640px) {
   .search-wrappper {
     margin-bottom: 2rem;
+    width: 300px;
+
   }
 
   .results-box {
