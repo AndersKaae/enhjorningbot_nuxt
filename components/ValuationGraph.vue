@@ -58,8 +58,8 @@ const getDates = (graphData) => {
         if (graphData.increases[i].type != 'decreased') {
             chartData.value.labels.push(graphData.increases[i].validFrom);
         }
-        if (i == 0) {
-            chartData.value.datasets[0].data.push(graphData.increases[i].capital);
+        if (graphData.increases[i].type == 'initial_capital') {
+            chartData.value.datasets[0].data.push(graphData.increases[i].valuation);
         } else {
             if (graphData.increases[i].type != 'decreased'){
                 chartData.value.datasets[0].data.push(graphData.increases[i].valuation);

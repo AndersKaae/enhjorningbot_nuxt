@@ -116,9 +116,9 @@ let activeTab = ref('chart');
 
 const populateValues = (graphData) => {
     // The first entry is not an increase, but the start capital
-    chartData.value.datasets[0].data.push(graphData.increases[0].capital)
+    //chartData.value.datasets[0].data.push(graphData.increases[0].capital)
     // Then we loop over the rest of the data
-    for (let i = 1; i < graphData.increases.length; i++) {
+    for (let i = 0; i < graphData.increases.length; i++) {
         //console.log('--')
         for (let j = 0; j < chartData.value.datasets.length; j++) {
             //console.log('Chart: ' + chartData.value.datasets[j].label)
