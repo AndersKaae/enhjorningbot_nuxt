@@ -145,7 +145,7 @@ const FetchSearchResult = async (name) => {
   border: 1px solid #ddd;
   background-color: #f3f3f3;
   padding-left: 34px; /* Add padding to make space for the icon */
-  background-image: url('magnifying-glass-solid2.svg');
+  background-image: url('/magnifying-glass-solid2.svg');
   background-position: 10px center; /* Position the icon */
   background-repeat: no-repeat; /* Prevent the icon from repeating */
   background-size: 16px; /* Adjust the size of the icon */
