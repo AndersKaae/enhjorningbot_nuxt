@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>Top Investor</h1>
+        <h1>Top Investors</h1>
         <p>Most active investors in the past 24 months.</p>
         <div v-if="!topData">
             <Loader></Loader>
