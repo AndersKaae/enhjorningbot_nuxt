@@ -9,7 +9,7 @@
         <a href="/" class="nav-button"><img class="nav-img" src="/startup.png"> Companies</a>
       </div>
       <div>
-        <a href="/top_investor" class="nav-button"><img class="nav-img" src="/angel-investor.png">Top 100 Investors</a>
+        <a href="/top_investors" class="nav-button"><img class="nav-img" src="/angel-investor.png">Top 100 Investors</a>
       </div>
     </div>
     <div class="search-container">
