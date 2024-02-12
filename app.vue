@@ -13,6 +13,14 @@ const updateLoaded = (value) => {
   loaded.value = value;
 };
 
+onMounted(() => {
+  document.addEventListener('topInvestorsFetched', (event) => {
+    console.log('Fetched top investors:', event.detail);
+    // Update your component's state or props as necessary
+    loaded.value = true; // Update loaded state if required
+  });
+});
+
 useSeoMeta({
   title: 'Enhjørning.bot',
   ogTitle: 'Enhjørning.bot',
