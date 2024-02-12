@@ -4,8 +4,7 @@ export default defineNuxtPlugin(nuxtApp => {
       try {
         const response = await fetch('https://virk.oaktoad.dk/api/v1/top_investors');
         const data = await response.json();
-  
-        console.log(data)
+        //console.log(data)
         // If using Vuex to store the data
         // If using an event to communicate with components
         if (typeof window !== 'undefined') {
