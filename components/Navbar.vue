@@ -54,7 +54,6 @@
   filter: saturate(100%);
 }
 
-.
 .search-container {
   order: 2;
 }
