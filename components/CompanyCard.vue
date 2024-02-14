@@ -47,7 +47,7 @@ const isInvestmentCompany = computed(() => {
     </td>
     <td class="company-round" data-label="Round">
       <div class="values">
-        <span class="amount">{{ company.increases.length - 1 }}</span><br>
+        <span class="amount">{{ company.number_increases }}</span><br>
       </div>
     </td>
 </template>
