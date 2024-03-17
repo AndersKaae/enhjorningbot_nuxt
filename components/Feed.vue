@@ -165,6 +165,7 @@ onBeforeMount(() => {
   .col-date,
   .col-company{
     text-align: left;
+    min-width: 110px;
   }
 
   .col-investment,
