@@ -61,6 +61,7 @@ const filteredCompaniesList = computed(() => {
 
 // Function that feches the data from the API appends it to pokemons constant and console.log the list of pokemons
 const fetchCompanies = async (limit) => {
+try {
   //console.log('Fetching companies')
   let url = `https://enhjorning.oaktoad.dk/api/v1/enhjorning/feed?offset=${offset}&limit=${limit}&filtered=true`
   const response = await axios.get(url, {auth: {username: 'enhjorningbot@gmail.com',password: 'bf7f8df76a4443f2ae6de295f5fd3340'}})  
@@ -76,6 +77,11 @@ const fetchCompanies = async (limit) => {
   }
 }
   firstLoad = false;
+} catch (error) {
+ console.error('Error fetching companies:', error);
+    // Redirect the user to an error page
+    window.location.href = '/error500'; 
+}
 }
 
 // Call the function in onMounted
