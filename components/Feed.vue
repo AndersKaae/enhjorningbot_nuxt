@@ -80,7 +80,7 @@ try {
 } catch (error) {
  console.error('Error fetching companies:', error);
     // Redirect the user to an error page
-    window.location.href = '/error500'; 
+    window.location.href = '/500'; 
 }
 }
 
