@@ -2,7 +2,7 @@
     <div v-if="generalInfo != ''" class="info-box">
         <h1 class="company-name">{{ generalInfo.name }}</h1>
         <span class="company-info-item">CVR-no.: <strong>{{ generalInfo.cvr }}</strong></span>
-        <span class="company-info-item">Founded: <strong>{{ generalInfo.start }}</strong></span>
+        <span class="company-info-item">Founded: <strong>{{ generalInfo.start.split(' ')[0] }}</strong></span>
         <span class="company-info-item">Industry: <strong>{{ generalInfo.branchekode }}</strong></span>
         <template v-if="generalInfo.Website != null">
             <span class="company-info-item">Website: <strong>{{ generalInfo.Website }}</strong></span>
