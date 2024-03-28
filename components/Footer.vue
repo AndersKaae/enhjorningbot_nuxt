@@ -9,21 +9,21 @@ const props = defineProps({
 
 const footerHeight = ref(0)
 
-onMounted(() => {
-  const footer = document.querySelector('.site-footer')
-  footerHeight.value = footer.offsetHeight
-  footer.style.position = 'fixed'
-  footer.style.bottom = '0'
-})
-
 watch(
   () => props.loaded,
-  () => {
-    const footer = document.querySelector('.site-footer')
-    footer.style.position = ''
-    footer.style.bottom = ''
+  (newVal) => {
+    const footer = document.querySelector('.site-footer');
+    if (newVal) {
+      // If content is loaded, adjust the footer's style as needed
+      footer.style.position = 'relative'; // Change to 'relative' or another value as needed
+      footer.style.bottom = 'initial'; // Reset to default or another value as needed
+    } else {
+      // If content is not loaded, you can revert to the original fixed positioning
+      footer.style.position = 'fixed';
+      footer.style.bottom = '0';
+    }
   }
-)
+);
 
 </script>
 
@@ -63,6 +63,8 @@ watch(
     padding: 4rem;
     text-align: center;
     width: 100%;
+    position: fixed;
+    bottom: 0;
   }
   .site-footer p{
     max-width: 100%;

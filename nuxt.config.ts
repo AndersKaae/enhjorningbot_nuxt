@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/sitemap',
-            '@zadigetvoltaire/nuxt-gtm'],
+            '@zadigetvoltaire/nuxt-gtm',
+            '@sidebase/nuxt-auth'],
   plugins: [
               '~/plugins/fetchTopInvestors.js'
             ],
@@ -19,5 +20,18 @@ export default defineNuxtConfig({
   ],
   gtm: {
     id: 'GTM-KJXRVZZP',
+  },
+  auth: {
+    baseURL: 'https://enhjorning.oaktoad.dk/api/v1',
+    provider: {
+      type: 'local',
+      endpoints: {
+        signIn: { path: '/login', method: 'post' },
+        signOut: { path: '/logout', method: 'post' },
+        signUp: { path: '/register', method: 'post' },
+        getSession: { path: '/session', method: 'get' }
+      },
+      token: { signInResponseTokenPointer: '/token/accessToken' },
+    }
   }
 }) 
