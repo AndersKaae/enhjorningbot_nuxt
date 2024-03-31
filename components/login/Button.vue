@@ -5,8 +5,8 @@
     </div>
   </div>
   <div v-else>
-    <div class='login_button'>
-    <router-link to="/login">Login</router-link>
+    <div class='login_button' @click="showModal()">
+      <span>Login</span>
     </div>
   </div>
 </template>
@@ -17,8 +17,15 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+const emit = defineEmits(['update:show-login-modal'])
+
 const logout = () => {
   signOut({ callbackUrl: '/' })
+}
+
+const showModal = () => {
+  console.log("Emitting show-login-modal");
+  emit('update:show-login-modal', true)
 }
 
 </script>

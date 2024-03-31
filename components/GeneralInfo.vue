@@ -7,7 +7,7 @@
         <template v-if="generalInfo.Website != null">
             <span class="company-info-item">Website: <strong>{{ generalInfo.Website }}</strong></span>
         </template>
-        <span class="company-info-item">Adress: <strong>{{ generalInfo.adress }}</strong></span>
+        <span class="company-info-item">Address: <strong>{{ generalInfo.adress }}</strong></span>
     </div>
 </template>
 

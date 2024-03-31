@@ -1,34 +1,34 @@
 <template>
-    <div>
-        <div v-if="management != ''">
-            <div class="management-container">
-                <div v-if="management.result.board.length > 0" class="board-container">
-                    <h2>Board:</h2>
-                    <div v-for="member in management.result.board" :key="member.name">
-                        <span v-if="member.role == 'FORMAND'">
-                            <p>{{ member.name }} (Chairman)</p>
-                        </span>
-                    </div>
-                    <div v-for="member in management.result.board" :key="member.name">
-                        <span v-if="member.role == 'BESTYRELSESMEDLEM'">
-                            <p>{{ member.name }}</p>
-                        </span>
-                    </div>
-                </div>
-                <div class="excutive-container">
-                    <h2>Executives:</h2>
-                    <div v-for="member in management.result.management" :key="member.name">
-                        <span v-if="member.role == 'ADM. DIR.'">
-                            <p>{{ member.name }}</p>
-                        </span>
-                        <span v-if="member.role == 'DIREKTØR'">
-                            <p>{{ member.name }}</p>
-                        </span>
-                    </div>
-                </div>
-            </div>
+  <div>
+    <div v-if="management != ''">
+      <div class="management-container">
+        <div v-if="management.result.board.length > 0" class="board-container">
+          <h2>Board:</h2>
+          <div v-for="member in management.result.board" :key="member.name">
+            <span v-if="member.role == 'FORMAND'">
+              <p>{{ member.name }} (Chairman)</p>
+            </span>
+          </div>
+          <div v-for="member in management.result.board" :key="member.name">
+            <span v-if="member.role == 'BESTYRELSESMEDLEM'">
+              <p>{{ member.name }}</p>
+            </span>
+          </div>
         </div>
+        <div class="excutive-container">
+          <h2>Executives:</h2>
+          <div v-for="member in management.result.management" :key="member.name">
+            <span v-if="member.role == 'ADM. DIR.'">
+              <p>{{ member.name }}</p>
+            </span>
+            <span v-if="member.role == 'DIREKTØR'">
+              <p>{{ member.name }}</p>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <style scoped>

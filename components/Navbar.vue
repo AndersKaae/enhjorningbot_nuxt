@@ -1,9 +1,16 @@
-<script setup></script>
+<script setup>
+  const show_login_modal = ref(false);
+
+  const handleLoginModalVisibility = (newValue) => {
+  console.log("Handling show-login-modal event with value:", newValue);
+  show_login_modal.value = newValue;
+}
+</script>
 
 <template>
   <header class="site-header">
     <a href="/" class="site-logo" title="To the frontpage"><span class="emoji">🦄</span>Enhjørning.bot<span
-        class="beta">beta</span></a>
+                                                                 class="beta">beta</span></a>
     <div class="nav-buttons-container">
       <div>
         <a href="/" class="nav-button"><img class="nav-img" src="/startup.png"> Companies</a>
@@ -16,25 +23,26 @@
       <SearchBox></SearchBox>
     </div>
     <div class="login-container">
-      <LoginElement></LoginElement>
+      <LoginButton @update:show-login-modal="handleLoginModalVisibility"></LoginButton>
     </div>
   </header>
+  <LoginModal @update:show-login-modal="handleLoginModalVisibility" :show_login_modal="show_login_modal"></LoginModal>
 </template>
 
 <style scoped>
 .nav-button {
-  display: inline-flex; /* Makes the link a flex container to align its children */
-  align-items: center; /* Centers the items vertically */
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
-  color: inherit; /* Inherits the color from parent or explicitly set as needed */
-  padding: 5px 10px; /* Adjust padding as needed */
-  border-radius: 5px; /* Optional: for styled buttons */
-  transition: background-color 0.3s; /* Optional: for hover effect */
+  color: inherit; 
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s; 
 }
 .nav-buttons-container {
   display: flex;
-  justify-content: flex-start; /* Aligns items to the start of the container */
-  gap: 20px; /* Adds some space between the buttons */
+  justify-content: flex-start; 
+  gap: 20px; 
 }
 .nav-img {
   width: 30px;
@@ -112,32 +120,32 @@
   display: flex;
 }
 
-@media (max-width: 640px) {
-  .login-container {
-    display: none;
-  }
-  .header-nav {
-    margin-bottom: 1rem;
-    order: 1;
-    padding: 0;
-  }
+      @media (max-width: 640px) {
+        .login-container {
+          display: none;
+        }
+        .header-nav {
+          margin-bottom: 1rem;
+          order: 1;
+          padding: 0;
+        }
 
-  .site-header {
-    flex-direction: column;
-    padding: 1rem 0 0;
-  }
+        .site-header {
+          flex-direction: column;
+          padding: 1rem 0 0;
+        }
 
-  .site-logo {
-    margin-bottom: 1rem;
-  }
+        .site-logo {
+          margin-bottom: 1rem;
+        }
 
-  .search-container {
-    width: 80%;
-  }
-  .nav-buttons-container {
-    justify-content: center;
-    padding-top: 10px;
-    padding-bottom: 20px;
-  }
-}
+        .search-container {
+          width: 80%;
+        }
+        .nav-buttons-container {
+          justify-content: center;
+          padding-top: 10px;
+          padding-bottom: 20px;
+        }
+      }
 </style>
