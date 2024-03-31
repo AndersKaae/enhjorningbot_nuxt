@@ -8,6 +8,9 @@
   const userExists = ref(null)
   const password_match = ref(true)
   const valid_email = ref(true)
+  const password_incorrect = ref(false)
+
+  const emit = defineEmits(['update:show-login-modal'])
 
   async function checkIfUserExists() {
   spinner.value = true
@@ -76,10 +79,15 @@
     }
     try {
       // This sends a POST request to the `auth.provider.endpoints.signIn` endpoint with `credentials` as the body
-      await signIn(credentials, { callbackUrl: '/protected' })
+      await signIn(credentials, { callbackUrl: '/' })
+      emit('update:show-login-modal', true)
     } catch (error) {
-      // console.error(error) <--- This is a little bit weird. The signIn function expects a token and when it does not get ii, it throws an error. It is unclear to me how to distinquic between potetial real errors and wrong credentials.
+    // This is what is returned if the password is incorrect 
+    if (error.message.includes('Invalid reference token')) {
+      password_incorrect.value = true
+    } else { 
       login_failed.value = true
+    }
     }
     finally {
       spinner.value = false
@@ -100,10 +108,15 @@
   <div v-if="userExists == true">
     <label for="password">Password:</label>
     <input v-model="password" type="password" id="password"/>
-    <button @click="signInWithCredentials()">
-      <span v-if="spinner">Loading...</span>
-      <span v-else>Sign In</span>
-    </button>
+    <div id="forgotten_pass">
+      <a href="/forgot_password">Forgot your password?</a>
+    </div>
+    <div>
+      <button @click="signInWithCredentials()">
+        <span v-if="spinner">Loading...</span>
+        <span v-else>Sign In</span>
+      </button>
+    </div>
   </div>
   <div v-if="userExists == false">
     <label for="new_password">New Password:</label>
@@ -118,6 +131,7 @@
     <div class="error-msg" v-if="userExists == true">User already exists!</div>
   </div>
   <div class="error-msg" v-if="login_failed">Login failed!</div>
+  <div class="error-msg" v-if="password_incorrect">Password incorrect!</div>
 </template>
 
 <style scoped>
@@ -125,6 +139,16 @@
   color: red;
   text-align: center;
   margin-top: 15px;
+}
+
+#forgotten_pass {
+  padding-bottom: 10px;
+}
+
+#forgotten_pass a {
+  text-decoration: none;
+  font-size: 12px;
+  color: black;
 }
 
 h1 {

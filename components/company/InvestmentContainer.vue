@@ -2,9 +2,9 @@
     <CompanyStats :increases="increases"></CompanyStats>
     <div v-if="increases">
         <div class="valuation-container">
-            <ValuationGraph :graphData="increases"></ValuationGraph>
+            <CompanyValuationGraph :graphData="increases"></CompanyValuationGraph>
         </div>
-        <InvestmentGraph :graphData="increases"></InvestmentGraph>
+        <CompanyInvestmentGraph :graphData="increases"></CompanyInvestmentGraph>
     </div>
 </template>
 

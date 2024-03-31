@@ -2,13 +2,13 @@
     <div class="container">
         <Loader v-if="generalInfoData == null"></Loader>
         <div v-else>
-            <GeneralInfo :generalInfo="generalInfoData"></GeneralInfo>
-            <InvestmentContainer></InvestmentContainer>
+            <CompanyBasicInfo :generalInfo="generalInfoData"></CompanyBasicInfo>
+            <CompanyInvestmentContainer></CompanyInvestmentContainer>
             <div class="relations-container">
-                <Management></Management>
-                <Owners></Owners>
+                <CompanyManagement></CompanyManagement>
+                <CompanyOwners></CompanyOwners>
             </div>
-            <FiscalData></FiscalData>
+            <CompanyFiscal></CompanyFiscal>
         </div>
     </div>
 </template>

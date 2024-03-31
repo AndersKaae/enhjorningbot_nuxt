@@ -3,19 +3,23 @@
     <div class="modal-content" @click.stop>
       <button @click="closeModal" class="close-button">&times;</button>
       <slot>
-      <LoginForm></LoginForm>
+      <LoginForm @update:show-login-modal="handleLoginModalVisibility"></LoginForm>
       </slot>
     </div>
   </div>
 </template>
 
 <script setup>
-  import { defineProps, defineEmits } from 'vue'
 const props = defineProps({
   show_login_modal: Boolean
 })
 
 const emit = defineEmits(['update:show-login-modal'])
+
+const handleLoginModalVisibility = () => {
+  emit('update:show-login-modal', false)
+  console.log("Closing upon successful login");
+}
 
 const closeModal = () => {
   console.log("Emitting show-login-modal");
