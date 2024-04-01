@@ -24,7 +24,6 @@ const logout = () => {
 }
 
 const showModal = () => {
-  console.log("Emitting show-login-modal");
   emit('update:show-login-modal', true)
 }
 

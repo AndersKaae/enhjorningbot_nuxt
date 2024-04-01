@@ -2,7 +2,6 @@
   const show_login_modal = ref(false);
 
   const handleLoginModalVisibility = (newValue) => {
-  console.log("Handling show-login-modal event with value:", newValue);
   show_login_modal.value = newValue;
 }
 </script>

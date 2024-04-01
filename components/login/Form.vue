@@ -9,6 +9,10 @@
   const password_match = ref(true)
   const valid_email = ref(true)
   const password_incorrect = ref(false)
+  const forgot_password = ref(false)
+  const token_created = ref(null)
+  const account_created = ref(false)
+  const marketing_consent = ref(false)
 
   const emit = defineEmits(['update:show-login-modal'])
 
@@ -41,6 +45,7 @@
     const credentials = {
       username: email.value,
       password: password.value,
+      marketing_consent: marketing_consent.value
       }
 
     // Check if the passwords match 
@@ -58,13 +63,13 @@
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: email.value, password: password.value })
+        body: JSON.stringify({ email: email.value, password: password.value, marketing_consent: marketing_consent.value})
       })
       const data = await response.json()
       let created_status = data.created
       spinner.value = false
       if (created_status=='user_created') {
-       signInWithCredentials()
+        account_created.value = true
       }
       if (created_status=='email_exists') {
         userExists.value = true
@@ -93,62 +98,124 @@
       spinner.value = false
     }
   }
+
+  async function enableForgotPassword() {
+    forgot_password.value = true
+    password_incorrect.value = false
+  }
+
+ async function initiatePasswordReset() {
+    spinner.value = true
+    const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/initiate_reset_password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email.value })
+    })
+    const data = await response.json()
+    spinner.value = false
+    console.log(data)
+    token_created.value = data.status
+    }
+
 </script>
 
 <template>
-  <h1>Login or create a user:</h1>
-  <label for="email">Email:</label>
-  <input v-model="email" type="email" id="email"/>
+  <h1 v-if="forgot_password == false && account_created == false">Login or create a user:</h1>
+  <h1 v-if="forgot_password == true && account_created == false">Forgotten password:</h1>
+  <h1 v-if="account_created">🎉 Account created! 🎉</h1>
+  <div v-if="token_created != 'success' && account_created != true">
+    <label for="email">Email:</label>
+    <input v-model="email" type="email" id="email"/>
+  </div>
   <span v-if="!valid_email" class="error-msg">Invalid email!</span>
   <!-- Check if the user exists in the database -->
-  <button v-if="userExists==null" @click="checkIfUserExists()">
+  <button v-if="userExists==null" @click="checkIfUserExists()" class="main-button">
     <span v-if="spinner">Loading...</span>
     <span v-else>Sign In</span>
   </button>
-  <div v-if="userExists == true">
+  <div v-if="userExists == true && forgot_password == false">
     <label for="password">Password:</label>
     <input v-model="password" type="password" id="password"/>
-    <div id="forgotten_pass">
-      <a href="/forgot_password">Forgot your password?</a>
+    <div @click="enableForgotPassword()" id="forgotten_pass">
+      Forgot your password?
     </div>
     <div>
-      <button @click="signInWithCredentials()">
+      <button @click="signInWithCredentials()" class="main-button">
         <span v-if="spinner">Loading...</span>
         <span v-else>Sign In</span>
       </button>
     </div>
   </div>
-  <div v-if="userExists == false">
+  <!-- PASSWORD REST -->
+  <div v-if="forgot_password == true && token_created != 'success'" class="buttons-container">
+    <button @click="forgot_password = false" class="secondary-button">
+      <span>Back</span>
+    </button>
+    <button @click="initiatePasswordReset()" class="main-button">
+      <span v-if="spinner">Loading...</span>
+      <span v-else>Reset password</span>
+    </button>
+    <span v-if="token_created != null && token_created != 'success'" class="error-msg">System Error!</span>
+  </div>
+  <div v-if="token_created == 'success'">Password reset initiated! Please check you email.</div>
+
+  <!-- CREATE USER -->
+  <div v-if="userExists == false && account_created == false">
     <label for="new_password">New Password:</label>
     <input v-model="password" type="password" id="new_password"/>
     <label for="repeat_password">Repeat Password:</label>
     <input v-model="repeat_password" type="password" id="repeat_password"/>
     <span v-if="!password_match" class="error-msg">Passwords do not match!</span>
-    <button @click="createUser()">
+    <input v-model="marketing_consent" type="checkbox" id="consent">
+    <label for="consent">Keep me posted on new updates!</label>
+    <button @click="createUser()" class="main-button">
       <span v-if="spinner">Loading...</span>
       <span v-else>Create User</span>
     </button>
     <div class="error-msg" v-if="userExists == true">User already exists!</div>
   </div>
+  <div v-if="account_created">
+    Congratulations! Your new account was just created. You can now login.
+    <div class="success-img">
+      <img src="/account_created.webp" alt="Account created" />
+    </div>
+  </div>
+
+  <!-- ERROR MESSAGES -->
   <div class="error-msg" v-if="login_failed">Login failed!</div>
   <div class="error-msg" v-if="password_incorrect">Password incorrect!</div>
 </template>
 
 <style scoped>
-.error-msg {
-  color: red;
-  text-align: center;
-  margin-top: 15px;
+#consent,
+label[for="consent"] {
+  display: inline-block;
+  width: auto;
+  padding-left: 10px;
+}
+
+.success-img {
+  width: 100%;
+  max-width: 400px;
+}
+
+img {
+  width: 100%;
+  max-width: 400px;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: start; /* Adjust this to center, space-between, etc., as needed */
+  gap: 20px;
 }
 
 #forgotten_pass {
   padding-bottom: 10px;
-}
-
-#forgotten_pass a {
-  text-decoration: none;
   font-size: 12px;
-  color: black;
+  cursor: pointer;
 }
 
 h1 {
@@ -167,10 +234,22 @@ input {
   box-sizing: border-box; /* Prevents the input from extending beyond its container */
 }
 
-button {
+.main-button {
   width: 100%;
   padding: 10px;
   background-color: #f8eeff; 
+  color: #A020F0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  border: 1px solid #A020F0;
+}
+
+.secondary-button {
+  width: 50%;
+  padding: 10px;
+  background-color: white; 
   color: #A020F0;
   border: none;
   border-radius: 5px;
