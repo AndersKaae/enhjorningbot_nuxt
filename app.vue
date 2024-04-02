@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar></Navbar>
+    <NavbarBar></NavbarBar>
     <NuxtPage :loaded="loaded" @change-loaded="updateLoaded"></NuxtPage>
     <Footer :loaded="loaded"></Footer>
   </div>

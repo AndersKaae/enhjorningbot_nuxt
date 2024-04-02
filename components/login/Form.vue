@@ -14,6 +14,8 @@
   const account_created = ref(false)
   const marketing_consent = ref(false)
 
+  const login_or_crate_user = ref(true)
+
   const emit = defineEmits(['update:show-login-modal'])
 
   async function checkIfUserExists() {
@@ -36,6 +38,7 @@
   })
   const data = await response.json()
   userExists.value = data.exists
+  login_or_crate_user.value = false
   spinner.value = false
 
   }
@@ -115,67 +118,82 @@
     })
     const data = await response.json()
     spinner.value = false
-    console.log(data)
     token_created.value = data.status
     }
 
 </script>
 
 <template>
-  <h1 v-if="forgot_password == false && account_created == false">Login or create a user:</h1>
-  <h1 v-if="forgot_password == true && account_created == false">Forgotten password:</h1>
   <h1 v-if="account_created">🎉 Account created! 🎉</h1>
-  <div v-if="token_created != 'success' && account_created != true">
+  <!-- SELECT LOGIN OR CREATE USER -->
+  <div v-if="login_or_crate_user == true">
+    <h1>Login or create a user:</h1>
     <label for="email">Email:</label>
     <input v-model="email" type="email" id="email"/>
+    <!-- Check if the user exists in the database -->
+    <button v-if="userExists==null" @click="checkIfUserExists()" class="main-button">
+      <span v-if="spinner">Loading...</span>
+      <span v-else>Sign In</span>
+    </button>
+    <span v-if="!valid_email" class="error-msg">Invalid email!</span>
   </div>
-  <span v-if="!valid_email" class="error-msg">Invalid email!</span>
-  <!-- Check if the user exists in the database -->
-  <button v-if="userExists==null" @click="checkIfUserExists()" class="main-button">
-    <span v-if="spinner">Loading...</span>
-    <span v-else>Sign In</span>
-  </button>
+  <!-- PASSWORD LOGIN EXISTING USER -->
   <div v-if="userExists == true && forgot_password == false">
+    <h1>Login to your account:</h1>
+    <label for="email">Email:</label>
+    <input v-model="email" type="email" id="email"/>
     <label for="password">Password:</label>
     <input v-model="password" type="password" id="password"/>
     <div @click="enableForgotPassword()" id="forgotten_pass">
       Forgot your password?
     </div>
-    <div>
       <button @click="signInWithCredentials()" class="main-button">
         <span v-if="spinner">Loading...</span>
         <span v-else>Sign In</span>
       </button>
+  </div>
+  <!-- PASSWORD RESET -->
+  <div v-if="forgot_password == true && token_created == null">
+    <h1>Forgotten password:</h1>
+    <label for="email">Email:</label>
+    <input v-model="email" type="email" id="email"/>
+    <div class="buttons-container">
+      <button @click="forgot_password = false" class="secondary-button">
+        <span>Back</span>
+      </button>
+      <button @click="initiatePasswordReset()" class="main-button">
+        <span v-if="spinner">Loading...</span>
+        <span v-else>Reset password</span>
+      </button>
     </div>
-  </div>
-  <!-- PASSWORD REST -->
-  <div v-if="forgot_password == true && token_created != 'success'" class="buttons-container">
-    <button @click="forgot_password = false" class="secondary-button">
-      <span>Back</span>
-    </button>
-    <button @click="initiatePasswordReset()" class="main-button">
-      <span v-if="spinner">Loading...</span>
-      <span v-else>Reset password</span>
-    </button>
     <span v-if="token_created != null && token_created != 'success'" class="error-msg">System Error!</span>
+    <div v-if="token_created == 'success'">Password reset initiated! Please check you email.</div>
   </div>
-  <div v-if="token_created == 'success'">Password reset initiated! Please check you email.</div>
-
+  <!-- PASSSWORD RESET CONFIRMATION SCREEN -->
+  <div v-if="token_created == 'success'">
+    <h1>Password reset initiated!</h1>
+    <p>Please check your email for the password reset link.</p>
+    <p>The email should arrive in a few minutes. If it has not, please check your spam folder.</p>
+  </div>
   <!-- CREATE USER -->
   <div v-if="userExists == false && account_created == false">
+    <h1>Create a new user:</h1>
+    <label for="email">Email:</label>
+    <input v-model="email" type="email" id="email"/>
     <label for="new_password">New Password:</label>
     <input v-model="password" type="password" id="new_password"/>
     <label for="repeat_password">Repeat Password:</label>
     <input v-model="repeat_password" type="password" id="repeat_password"/>
-    <span v-if="!password_match" class="error-msg">Passwords do not match!</span>
     <input v-model="marketing_consent" type="checkbox" id="consent">
     <label for="consent">Keep me posted on new updates!</label>
     <button @click="createUser()" class="main-button">
       <span v-if="spinner">Loading...</span>
       <span v-else>Create User</span>
     </button>
+    <span v-if="!password_match" class="error-msg">Passwords do not match!</span>
     <div class="error-msg" v-if="userExists == true">User already exists!</div>
   </div>
+  <!-- ACCOUNT CREATED -->
   <div v-if="account_created">
     Congratulations! Your new account was just created. You can now login.
     <div class="success-img">
@@ -208,7 +226,7 @@ img {
 
 .buttons-container {
   display: flex;
-  justify-content: start; /* Adjust this to center, space-between, etc., as needed */
+  justify-content: flex-start; /* Adjust this to center, space-between, etc., as needed */
   gap: 20px;
 }
 

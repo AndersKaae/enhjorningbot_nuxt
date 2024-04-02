@@ -1,5 +1,5 @@
 <template>
-    <Navbar></Navbar>
+    <NavbarBar></NavbarBar>
     <PageNotFound></PageNotFound>
     <Footer></Footer>
 </template>
