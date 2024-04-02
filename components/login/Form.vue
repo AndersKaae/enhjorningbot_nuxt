@@ -7,6 +7,7 @@
   const login_failed = ref(false)
   const userExists = ref(null)
   const password_match = ref(true)
+  const password_complex_enough = ref(true)
   const valid_email = ref(true)
   const password_incorrect = ref(false)
   const forgot_password = ref(false)
@@ -56,9 +57,14 @@
       password_match.value = false
       spinner.value = false
       return
-    } else {
-      password_match.value = true
     }
+    // Check if the password is complex password_complex_enough
+    if (password.value.length < 8) {
+      password_complex_enough.value = false
+      spinner.value = false
+      return
+    }
+
 
 
       const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/create_user', {
@@ -124,7 +130,6 @@
 </script>
 
 <template>
-  <h1 v-if="account_created">🎉 Account created! 🎉</h1>
   <!-- SELECT LOGIN OR CREATE USER -->
   <div v-if="login_or_crate_user == true">
     <h1>Login or create a user:</h1>
@@ -147,10 +152,10 @@
     <div @click="enableForgotPassword()" id="forgotten_pass">
       Forgot your password?
     </div>
-      <button @click="signInWithCredentials()" class="main-button">
-        <span v-if="spinner">Loading...</span>
-        <span v-else>Sign In</span>
-      </button>
+    <button @click="signInWithCredentials()" class="main-button">
+      <span v-if="spinner">Loading...</span>
+      <span v-else>Sign In</span>
+    </button>
   </div>
   <!-- PASSWORD RESET -->
   <div v-if="forgot_password == true && token_created == null">
@@ -192,9 +197,11 @@
     </button>
     <span v-if="!password_match" class="error-msg">Passwords do not match!</span>
     <div class="error-msg" v-if="userExists == true">User already exists!</div>
+    <div class="error-msg" v-if="!password_complex_enough">Password must be at least 8 characters long!</div>
   </div>
   <!-- ACCOUNT CREATED -->
   <div v-if="account_created">
+  <h1>🎉 Account created! 🎉</h1>
     Congratulations! Your new account was just created. You can now login.
     <div class="success-img">
       <img src="/account_created.webp" alt="Account created" />
@@ -216,12 +223,13 @@ label[for="consent"] {
 
 .success-img {
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
+  margin: 0 auto;
 }
 
 img {
   width: 100%;
-  max-width: 400px;
+  max-width: 300px;
 }
 
 .buttons-container {
