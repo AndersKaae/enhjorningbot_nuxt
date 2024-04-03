@@ -23,7 +23,7 @@ export default defineNuxtConfig({
   },
   auth: {
     isEnabled: true,
-    baseURL: 'https://enhjorning.oaktoad.dk/api/v1',
+    baseURL: 'https://api.enhjorning.bot/api/v1',
     provider: {
       type: 'local',
       endpoints: {
