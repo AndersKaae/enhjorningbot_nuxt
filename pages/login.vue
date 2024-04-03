@@ -1,4 +1,0 @@
-<template>
-  <LoginModal></LoginModal>
-</template>
-

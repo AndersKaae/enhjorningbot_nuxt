@@ -17,6 +17,8 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
+console.log(status.value)
+
 const emit = defineEmits(['update:show-login-modal'])
 
 const logout = () => {

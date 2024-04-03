@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     id: 'GTM-KJXRVZZP',
   },
   auth: {
+    isEnabled: true,
     baseURL: 'https://enhjorning.oaktoad.dk/api/v1',
     provider: {
       type: 'local',
