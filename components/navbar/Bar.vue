@@ -29,10 +29,8 @@ const emitLoginClick = () => {
         <NavbarSearchBox></NavbarSearchBox>
       </div>
       <div class="login-container">
-        <LoginButton @update:show-login-modal="handleLoginModalVisibility"></LoginButton>
       </div>
   </header>
-  <LoginModal @update:show-login-modal="handleLoginModalVisibility" :show_login_modal="show_login_modal"></LoginModal>
 </template>
 
 <style scoped>
