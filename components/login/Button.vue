@@ -12,12 +12,9 @@
 </template>
 
 <script setup>
-const { status, signOut, user } = useAuth()
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
-console.log(status.value)
 
 const emit = defineEmits(['update:show-login-modal'])
 

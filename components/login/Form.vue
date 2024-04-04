@@ -2,7 +2,6 @@
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
-  const { signIn } = useAuth()
   const spinner = ref(false)
   const login_failed = ref(false)
   const userExists = ref(null)
@@ -14,6 +13,8 @@
   const token_created = ref(null)
   const account_created = ref(false)
   const marketing_consent = ref(false)
+
+import { useCookie } from '#app'
 
   const login_or_crate_user = ref(true)
 
@@ -64,9 +65,6 @@
       spinner.value = false
       return
     }
-
-
-
       const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/create_user', {
         method: 'POST',
         headers: {
@@ -85,28 +83,39 @@
       }
   }
 
-  async function signInWithCredentials() {
-    spinner.value = true
-    const credentials = {
-      username: email.value,
-      password: password.value
-    }
-    try {
-      // This sends a POST request to the `auth.provider.endpoints.signIn` endpoint with `credentials` as the body
-      await signIn(credentials, { callbackUrl: '/' })
-      emit('update:show-login-modal', true)
-    } catch (error) {
-    // This is what is returned if the password is incorrect 
-    if (error.message.includes('Invalid reference token')) {
-      password_incorrect.value = true
-    } else { 
-      login_failed.value = true
-    }
-    }
-    finally {
-      spinner.value = false
-    }
+const signInWithCredentials = async () => {
+  spinner.value = true
+  const credentials = {
+    username: email.value,
+    password: password.value,
   }
+  try {
+    const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(credentials),
+    })
+    if (!response.ok) {
+      throw new Error('Login failed')
+    }
+    const data = await response.json()
+
+    if (data.access_token) {
+      // Use the useCookie composable to manage cookies
+      const tokenCookie = useCookie('access_token')
+      tokenCookie.value = data.access_token
+    }
+    // Handle login success, e.g., redirect or load user data
+  } catch (error) {
+    console.error('Error during login:', error)
+    // Handle login error, e.g., show a message to the user
+  } finally {
+    spinner.value = false
+  }
+}
+
 
   async function enableForgotPassword() {
     forgot_password.value = true
@@ -201,7 +210,7 @@
   </div>
   <!-- ACCOUNT CREATED -->
   <div v-if="account_created">
-  <h1>🎉 Account created! 🎉</h1>
+    <h1>🎉 Account created! 🎉</h1>
     Congratulations! Your new account was just created. You can now login.
     <div class="success-img">
       <img src="/account_created.webp" alt="Account created" />

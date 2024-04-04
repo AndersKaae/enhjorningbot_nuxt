@@ -25,6 +25,7 @@
     "@nuxtjs/sitemap": "^5.1.0",
     "axios": "^1.6.7",
     "chart.js": "^4.3.3",
+    "cookie-universal-nuxt": "^2.2.2",
     "update-browserslist-db": "^1.0.13",
     "vue-chartjs": "^5.2.0"
   }

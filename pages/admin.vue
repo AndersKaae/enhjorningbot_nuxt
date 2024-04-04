@@ -1,19 +1,29 @@
 <script setup>
+import { ref } from 'vue'
 
-async function get_session_data() {
-  const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/session', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include' // Include cookies with the request
-  })
-  const data = await response.json()
-  console.log(data)
+const userProfile = ref(null)
+const error = ref(null)
 
-}</script>
+const getSession = async () => {
+  try {
+    const data = await $fetch('https://api.enhjorning.bot/api/v1/session', {
+      method: 'GET',
+      credentials: 'include', // Ensure cookies are sent with the request
+    })
+
+    if (!data) {
+      throw new Error('Session invalid or expired')
+    }
+
+    userProfile.value = data
+  } catch (err) {
+    error.value = err.message
+    console.error('Error verifying session:', err.message)
+  }
+}
+</script>
 
 <template>
-  <button @click="get_session_data">Get session data</button>
-
+  <button @click="getSession">Get session data</button>
 </template>
+
