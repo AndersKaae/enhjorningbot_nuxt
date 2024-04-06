@@ -22,8 +22,8 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      env: '',
-      apiUrl: ''
+      env: 'production',
+      apiUrl: 'https://api.enhjorning.bot',
     }
 }
 }) 
