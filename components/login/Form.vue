@@ -14,11 +14,14 @@
   const account_created = ref(false)
   const marketing_consent = ref(false)
 
-import { useCookie } from '#app'
+  import { useCookie } from '#app'
 
   const login_or_crate_user = ref(true)
 
   const emit = defineEmits(['update:show-login-modal'])
+
+  const url = 'https://api.enhjorning.bot'
+  //const url = 'http://localhost:43690'
 
   async function checkIfUserExists() {
   spinner.value = true
@@ -31,7 +34,7 @@ import { useCookie } from '#app'
     valid_email.value = true;
   }
   // post email to endpoint and console.log the response 
-  const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/check_user_exists', {
+  const response = await fetch(url + '/api/v1/check_user_exists', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -65,7 +68,7 @@ import { useCookie } from '#app'
       spinner.value = false
       return
     }
-      const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/create_user', {
+      const response = await fetch('/api/v1/create_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -90,7 +93,7 @@ const signInWithCredentials = async () => {
     password: password.value,
   }
   try {
-    const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/login', {
+    const response = await fetch(url + '/api/v1/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -104,8 +107,15 @@ const signInWithCredentials = async () => {
 
     if (data.access_token) {
       // Use the useCookie composable to manage cookies
-      const tokenCookie = useCookie('access_token')
+      const tokenCookie = useCookie('access_token', {
+        path: '/',
+        domain: '.enhjorning.bot',
+        secure: true,
+        sameSite: 'None',
+
+      })
       tokenCookie.value = data.access_token
+      emit('update:show-login-modal', false)
     }
     // Handle login success, e.g., redirect or load user data
   } catch (error) {
@@ -124,7 +134,7 @@ const signInWithCredentials = async () => {
 
  async function initiatePasswordReset() {
     spinner.value = true
-    const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/initiate_reset_password', {
+    const response = await fetch('/api/v1/initiate_reset_password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
