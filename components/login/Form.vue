@@ -1,4 +1,5 @@
 <script setup>
+  const config = useRuntimeConfig()
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
@@ -19,9 +20,7 @@
   const login_or_crate_user = ref(true)
 
   const emit = defineEmits(['update:show-login-modal'])
-
-  const url = 'https://api.enhjorning.bot'
-  //const url = 'http://localhost:43690'
+  console.log('Runtime config:', config.public)
 
   async function checkIfUserExists() {
   spinner.value = true
@@ -34,7 +33,7 @@
     valid_email.value = true;
   }
   // post email to endpoint and console.log the response 
-  const response = await fetch(url + '/api/v1/check_user_exists', {
+  const response = await fetch(config.public.apiUrl + '/api/v1/check_user_exists', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -93,7 +92,7 @@ const signInWithCredentials = async () => {
     password: password.value,
   }
   try {
-    const response = await fetch(url + '/api/v1/login', {
+    const response = await fetch(config.public.apiUrl + '/api/v1/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -106,14 +105,20 @@ const signInWithCredentials = async () => {
     const data = await response.json()
 
     if (data.access_token) {
+      console.log(config.public)
+      let tokenCookie;
       // Use the useCookie composable to manage cookies
-      const tokenCookie = useCookie('access_token', {
+      if (config.public.env == 'development') {
+        tokenCookie = useCookie('access_token')
+      } 
+      if (config.public.env == 'production') {
+        tokenCookie2 = useCookie('access_token', {
         path: '/',
         domain: '.enhjorning.bot',
         secure: true,
         sameSite: 'None',
-
       })
+      }
       tokenCookie.value = data.access_token
       emit('update:show-login-modal', false)
     }
@@ -134,7 +139,7 @@ const signInWithCredentials = async () => {
 
  async function initiatePasswordReset() {
     spinner.value = true
-    const response = await fetch('/api/v1/initiate_reset_password', {
+    const response = await fetch(config.public.apiUrl + '/api/v1/initiate_reset_password', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

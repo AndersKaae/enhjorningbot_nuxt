@@ -1,16 +1,14 @@
 <script setup>
 import { ref } from 'vue'
+const config = useRuntimeConfig()
+
 
 const userProfile = ref(null)
 const error = ref(null)
 
-const url = 'https://api.enhjorning.bot'
-//const url = 'http://localhost:43690'
-
-
 const getSession = async () => {
   try {
-    const data = await $fetch(url + '/api/v1/session', {
+    const data = await $fetch(config.public.apiUrl + '/api/v1/session', {
       method: 'GET',
       credentials: 'include', // Ensure cookies are sent with the request
     });

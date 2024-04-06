@@ -19,5 +19,11 @@ export default defineNuxtConfig({
   ],
   gtm: {
     id: 'GTM-KJXRVZZP',
-  } 
+  },
+  runtimeConfig: {
+    public: {
+      env: '',
+      apiUrl: ''
+    }
+}
 }) 
