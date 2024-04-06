@@ -112,7 +112,7 @@ const signInWithCredentials = async () => {
         tokenCookie = useCookie('access_token')
       } 
       if (config.public.env == 'production') {
-        tokenCookie2 = useCookie('access_token', {
+        tokenCookie = useCookie('access_token', {
         path: '/',
         domain: '.enhjorning.bot',
         secure: true,
