@@ -1,6 +1,6 @@
 <template>
-  <div v-if="status === 'authenticated'">
-    <div class='login_button' @click="logout()">
+  <div v-if="isLoggedIn == true">
+    <div class='login_button' @click="logout_session()">
       <span>Logout</span>
     </div>
   </div>
@@ -13,18 +13,36 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 
-const emit = defineEmits(['update:show-login-modal'])
+const { isLoggedIn, login, logout } = useAuth()
 
-const logout = () => {
-  signOut({ callbackUrl: '/' })
-}
+const emit = defineEmits(['update:show-login-modal'])
 
 const showModal = () => {
   emit('update:show-login-modal', true)
 }
+const logout_session = () => {
+  // Function to set a cookie
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
+  // Delete 'access_token' cookie by setting its expiration to a past date
+  setCookie('access_token', '', -1);
+
+  // Assuming `logout` is a function that updates the application state to reflect that the user is logged out
+  logout();
+
+  // Assuming `router` is available in the scope, redirect to the homepage
+  router.push('/');
+};
 
 </script>
 

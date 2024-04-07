@@ -1,5 +1,6 @@
 <script setup>
   const config = useRuntimeConfig()
+  const { isLoggedIn, login, logout } = useAuth()
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
@@ -20,7 +21,6 @@
   const login_or_crate_user = ref(true)
 
   const emit = defineEmits(['update:show-login-modal'])
-  console.log('Runtime config:', config.public)
 
   async function checkIfUserExists() {
   spinner.value = true
@@ -120,6 +120,7 @@ const signInWithCredentials = async () => {
       })
       }
       tokenCookie.value = data.access_token
+      login()
       emit('update:show-login-modal', false)
     }
     // Handle login success, e.g., redirect or load user data

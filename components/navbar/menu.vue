@@ -1,4 +1,3 @@
-
 <script setup>
 const showLoginModal = ref(false);
 const isMenuVisible = ref(false); // New ref for menu visibility
@@ -17,7 +16,7 @@ const emitLoginClick = () => {
 
 <template>  
   <!-- Added @click directive to toggle the menu -->
-  <font-awesome-icon class="burgermenu" icon="fa-solid fa-bars" @click="toggleMenu" />
+  <font-awesome-icon class="burgermenu" icon="fa-solid fa-bars" @click="toggleMenu" /> 
 
   <div class="menu" v-if="isMenuVisible">
     <div>
