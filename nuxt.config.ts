@@ -12,7 +12,13 @@ export default defineNuxtConfig({
   site: {
     url: 'https://www.enhjorning.bot',
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    }
+  },
   css: [
     '~/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
@@ -26,4 +32,4 @@ export default defineNuxtConfig({
       apiUrl: 'https://api.enhjorning.bot',
     }
 }
-}) 
+})

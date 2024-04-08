@@ -14,9 +14,9 @@
 </template>
 
 <script setup>
-  const config = useRuntimeConfig()
+const config = useRuntimeConfig()
 
-const { isLoggedIn, isLoading } = useAuth(config)
+const { isLoggedIn, isLoading, logOutUser } = useAuth(config)
 
 const emit = defineEmits(['update:show-login-modal'])
 const showModal = () => {
@@ -36,8 +36,8 @@ const logout_session = () => {
 
   // Delete 'access_token' cookie by setting its expiration to a past date
   setCookie('access_token', '', -1);
+  logOutUser();
   // Assuming `router` is available in the scope, redirect to the homepage
-  naviateTo('/');
 };
 
 </script>

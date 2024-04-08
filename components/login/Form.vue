@@ -1,6 +1,6 @@
 <script setup>
   const config = useRuntimeConfig()
-  const { isLoggedIn } = useAuth()
+  const { isLoggedIn, logInUser } = useAuth()
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
@@ -121,7 +121,11 @@ const signInWithCredentials = async () => {
       })
       }
       tokenCookie.value = data.access_token
-      emit('update:show-login-modal', false)
+      logInUser();
+      // TODO: Get the button to update without a page refresh
+      const router = useRouter();
+      router.go();
+      emit('update:show-login-modal', false);
     }
     // Handle login success, e.g., redirect or load user data
   } catch (error) {
