@@ -1,19 +1,45 @@
 <script setup>
+import { ref } from 'vue'
+const config = useRuntimeConfig()
 
-async function get_session_data() {
-  const response = await fetch('https://enhjorning.oaktoad.dk/api/v1/session', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include' // Include cookies with the request
-  })
-  const data = await response.json()
-  console.log(data)
 
-}</script>
+const userProfile = ref(null)
+const error = ref(null)
+
+const getSession = async () => {
+  try {
+    const data = await $fetch(config.public.apiUrl + '/api/v1/session', {
+      method: 'GET',
+      credentials: 'include', // Ensure cookies are sent with the request
+    });
+
+    if (!data) {
+      throw new Error('Session invalid or expired');
+    }
+
+    userProfile.value = data;
+  } catch (err) {
+    // Assuming $fetch provides an error object similar to the Fetch API
+    if (err.response) { // Check if the error object has a response property
+      const { status, statusText } = err.response;
+      error.value = `Error ${status}: ${statusText}`;
+      console.error(`Error verifying session: ${status} ${statusText}`, err);
+      // Optionally, inspect and log the response body for more details
+      err.response.json().then(body => {
+        console.error('Response body:', body);
+      }).catch(jsonError => {
+        console.error('Error parsing response body:', jsonError);
+      });
+    } else {
+      // Handle non-HTTP errors (e.g., network problems, invalid JSON)
+      error.value = 'An error occurred while verifying the session.';
+      console.error('Error verifying session:', err.message, err);
+    }
+  }
+};
+</script>
 
 <template>
-  <button @click="get_session_data">Get session data</button>
-
+  <button @click="getSession">Get session data</button>
 </template>
+

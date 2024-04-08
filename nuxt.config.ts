@@ -1,11 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/sitemap',
-            '@zadigetvoltaire/nuxt-gtm',
-            '@sidebase/nuxt-auth'],
+    '@zadigetvoltaire/nuxt-gtm'],
   plugins: [
-              '~/plugins/fetchTopInvestors.js'
-            ],
+    '~/plugins/fetchTopInvestors.js',
+  ],
   sitemap: {
     // automatically chunk into multiple sitemaps
     sitemaps: true,
@@ -13,7 +12,13 @@ export default defineNuxtConfig({
   site: {
     url: 'https://www.enhjorning.bot',
   },
-  devtools: { enabled: true },
+  devtools: {
+    enabled: true,
+
+    timeline: {
+      enabled: true
+    }
+  },
   css: [
     '~/assets/css/main.css',
     '@fortawesome/fontawesome-svg-core/styles.css'
@@ -21,18 +26,10 @@ export default defineNuxtConfig({
   gtm: {
     id: 'GTM-KJXRVZZP',
   },
-  auth: {
-    isEnabled: true,
-    baseURL: 'https://api.enhjorning.bot/api/v1',
-    provider: {
-      type: 'local',
-      endpoints: {
-        signIn: { path: '/login', method: 'post' },
-        signOut: { path: '/logout', method: 'post' },
-        signUp: { path: '/register', method: 'post' },
-        getSession: { path: '/session', method: 'get' }
-      },
-      token: { signInResponseTokenPointer: '/token/accessToken' },
+  runtimeConfig: {
+    public: {
+      env: 'production',
+      apiUrl: 'https://api.enhjorning.bot',
     }
   }
-}) 
+})
