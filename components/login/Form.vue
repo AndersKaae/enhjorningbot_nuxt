@@ -1,6 +1,6 @@
 <script setup>
   const config = useRuntimeConfig()
-  const { isLoggedIn, login, logout } = useAuth()
+  const { isLoggedIn } = useAuth()
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
@@ -117,10 +117,10 @@ const signInWithCredentials = async () => {
         domain: '.enhjorning.bot',
         secure: true,
         sameSite: 'None',
+        lifetime: 60 * 60 * 24 * 1 // 1 days
       })
       }
       tokenCookie.value = data.access_token
-      login()
       emit('update:show-login-modal', false)
     }
     // Handle login success, e.g., redirect or load user data

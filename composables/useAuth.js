@@ -1,45 +1,53 @@
-import { ref, watchEffect } from 'vue';
+import { ref, onMounted } from 'vue';
 
-// Function to get a cookie by name
-function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-}
+export default function useAuth(config) {
+  const isLoggedIn = ref(false);
+  const isLoading = ref(true);
+  const userProfile = ref(null);
+  const error = ref('');
 
-// Function to set a cookie
-function setCookie(name, value, days) {
-  let expires = "";
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    expires = "; expires=" + date.toUTCString();
-  }
-  document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-}
+  const getSession = async () => {
+    isLoading.value = true;
+    try {
+      const data = await $fetch(config.public.apiUrl + '/api/v1/session', {
+        method: 'GET',
+        credentials: 'include', // Ensures cookies are sent with the request
+      });
 
-// Initialize isLoggedIn from cookies or default to false
-const isLoggedIn = ref(getCookie('isLoggedIn') === 'true');
+      if (!data) {
+        throw new Error('Session invalid or expired');
+      }
 
-// Watch for changes in isLoggedIn and update cookies accordingly
-watchEffect(() => {
-  setCookie('isLoggedIn', isLoggedIn.value, 7); // Expires in 7 days
-});
+      isLoggedIn.value = true;
+      userProfile.value = data;
+    } catch (err) {
+      isLoggedIn.value = false;
+      userProfile.value = null;
 
-// Function to log the user in
-const login = () => {
-  isLoggedIn.value = true;
-};
-
-// Function to log the user out
-const logout = () => {
-  isLoggedIn.value = false;
-};
-
-export const useAuth = () => {
-  return {
-    isLoggedIn,
-    login,
-    logout,
+      if (err.response) { // Check if the error object has a response property
+        const { status, statusText } = err.response;
+        error.value = `Error ${status}: ${statusText}`;
+        console.error(`Error verifying session: ${status} ${statusText}`, err);
+        // Optionally, inspect and log the response body for more details
+        err.response.json().then(body => {
+          console.error('Response body:', body);
+        }).catch(jsonError => {
+          console.error('Error parsing response body:', jsonError);
+        });
+      } else {
+        // Handle non-HTTP errors (e.g., network problems, invalid JSON)
+        error.value = 'An error occurred while verifying the session.';
+        console.error('Error verifying session:', err.message, err);
+      }
+    } finally {
+      isLoading.value = false;
+    }
   };
-};
+
+  onMounted(() => {
+    getSession();
+  });
+
+  // Exporting reactive state, user profile data, and any error message
+  return { isLoggedIn, isLoading, userProfile, error };
+}

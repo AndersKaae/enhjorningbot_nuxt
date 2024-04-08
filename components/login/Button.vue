@@ -1,24 +1,24 @@
 <template>
-  <div v-if="isLoggedIn == true">
-    <div class='login_button' @click="logout_session()">
-      <span>Logout</span>
+  <div v-if)="isLoading == false">
+    <div v-if="isLoggedIn == true">
+      <div class='login_button' @click="logout_session()">
+        <span>Logout</span>
+      </div>
     </div>
-  </div>
-  <div v-else>
-    <div class='login_button' @click="showModal()">
-      <span>Login</span>
+    <div v-else>
+      <div class='login_button' @click="showModal()">
+        <span>Login</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
-const router = useRouter()
+  const config = useRuntimeConfig()
 
-const { isLoggedIn, login, logout } = useAuth()
+const { isLoggedIn, isLoading } = useAuth(config)
 
 const emit = defineEmits(['update:show-login-modal'])
-
 const showModal = () => {
   emit('update:show-login-modal', true)
 }
@@ -41,24 +41,24 @@ const logout_session = () => {
   logout();
 
   // Assuming `router` is available in the scope, redirect to the homepage
-  router.push('/');
+  naviateTo('/');
 };
 
 </script>
 
 <style scoped>
-  .userIcon {
-    background-color: #A020F0;
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: white;
-  }
+.userIcon {
+  background-color: #A020F0;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
   .login_button {
     border: 1px solid #A020F0;
     padding: 10px;

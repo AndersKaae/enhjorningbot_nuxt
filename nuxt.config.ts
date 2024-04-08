@@ -3,7 +3,7 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/sitemap',
             '@zadigetvoltaire/nuxt-gtm'],
   plugins: [
-              '~/plugins/fetchTopInvestors.js'
+              '~/plugins/fetchTopInvestors.js',
             ],
   sitemap: {
     // automatically chunk into multiple sitemaps
