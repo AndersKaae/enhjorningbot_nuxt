@@ -50,6 +50,7 @@ const closeModal = () => {
   animation-name: animatetop;
   animation-duration: 0.4s;
   min-height: 200px;
+  width: 500px;
 }
 
   @keyframes animatetop {
