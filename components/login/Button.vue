@@ -36,10 +36,6 @@ const logout_session = () => {
 
   // Delete 'access_token' cookie by setting its expiration to a past date
   setCookie('access_token', '', -1);
-
-  // Assuming `logout` is a function that updates the application state to reflect that the user is logged out
-  logout();
-
   // Assuming `router` is available in the scope, redirect to the homepage
   naviateTo('/');
 };
