@@ -67,7 +67,7 @@
       spinner.value = false
       return
     }
-      const response = await fetch('/api/v1/create_user', {
+      const response = await fetch(config.public.apiUrl + '/api/v1/create_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
