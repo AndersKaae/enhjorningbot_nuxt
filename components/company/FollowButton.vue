@@ -1,5 +1,5 @@
 <template>
-  <div class="follow-button" @click="followUser">
+  <div class="follow-button" @click="followCompany()">
     <span v-if="isLoading">
       <font-awesome-icon :icon="['fas', 'spinner']" spin-pulse />
     </span>
@@ -11,6 +11,8 @@
 </template>
 
 <script setup>
+  const { openModal } = useModal()
+
   const config = useRuntimeConfig()
   var isLoading = ref(false);
   var isFollowing = ref(false);
@@ -26,6 +28,19 @@
       isFollowing.value = true;
     }, 2000);
   }});
+
+  const followCompany = () => {
+    if (!config.public.isLoggedin) {
+      openModal()
+    }
+    else {
+      isLoading.value = true;
+      setTimeout(() => {
+        isLoading.value = false;
+        isFollowing.value = !isFollowing.value;
+      }, 2000);
+    }
+  }
 </script>
 
 <style scoped>

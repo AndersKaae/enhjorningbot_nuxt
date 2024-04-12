@@ -10,6 +10,8 @@
 </template>
 
 <script setup>
+const { isModal } = useModal()
+
 const props = defineProps({
   show_login_modal: Boolean
 })
