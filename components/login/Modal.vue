@@ -10,7 +10,12 @@
 </template>
 
 <script setup>
-const { isModal } = useModal()
+
+const  modal = useModalStore()
+
+watch(() => modal.showModal, (value) => {
+  props.show_login_modal = value
+})
 
 const props = defineProps({
   show_login_modal: Boolean

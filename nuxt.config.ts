@@ -1,7 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: ['@nuxtjs/sitemap',
-    '@zadigetvoltaire/nuxt-gtm'],
+            '@zadigetvoltaire/nuxt-gtm',
+            '@pinia/nuxt'],
+
   plugins: [
     '~/plugins/fetchTopInvestors.js',
   ],

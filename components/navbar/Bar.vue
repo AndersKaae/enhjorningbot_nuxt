@@ -1,9 +1,15 @@
 <script setup>
   const show_login_modal = ref(false);
+  const  modal = useModalStore()
+
+  watch(() => modal.showModal, (value) => {
+    show_login_modal.value = value;
+  })
+
 
   const handleLoginModalVisibility = (newValue) => {
-  show_login_modal.value = newValue;
-}
+    show_login_modal.value = newValue;
+  }
 
 const emits = defineEmits(['loginClick']);
 

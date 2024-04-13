@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-  const { openModal } = useModal()
+  const  modal = useModalStore()
 
   const config = useRuntimeConfig()
   var isLoading = ref(false);
@@ -31,7 +31,8 @@
 
   const followCompany = () => {
     if (!config.public.isLoggedin) {
-      openModal()
+      modal.openModal()
+      console.log(modal)
     }
     else {
       isLoading.value = true;
