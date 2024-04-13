@@ -1,6 +1,8 @@
 <script setup>
   const config = useRuntimeConfig()
   const { isLoggedIn, logInUser } = useAuth()
+  const  modal = useModalStore()
+
   const email = ref('')
   const password = ref('')
   const repeat_password = ref('')
@@ -19,8 +21,6 @@
   import { useCookie } from '#app'
 
   const login_or_crate_user = ref(true)
-
-  const emit = defineEmits(['update:show-login-modal'])
 
   async function checkIfUserExists() {
   spinner.value = true
@@ -125,7 +125,7 @@ const signInWithCredentials = async () => {
       // TODO: Get the button to update without a page refresh
       const router = useRouter();
       router.go();
-      emit('update:show-login-modal', false);
+      modal.closeModal()
     }
     // Handle login success, e.g., redirect or load user data
   } catch (error) {

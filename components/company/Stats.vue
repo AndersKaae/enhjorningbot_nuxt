@@ -29,7 +29,6 @@ const formattedFunding = computed(() => {
 });
 
 const totalInvestment = () => {
-    console.log(props.increases);
     let total = 0;
     if (!props.increases || !props.increases.increases) return total; // Check for potential undefined values
 

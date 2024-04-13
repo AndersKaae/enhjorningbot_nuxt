@@ -19,7 +19,6 @@
   onBeforeMount(() => {
     if (!config.public.isLoggedin) {
       isFollowing.value = false;
-      console.log(config)
     }
     else
     {
@@ -32,7 +31,6 @@
   const followCompany = () => {
     if (!config.public.isLoggedin) {
       modal.openModal()
-      console.log(modal)
     }
     else {
       isLoading.value = true;

@@ -1,17 +1,18 @@
 <script setup>
-const showLoginModal = ref(false);
+  const  modal = useModalStore()
+
 const isMenuVisible = ref(false); // New ref for menu visibility
 
 const toggleMenu = () => {
   isMenuVisible.value = !isMenuVisible.value; // Toggle the menu visibility
 }
 
-const emits = defineEmits(['loginClick']);
-
-const emitLoginClick = () => {
-  emits('loginClick', true); // Emitting 'loginClick' event with a payload if needed
+const clickLogin = () => {
+  modal.openModal(); // Open the login modal
   toggleMenu(); // Close the menu after clicking the login button
 }
+
+
 </script>
 
 <template>  
@@ -20,7 +21,7 @@ const emitLoginClick = () => {
 
   <div class="menu" v-if="isMenuVisible">
     <div>
-      <div class="login-button" @click="emitLoginClick"><img class="nav-img" src="/padlock.png">Login</div>
+      <div class="login-button" @click="clickLogin"><img class="nav-img" src="/padlock.png">Login</div>
     </div>
     <div>
       <a href="/top_investors" class="nav-button"><img class="nav-img" src="/angel-investor.png">Top 100 Investors</a>

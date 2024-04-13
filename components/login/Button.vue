@@ -1,12 +1,12 @@
 <template>
-  <div v-if)="isLoading == false">
+  <div v-if="isLoading == false">
     <div v-if="isLoggedIn == true">
       <div class='login_button' @click="logout_session()">
         <span>Logout</span>
       </div>
     </div>
     <div v-else>
-      <div class='login_button' @click="showModal()">
+      <div class='login_button' @click="modal.openModal()">
         <span>Login</span>
       </div>
     </div>
@@ -16,12 +16,10 @@
 <script setup>
 const config = useRuntimeConfig()
 
+const  modal = useModalStore()
+
 const { isLoggedIn, isLoading, logOutUser } = useAuth(config)
 
-const emit = defineEmits(['update:show-login-modal'])
-const showModal = () => {
-  emit('update:show-login-modal', true)
-}
 const logout_session = () => {
   // Function to set a cookie
   function setCookie(name, value, days) {

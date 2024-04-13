@@ -1,35 +1,22 @@
 <template>
-  <div v-if="show_login_modal" class="modal" @click.self="closeModal" tabindex="-1">
+  <div v-if="show_login_modal" class="modal" @click.self="modal.closeModal()" tabindex="-1">
     <div class="modal-content" @click.stop>
-      <button @click="closeModal" class="close-button">&times;</button>
+      <button @click="modal.closeModal()" class="close-button">&times;</button>
       <slot>
-      <LoginForm @update:show-login-modal="handleLoginModalVisibility"></LoginForm>
+        <LoginForm></LoginForm>
       </slot>
     </div>
   </div>
 </template>
 
 <script setup>
-
+const show_login_modal = ref(false);
 const  modal = useModalStore()
 
 watch(() => modal.showModal, (value) => {
-  props.show_login_modal = value
+  show_login_modal.value = value;
 })
 
-const props = defineProps({
-  show_login_modal: Boolean
-})
-
-const emit = defineEmits(['update:show-login-modal'])
-
-const handleLoginModalVisibility = () => {
-  emit('update:show-login-modal', false)
-}
-
-const closeModal = () => {
-  emit('update:show-login-modal', false)
-}
 </script>
 
 

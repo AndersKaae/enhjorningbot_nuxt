@@ -1,11 +1,4 @@
 <script setup>
-const show_login_modal = ref(false);
-const  modal = useModalStore()
-
-watch(() => modal.showModal, (value) => {
-  show_login_modal.value = value;
-})
-
 const emits = defineEmits(['loginClick']);
 
 const emitLoginClick = () => {
@@ -17,7 +10,7 @@ const emitLoginClick = () => {
   <header class="site-header">
     <a href="/" class="site-logo" title="To the frontpage"><span class="emoji">🦄</span>Enhjørning.bot<span
       class="beta">beta</span></a>
-    <NavbarMenu @loginClick="handleLoginModalVisibility"></NavbarMenu>
+    <NavbarMenu></NavbarMenu>
     <div class="nav-buttons-container">
       <div>
         <a href="/" class="nav-button"><img class="nav-img" src="/startup.png"> Companies</a>

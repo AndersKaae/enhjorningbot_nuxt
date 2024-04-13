@@ -1,18 +1,11 @@
-// stores/counter.js
 import { defineStore } from 'pinia'
-
-export const useModalStore = defineStore('modal', {
-  state: () => {
-    return { showModal: false }
-  },
-  // could also be defined as
-  // state: () => ({ count: 0 })
-  actions: {
-    openModal() {
-      this.showModal = true
-    },
-    closeModal() {
-      this.showModal = false
-    },
-  },
+export const useModalStore = defineStore('modal', () => {
+  const showModal = ref(false)
+  function openModal() {
+    showModal.value = true
+  }
+  function closeModal() {
+    showModal.value = false
+  }
+  return { showModal, openModal, closeModal }
 })
