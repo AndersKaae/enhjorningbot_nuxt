@@ -1,6 +1,6 @@
 <script setup>
 const config = useRuntimeConfig()
-const { isLoggedIn, logInUser } = useAuth()
+const { isLoggedIn, logInUser, getSession, userProfile } = useAuth()
 const  modal = useModalStore()
 
 const email = ref('')
@@ -105,23 +105,11 @@ const signInWithCredentials = async () => {
     const data = await response.json()
 
     if (data.access_token) {
-      console.log(config.public)
-      let tokenCookie;
-      // Use the useCookie composable to manage cookies
-      if (config.public.env == 'development') {
-        tokenCookie = useCookie('access_token')
-      } 
-      if (config.public.env == 'production') {
-        tokenCookie = useCookie('access_token', {
-          path: '/',
-          domain: '.enhjorning.bot',
-          secure: true,
-          sameSite: 'None',
-          lifetime: 60 * 60 * 24 * 1 // 1 days
-        })
-      }
-      tokenCookie.value = data.access_token
+      await createCookie('access_token', data.access_token);
+      await getSession();
       logInUser();
+      await createCookie('user', userProfile.value.logged_in_as);
+
       // TODO: Get the button to update without a page refresh
       const router = useRouter();
       router.go();

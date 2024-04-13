@@ -18,6 +18,7 @@ export default function useAuth(config) {
   };
 
   const getSession = async () => {
+    const config = useRuntimeConfig()
     isLoading.value = true;
     try {
       const data = await $fetch(config.public.apiUrl + '/api/v1/session', {
@@ -32,6 +33,7 @@ export default function useAuth(config) {
       isLoggedIn.value = true;
       userProfile.value = data;
     } catch (err) {
+      console.error(err);
       isLoggedIn.value = false;
       userProfile.value = null;
     } finally {
