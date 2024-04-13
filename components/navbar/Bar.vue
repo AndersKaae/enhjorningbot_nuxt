@@ -1,15 +1,10 @@
 <script setup>
-  const show_login_modal = ref(false);
-  const  modal = useModalStore()
+const show_login_modal = ref(false);
+const  modal = useModalStore()
 
-  watch(() => modal.showModal, (value) => {
-    show_login_modal.value = value;
-  })
-
-
-  const handleLoginModalVisibility = (newValue) => {
-    show_login_modal.value = newValue;
-  }
+watch(() => modal.showModal, (value) => {
+  show_login_modal.value = value;
+})
 
 const emits = defineEmits(['loginClick']);
 
@@ -21,24 +16,24 @@ const emitLoginClick = () => {
 <template>
   <header class="site-header">
     <a href="/" class="site-logo" title="To the frontpage"><span class="emoji">🦄</span>Enhjørning.bot<span
-                                                                 class="beta">beta</span></a>
-      <NavbarMenu @loginClick="handleLoginModalVisibility"></NavbarMenu>
-      <div class="nav-buttons-container">
-        <div>
-          <a href="/" class="nav-button"><img class="nav-img" src="/startup.png"> Companies</a>
-        </div>
-        <div>
-          <a href="/top_investors" class="nav-button"><img class="nav-img" src="/angel-investor.png">Top 100 Investors</a>
-        </div>
+      class="beta">beta</span></a>
+    <NavbarMenu @loginClick="handleLoginModalVisibility"></NavbarMenu>
+    <div class="nav-buttons-container">
+      <div>
+        <a href="/" class="nav-button"><img class="nav-img" src="/startup.png"> Companies</a>
       </div>
-      <div class="search-container">
-        <NavbarSearchBox></NavbarSearchBox>
+      <div>
+        <a href="/top_investors" class="nav-button"><img class="nav-img" src="/angel-investor.png">Top 100 Investors</a>
       </div>
-      <div class="login-container">
-        <LoginButton @update:show-login-modal="handleLoginModalVisibility"></LoginButton>
-      </div>
+    </div>
+    <div class="search-container">
+      <NavbarSearchBox></NavbarSearchBox>
+    </div>
+    <div class="login-container">
+      <LoginButton></LoginButton>
+    </div>
   </header>
-  <LoginModal @update:show-login-modal="handleLoginModalVisibility" :show_login_modal="show_login_modal"></LoginModal>
+  <LoginModal></LoginModal>
 </template>
 
 <style scoped>
@@ -135,47 +130,47 @@ const emitLoginClick = () => {
   display: none;
 }
 
-          @media (max-width: 640px) {
-            .login-container {
-              display: none;
-            }
-            .header-nav {
-              margin-bottom: 1rem;
-              order: 1;
-              padding: 0;
-            }
+@media (max-width: 640px) {
+  .login-container {
+    display: none;
+  }
+  .header-nav {
+    margin-bottom: 1rem;
+    order: 1;
+    padding: 0;
+  }
 
-            .site-header {
-              flex-direction: column; /* Keeps elements vertically stacked */
-              align-items: flex-start; /* Aligns items to the start (left) */
-              padding: 1rem; /* Adjust padding as needed */
-              position: relative; /* Ensures relative positioning for absolute children */
-            }
+  .site-header {
+    flex-direction: column; /* Keeps elements vertically stacked */
+    align-items: flex-start; /* Aligns items to the start (left) */
+    padding: 1rem; /* Adjust padding as needed */
+    position: relative; /* Ensures relative positioning for absolute children */
+  }
 
-            .burgermenu {
-              display: flex; /* Show the burger menu */
-              position: absolute; /* Absolute positioning relative to the site-header */
-              right: 10px; /* Aligns the burger menu to the right */
-              top: 10px; /* Positions at the top, aligned with the logo */
-              font-size: 1.5rem; /* Adjust the size of the burger menu */
-            }
+  .burgermenu {
+    display: flex; /* Show the burger menu */
+    position: absolute; /* Absolute positioning relative to the site-header */
+    right: 10px; /* Aligns the burger menu to the right */
+    top: 10px; /* Positions at the top, aligned with the logo */
+    font-size: 1.5rem; /* Adjust the size of the burger menu */
+  }
 
-            .site-logo {
-              align-self: flex-start; /* Aligns the logo to the left */
-              margin-bottom: 1rem; /* Space between logo and search bar */
-            }
+  .site-logo {
+    align-self: flex-start; /* Aligns the logo to the left */
+    margin-bottom: 1rem; /* Space between logo and search bar */
+  }
 
-            .search-container {
-              order: 3; /* Positions the search bar below the logo and burger menu */
-              width: 80%; /* Sets the width of the search bar */
-              margin: 0 auto; /* Centers the search bar horizontally */
-              display: block; /* Ensures the search container is displayed */
-            }
+  .search-container {
+    order: 3; /* Positions the search bar below the logo and burger menu */
+    width: 80%; /* Sets the width of the search bar */
+    margin: 0 auto; /* Centers the search bar horizontally */
+    display: block; /* Ensures the search container is displayed */
+  }
 
-            /* Hide nav buttons and login container on mobile */
-            .nav-buttons-container, .login-container {
-              display: none;
-            }
+  /* Hide nav buttons and login container on mobile */
+  .nav-buttons-container, .login-container {
+    display: none;
+  }
 
-          }
+}
 </style>
