@@ -12,12 +12,14 @@
 
 <script setup>
   const  modal = useModalStore()
-
   const config = useRuntimeConfig()
+  const { isLoggedIn } = useAuth(config)
+
   var isLoading = ref(false);
   var isFollowing = ref(false);
+
   onBeforeMount(() => {
-    if (!config.public.isLoggedin) {
+    if (!isLoggedIn) {
       isFollowing.value = false;
     }
     else
@@ -25,11 +27,11 @@
     setTimeout(() => {
       isLoading.value = false;
       isFollowing.value = true;
-    }, 2000);
+    }, 400);
   }});
 
   const followCompany = () => {
-    if (!config.public.isLoggedin) {
+    if (!isLoggedIn) {
       modal.openModal()
     }
     else {
@@ -37,7 +39,7 @@
       setTimeout(() => {
         isLoading.value = false;
         isFollowing.value = !isFollowing.value;
-      }, 2000);
+      }, 400);
     }
   }
 </script>

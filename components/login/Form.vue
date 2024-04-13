@@ -1,28 +1,28 @@
 <script setup>
-  const config = useRuntimeConfig()
-  const { isLoggedIn, logInUser } = useAuth()
-  const  modal = useModalStore()
+const config = useRuntimeConfig()
+const { isLoggedIn, logInUser } = useAuth()
+const  modal = useModalStore()
 
-  const email = ref('')
-  const password = ref('')
-  const repeat_password = ref('')
-  const spinner = ref(false)
-  const login_failed = ref(false)
-  const userExists = ref(null)
-  const password_match = ref(true)
-  const password_complex_enough = ref(true)
-  const valid_email = ref(true)
-  const password_incorrect = ref(false)
-  const forgot_password = ref(false)
-  const token_created = ref(null)
-  const account_created = ref(false)
-  const marketing_consent = ref(false)
+const email = ref('')
+const password = ref('')
+const repeat_password = ref('')
+const spinner = ref(false)
+const login_failed = ref(false)
+const userExists = ref(null)
+const password_match = ref(true)
+const password_complex_enough = ref(true)
+const valid_email = ref(true)
+const password_incorrect = ref(false)
+const forgot_password = ref(false)
+const token_created = ref(null)
+const account_created = ref(false)
+const marketing_consent = ref(false)
 
-  import { useCookie } from '#app'
+import { useCookie } from '#app'
 
-  const login_or_crate_user = ref(true)
+const login_or_crate_user = ref(true)
 
-  async function checkIfUserExists() {
+async function checkIfUserExists() {
   spinner.value = true
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailPattern.test(email.value)) {
@@ -45,45 +45,45 @@
   login_or_crate_user.value = false
   spinner.value = false
 
+}
+
+async function createUser() {
+  spinner.value = true
+  const credentials = {
+    username: email.value,
+    password: password.value,
+    marketing_consent: marketing_consent.value
   }
 
-  async function createUser() {
-    spinner.value = true
-    const credentials = {
-      username: email.value,
-      password: password.value,
-      marketing_consent: marketing_consent.value
-      }
-
-    // Check if the passwords match 
-    if (password.value !== repeat_password.value) {
-      password_match.value = false
-      spinner.value = false
-      return
-    }
-    // Check if the password is complex password_complex_enough
-    if (password.value.length < 8) {
-      password_complex_enough.value = false
-      spinner.value = false
-      return
-    }
-      const response = await fetch(config.public.apiUrl + '/api/v1/create_user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: email.value, password: password.value, marketing_consent: marketing_consent.value})
-      })
-      const data = await response.json()
-      let created_status = data.created
-      spinner.value = false
-      if (created_status=='user_created') {
-        account_created.value = true
-      }
-      if (created_status=='email_exists') {
-        userExists.value = true
-      }
+  // Check if the passwords match 
+  if (password.value !== repeat_password.value) {
+    password_match.value = false
+    spinner.value = false
+    return
   }
+  // Check if the password is complex password_complex_enough
+  if (password.value.length < 8) {
+    password_complex_enough.value = false
+    spinner.value = false
+    return
+  }
+  const response = await fetch(config.public.apiUrl + '/api/v1/create_user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email: email.value, password: password.value, marketing_consent: marketing_consent.value})
+  })
+  const data = await response.json()
+  let created_status = data.created
+  spinner.value = false
+  if (created_status=='user_created') {
+    account_created.value = true
+  }
+  if (created_status=='email_exists') {
+    userExists.value = true
+  }
+}
 
 const signInWithCredentials = async () => {
   spinner.value = true
@@ -113,12 +113,12 @@ const signInWithCredentials = async () => {
       } 
       if (config.public.env == 'production') {
         tokenCookie = useCookie('access_token', {
-        path: '/',
-        domain: '.enhjorning.bot',
-        secure: true,
-        sameSite: 'None',
-        lifetime: 60 * 60 * 24 * 1 // 1 days
-      })
+          path: '/',
+          domain: '.enhjorning.bot',
+          secure: true,
+          sameSite: 'None',
+          lifetime: 60 * 60 * 24 * 1 // 1 days
+        })
       }
       tokenCookie.value = data.access_token
       logInUser();
@@ -135,26 +135,43 @@ const signInWithCredentials = async () => {
     spinner.value = false
   }
 }
-
-
-  async function enableForgotPassword() {
-    forgot_password.value = true
-    password_incorrect.value = false
-  }
-
- async function initiatePasswordReset() {
-    spinner.value = true
-    const response = await fetch(config.public.apiUrl + '/api/v1/initiate_reset_password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: email.value })
+async function createCookie(cookieName, cookieValue) {
+  let tokenCookie;
+  // Use the useCookie composable to manage cookies
+  if (config.public.env == 'development') {
+    tokenCookie = useCookie(cookieName)
+  } 
+  if (config.public.env == 'production') {
+    tokenCookie = useCookie(cookieName, {
+      path: '/',
+      domain: '.enhjorning.bot',
+      secure: true,
+      sameSite: 'None',
+      lifetime: 60 * 60 * 24 * 1 // 1 days
     })
-    const data = await response.json()
-    spinner.value = false
-    token_created.value = data.status
-    }
+  }
+  tokenCookie.value = cookieValue
+}
+
+
+async function enableForgotPassword() {
+  forgot_password.value = true
+  password_incorrect.value = false
+}
+
+async function initiatePasswordReset() {
+  spinner.value = true
+  const response = await fetch(config.public.apiUrl + '/api/v1/initiate_reset_password', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email: email.value })
+  })
+  const data = await response.json()
+  spinner.value = false
+  token_created.value = data.status
+}
 
 </script>
 

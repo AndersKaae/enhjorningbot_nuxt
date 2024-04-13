@@ -5,6 +5,18 @@ export default function useAuth(config) {
   const isLoading = ref(true);
   const userProfile = ref(null);
 
+  const getCookie = async () => {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split('; ');
+    const targetCookie = cookies.find(cookie => cookie.startsWith("access_token="));
+    if (targetCookie) {
+      isLoggedIn.value = true;
+    } else {
+      isLoggedIn.value = false;
+
+    }
+  };
+
   const getSession = async () => {
     isLoading.value = true;
     try {
@@ -36,10 +48,6 @@ export default function useAuth(config) {
     isLoggedIn.value = false;
   };
 
-  onMounted(() => {
-    getSession();
-  });
-
   // Exporting reactive state, user profile data, and any error message
-  return { isLoggedIn, isLoading, userProfile, logInUser, logOutUser};
+  return { isLoggedIn, isLoading, userProfile, logInUser, logOutUser, getCookie, getSession};
 }

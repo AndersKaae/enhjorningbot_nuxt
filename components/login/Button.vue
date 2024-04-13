@@ -1,5 +1,4 @@
 <template>
-  <div v-if="isLoading == false">
     <div v-if="isLoggedIn == true">
       <div class='login_button' @click="logout_session()">
         <span>Logout</span>
@@ -10,7 +9,6 @@
         <span>Login</span>
       </div>
     </div>
-  </div>
 </template>
 
 <script setup>
@@ -18,7 +16,12 @@ const config = useRuntimeConfig()
 
 const  modal = useModalStore()
 
-const { isLoggedIn, isLoading, logOutUser } = useAuth(config)
+const { isLoggedIn, isLoading, logOutUser, getCookie } = useAuth(config)
+
+onMounted(() => {
+  getCookie()
+})
+ 
 
 const logout_session = () => {
   // Function to set a cookie
