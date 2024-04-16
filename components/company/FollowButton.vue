@@ -11,27 +11,34 @@
 </template>
 
 <script setup>
-  const  modal = useModalStore()
   const config = useRuntimeConfig()
-  const { isLoggedIn } = useAuth(config)
+  const modal = useModalStore()
+  const { isLoggedIn, getCookie } = useAuth(config)
 
   var isLoading = ref(false);
   var isFollowing = ref(false);
 
-  onBeforeMount(() => {
-    if (!isLoggedIn) {
+  onMounted(() => {
+     getCookie();
+    if (!isLoggedIn.value) {
       isFollowing.value = false;
     }
     else
     {
-    setTimeout(() => {
-      isLoading.value = false;
-      isFollowing.value = true;
-    }, 400);
-  }});
+    const requestData = { userId: '123', follow: true }; // Example data you might want to send
+    const data = $fetch(config.public.apiUrl + '/api/v1/follow', {
+        method: 'POST',
+        credentials: 'include', // Ensures cookies are sent with the request
+        headers: {
+        'Content-Type': 'application/json' // Specifies that you're sending JSON
+        },
+        body: JSON.stringify(requestData) // Converts the JavaScript object into a JSON string
+      });
+    }});
 
   const followCompany = () => {
-    if (!isLoggedIn) {
+  console.log(isLoggedIn.value)
+    if (!isLoggedIn.value) {
       modal.openModal()
     }
     else {
