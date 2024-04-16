@@ -48,6 +48,8 @@ export default function useAuth(config) {
 
   const logOutUser = () => {
     isLoggedIn.value = false;
+    navigateTo('/')
+
   };
 
   // Exporting reactive state, user profile data, and any error message

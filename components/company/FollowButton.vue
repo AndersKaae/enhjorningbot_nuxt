@@ -18,6 +18,33 @@
   var isLoading = ref(false);
   var isFollowing = ref(false);
 
+  const callFollowAPI = async (requestData) => {
+    isLoading.value = true;
+    try {
+      const response = await $fetch(`${config.public.apiUrl}/api/v1/follow`, {
+        method: 'POST',
+        credentials: 'include', // Ensures cookies are sent with the request
+        headers: {
+          'Content-Type': 'application/json' // Specifies that you're sending JSON
+        },
+        body: JSON.stringify(requestData) // Converts the JavaScript object into a JSON string
+      });
+
+      console.log(response); // Log the response
+
+      if (response.status === 'success') {
+        isFollowing.value = true;
+      } else {
+        isFollowing.value = false;
+      }
+    } catch (error) {
+      console.error('Failed to call follow API:', error);
+      isFollowing.value = false;
+    } finally {
+      isLoading.value = false;
+    }
+  };
+
   onMounted(() => {
      getCookie();
     if (!isLoggedIn.value) {
@@ -25,15 +52,8 @@
     }
     else
     {
-    const requestData = { userId: '123', follow: true }; // Example data you might want to send
-    const data = $fetch(config.public.apiUrl + '/api/v1/follow', {
-        method: 'POST',
-        credentials: 'include', // Ensures cookies are sent with the request
-        headers: {
-        'Content-Type': 'application/json' // Specifies that you're sending JSON
-        },
-        body: JSON.stringify(requestData) // Converts the JavaScript object into a JSON string
-      });
+    const requestData = {"email":"anders.kaae@gmail.com", "cvr": 37890235, "action": "get"}; 
+    callFollowAPI(requestData);
     }});
 
   const followCompany = () => {
