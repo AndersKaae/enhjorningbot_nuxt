@@ -108,7 +108,7 @@ const signInWithCredentials = async () => {
       await createCookie('access_token', data.access_token);
       await getSession();
       logInUser();
-      await createCookie('user', userProfile.value.logged_in_as);
+      await createCookie('user_data', userProfile.value.logged_in_as);
 
       // TODO: Get the button to update without a page refresh
       const router = useRouter();

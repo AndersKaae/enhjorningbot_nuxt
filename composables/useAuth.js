@@ -5,10 +5,21 @@ export default function useAuth(config) {
   const isLoading = ref(true);
   const userProfile = ref(null);
 
+  function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+      const date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
+
   const getCookie = async () => {
     const cookieString = document.cookie;
     const cookies = cookieString.split('; ');
     const targetCookie = cookies.find(cookie => cookie.startsWith("access_token="));
+
     if (targetCookie) {
       isLoggedIn.value = true;
     } else {
@@ -29,7 +40,6 @@ export default function useAuth(config) {
       if (!data) {
         throw new Error('Session invalid or expired');
       }
-
       isLoggedIn.value = true;
       userProfile.value = data;
     } catch (err) {
@@ -41,12 +51,13 @@ export default function useAuth(config) {
     }
   };
 
+
   const logInUser = () => {
     isLoggedIn.value = true;
-    console.log('isLoggedIn changed to:', 'true');
   };
 
   const logOutUser = () => {
+    setCookie('access_token', '', -1);
     isLoggedIn.value = false;
     navigateTo('/')
 

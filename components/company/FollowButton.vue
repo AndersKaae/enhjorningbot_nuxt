@@ -13,7 +13,7 @@
 <script setup>
   const config = useRuntimeConfig()
   const modal = useModalStore()
-  const { isLoggedIn, getCookie } = useAuth(config)
+  const { isLoggedIn, getCookie, logOutUser } = useAuth(config)
 
   var isLoading = ref(false);
   var isFollowing = ref(false);
@@ -31,15 +31,27 @@
       });
 
       console.log(response); // Log the response
-
-      if (response.status === 'success') {
-        isFollowing.value = true;
-      } else {
-        isFollowing.value = false;
+      // HANDLE GET REQUESTS
+      if (requestData.action === "get") {
+          if (response.status == 'not_found') {
+            isFollowing.value = false;
+          }
+          else if (response.status == 'found') {
+            isFollowing.value = true;
+          }
+          else {
+            console.error('Unexpected response:', response);
+          }
       }
+      // HANDLE SET REQUESTS
+
+
+      
     } catch (error) {
       console.error('Failed to call follow API:', error);
+      logOutUser();
       isFollowing.value = false;
+      
     } finally {
       isLoading.value = false;
     }
@@ -62,12 +74,11 @@
       modal.openModal()
     }
     else {
-      isLoading.value = true;
-      setTimeout(() => {
-        isLoading.value = false;
-        isFollowing.value = !isFollowing.value;
-      }, 400);
+     if (isFollowing.value == false) {
+     console.log('test')
+     console.log(userProfile)
     }
+  }
   }
 </script>
 
