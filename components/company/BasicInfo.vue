@@ -30,18 +30,17 @@
 .company-info-item {
   margin-right: 1em;
 }
+      @media (max-width: 640px) {
+        .company-name{
+          font-size: 2rem;
+        }
 
-    @media (max-width: 640px) {
-      .company-name{
-        font-size: 2rem;
+        .company-info-item {
+          display: block;
+          margin-bottom: .5rem;
+          margin-right: 0;
+        }
       }
-
-      .company-info-item {
-        display: block;
-        margin-bottom: .5rem;
-        margin-right: 0;
-      }
-    }
 </style>
 
 <script setup>

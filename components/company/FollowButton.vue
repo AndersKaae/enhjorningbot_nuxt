@@ -50,12 +50,12 @@
       // HANDLE SET REQUESTS
 
 
-      
+
     } catch (error) {
       console.error('Failed to call follow API:', error);
       logOutUser();
       isFollowing.value = false;
-      
+
     } finally {
       isLoading.value = false;
     }

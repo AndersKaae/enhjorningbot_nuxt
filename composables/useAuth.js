@@ -4,6 +4,7 @@ export default function useAuth(config) {
   const isLoggedIn = ref(false);
   const isLoading = ref(true);
   const userProfile = ref(null);
+  const loginStore = useLoginStore()
 
   function setCookie(name, value, days) {
     let expires = "";
@@ -40,29 +41,21 @@ export default function useAuth(config) {
       if (!data) {
         throw new Error('Session invalid or expired');
       }
-      isLoggedIn.value = true;
       userProfile.value = data;
     } catch (err) {
       console.error(err);
-      isLoggedIn.value = false;
       userProfile.value = null;
     } finally {
       isLoading.value = false;
     }
   };
 
-
-  const logInUser = () => {
-    isLoggedIn.value = true;
-  };
-
   const logOutUser = () => {
     setCookie('access_token', '', -1);
-    isLoggedIn.value = false;
+    loginStore.delUsername()
     navigateTo('/')
-
   };
 
   // Exporting reactive state, user profile data, and any error message
-  return { isLoggedIn, isLoading, userProfile, logInUser, logOutUser, getCookie, getSession};
+  return { isLoggedIn, isLoading, userProfile, logOutUser, getCookie, getSession};
 }
