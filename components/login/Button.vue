@@ -19,7 +19,7 @@ const  modal = useModalStore()
 const { isLoggedIn, isLoading, logOutUser, getCookie } = useAuth(config)
 
 onMounted(() => {
-  getCookie()
+  getCookie("access_token")
 })
  
 const logout_session = () => {

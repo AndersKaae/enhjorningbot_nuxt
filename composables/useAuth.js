@@ -15,10 +15,10 @@ export default function useAuth(config) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
 
-  const getCookie = async () => {
+  const getCookie = async (cookieName) => {
     const cookieString = document.cookie;
     const cookies = cookieString.split('; ');
-    const targetCookie = cookies.find(cookie => cookie.startsWith("access_token="));
+    const targetCookie = cookies.find(cookie => cookie.startsWith(cookieName + "="));
 
     if (targetCookie) {
       isLoggedIn.value = true;

@@ -13,7 +13,11 @@
 <script setup>
   const config = useRuntimeConfig()
   const modal = useModalStore()
-  const { isLoggedIn, getCookie, logOutUser } = useAuth(config)
+  const { isLoggedIn, getCookie, logOutUser, userProfile } = useAuth(config)
+
+  // Get the current cvr
+  const route = useRoute()
+  const cvrNo = ref(route.path.split('/').pop())
 
   var isLoading = ref(false);
   var isFollowing = ref(false);
@@ -58,13 +62,15 @@
   };
 
   onMounted(() => {
-     getCookie();
+     getCookie("access_token");
     if (!isLoggedIn.value) {
       isFollowing.value = false;
     }
     else
     {
-    const requestData = {"email":"anders.kaae@gmail.com", "cvr": 37890235, "action": "get"}; 
+    const userdata = userProfile.value;
+    console.log(userdata)
+    const requestData = {"email":"anders.kaae@gmail.com", "cvr": cvrNo, "action": "get"}; 
     callFollowAPI(requestData);
     }});
 
