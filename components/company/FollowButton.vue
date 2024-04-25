@@ -13,7 +13,9 @@
 <script setup>
   const config = useRuntimeConfig()
   const modal = useModalStore()
-  const { isLoggedIn, getCookie, logOutUser, userProfile } = useAuth(config)
+  const loginStore = useLoginStore()
+
+  const { logOutUser } = useAuth(config)
 
   // Get the current cvr
   const route = useRoute()
@@ -22,7 +24,9 @@
   var isLoading = ref(false);
   var isFollowing = ref(false);
 
-  const callFollowAPI = async (requestData) => {
+
+  const callFollowAPI = async (action) => {
+    const requestData = {"email": loginStore.userName , "cvr": cvrNo.value, "action": action};
     isLoading.value = true;
     try {
       const response = await $fetch(`${config.public.apiUrl}/api/v1/follow`, {
@@ -47,10 +51,6 @@
             console.error('Unexpected response:', response);
           }
       }
-      // HANDLE SET REQUESTS
-
-
-
     } catch (error) {
       console.error('Failed to call follow API:', error);
       logOutUser();
@@ -62,28 +62,31 @@
   };
 
   onMounted(() => {
-     getCookie("access_token");
-    if (!isLoggedIn.value) {
+    if (loginStore.userName == null) {
       isFollowing.value = false;
     }
     else
     {
-    const userdata = userProfile.value;
-    console.log(userdata)
-    const requestData = {"email":"anders.kaae@gmail.com", "cvr": cvrNo, "action": "get"}; 
-    callFollowAPI(requestData);
+    callFollowAPI("get");
     }});
 
   const followCompany = () => {
-  console.log(isLoggedIn.value)
-    if (!isLoggedIn.value) {
+    // If NOT LOGGED IN
+    if (loginStore.userName == null) {
       modal.openModal()
     }
     else {
+     // IF LOGGED IN
      if (isFollowing.value == false) {
-     console.log('test')
-     console.log(userProfile)
-    }
+        callFollowAPI("set");
+        isFollowing.value = true;
+        return;
+      }
+     if (isFollowing.value == true) {
+        callFollowAPI("delete");
+        isFollowing.value = false;
+        return;
+      }
   }
   }
 </script>

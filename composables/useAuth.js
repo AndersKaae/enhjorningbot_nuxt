@@ -16,19 +16,6 @@ export default function useAuth(config) {
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
   }
 
-  const getCookie = async (cookieName) => {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split('; ');
-    const targetCookie = cookies.find(cookie => cookie.startsWith(cookieName + "="));
-
-    if (targetCookie) {
-      isLoggedIn.value = true;
-    } else {
-      isLoggedIn.value = false;
-
-    }
-  };
-
   const getSession = async () => {
     const config = useRuntimeConfig()
     isLoading.value = true;
@@ -52,10 +39,11 @@ export default function useAuth(config) {
 
   const logOutUser = () => {
     setCookie('access_token', '', -1);
-    loginStore.delUsername()
+    setCookie('user_data', '', -1);
+    loginStore.delUserName()
     navigateTo('/')
   };
 
   // Exporting reactive state, user profile data, and any error message
-  return { isLoggedIn, isLoading, userProfile, logOutUser, getCookie, getSession};
+  return { isLoggedIn, isLoading, userProfile, logOutUser, getSession};
 }

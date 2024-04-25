@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-  const config = useRuntimeConfig()
+const config = useRuntimeConfig()
 
 const modalStore = useModalStore()
 const loginStore = useLoginStore()
