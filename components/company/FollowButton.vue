@@ -110,5 +110,14 @@
 .follow-button:hover {
   background-color: #bd53ff;
 }
+
+@media (max-width: 640px) {
+  .follow-button {
+    margin-top: 1rem; /* Adds space above the button */
+    margin-left: 0; /* Removes left margin */
+    width: 100%; /* Makes the button full width */
+  }
+} 
+
 </style>
 

@@ -24,25 +24,31 @@
 
 .company-name {
   font-size: 3rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0; /* Removed bottom margin to keep the layout tight */
 }
 
 .company-info-item {
   margin-right: 1em;
 }
-      @media (max-width: 640px) {
-        .company-name{
-          font-size: 2rem;
-        }
 
-        .company-info-item {
-          display: block;
-          margin-bottom: .5rem;
-          margin-right: 0;
-        }
-      }
+@media (max-width: 640px) {
+  .headline {
+    flex-direction: column; /* Changes layout to vertical */
+    align-items: flex-start; /* Aligns items to the start, optional based on design */
+  }
+
+  .company-name {
+    font-size: 2rem;
+    margin-bottom: 0.5rem; /* Adds a little space between the name and the follow button */
+  }
+
+  .company-info-item {
+    display: block;
+    margin-bottom: 0.5rem;
+    margin-right: 0;
+  }
+}
 </style>
-
 <script setup>
   const props = defineProps(["generalInfo"]);
 let generalInfo = ref(props.generalInfo);
