@@ -17,8 +17,7 @@ const clickLogin = () => {
 
 <template>  
   <!-- Added @click directive to toggle the menu -->
-  <font-awesome-icon class="burgermenu" icon="fa-solid fa-bars" @click="toggleMenu" /> 
-
+  <img class="burgermenu" src="/menu-burger.svg" @click="toggleMenu"/>
     <div class="menu" v-if="isMenuVisible">
       <div>
         <div v-if="loginStore.userName == null" class="login-button" @click="clickLogin"><img class="nav-img" src="/padlock.png">Login</div>
@@ -48,6 +47,7 @@ const clickLogin = () => {
       font-size: 1.5rem; /* Adjust the size of the burger menu */
       z-index: 1050; /* Ensures it's above the menu */
       cursor: pointer; /* Indicates the icon is clickable */
+      width: 30px;
     }
 
     .nav-img {
