@@ -15,8 +15,6 @@
   const modal = useModalStore()
   const loginStore = useLoginStore()
 
-  const { logOutUser } = useAuth(config)
-
   // Get the current cvr
   const route = useRoute()
   const cvrNo = ref(route.path.split('/').pop())
@@ -53,7 +51,6 @@
       }
     } catch (error) {
       console.error('Failed to call follow API:', error);
-      logOutUser();
       isFollowing.value = false;
 
     } finally {

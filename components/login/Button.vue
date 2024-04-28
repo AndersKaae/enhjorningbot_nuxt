@@ -17,8 +17,6 @@ const config = useRuntimeConfig()
 const modalStore = useModalStore()
 const loginStore = useLoginStore()
 
-const { logOutUser } = useAuth(config)
-
 const logout_session = () => {
   const userCookie = useCookie('user_data')
     const tokenCookie = useCookie('access_token')

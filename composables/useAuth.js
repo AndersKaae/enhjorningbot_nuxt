@@ -27,5 +27,5 @@ export default function useAuth(config) {
   };
 
     // Exporting reactive state, user profile data, and any error message
-  return { isLoggedIn, isLoading, userProfile, logOutUser, getSession};
+  return { isLoggedIn, isLoading, userProfile, getSession};
 }
