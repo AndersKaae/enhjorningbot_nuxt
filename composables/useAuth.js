@@ -4,7 +4,6 @@ export default function useAuth(config) {
   const isLoggedIn = ref(false);
   const isLoading = ref(true);
   const userProfile = ref(null);
-  const loginStore = useLoginStore()
 
   const getSession = async () => {
     const config = useRuntimeConfig()
@@ -27,17 +26,6 @@ export default function useAuth(config) {
     }
   };
 
-  const logOutUser = () => {
-    const userCookie = useCookie('user_data')
-    const tokenCookie = useCookie('access_token')
-    console.log(userCookie.value, tokenCookie.value)
-    userCookie.value = null 
-    tokenCookie.value = null 
-    console.log(userCookie.value, tokenCookie.value)
-    loginStore.delUserName()
-    navigateTo('/')
-  };
-
-  // Exporting reactive state, user profile data, and any error message
+    // Exporting reactive state, user profile data, and any error message
   return { isLoggedIn, isLoading, userProfile, logOutUser, getSession};
 }

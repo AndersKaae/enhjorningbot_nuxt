@@ -20,7 +20,14 @@ const loginStore = useLoginStore()
 const { logOutUser } = useAuth(config)
 
 const logout_session = () => {
-  logOutUser();
+  const userCookie = useCookie('user_data')
+    const tokenCookie = useCookie('access_token')
+    console.log(userCookie.value, tokenCookie.value)
+    userCookie.value = null 
+    tokenCookie.value = null 
+    console.log(userCookie.value, tokenCookie.value)
+    loginStore.delUserName()
+    navigateTo('/')
 };
 
 </script>
