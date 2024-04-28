@@ -38,8 +38,12 @@ export default function useAuth(config) {
   };
 
   const logOutUser = () => {
-    setCookie('access_token', '', -1);
-    setCookie('user_data', '', -1);
+    const userCookie = useCookie('user_data')
+    const tokenCookie = useCookie('access_token')
+    //setCookie('access_token', '', -1);
+    //setCookie('user_data', '', -1);
+    userCookie.value = null 
+    tokenCookie.value = null 
     loginStore.delUserName()
     navigateTo('/')
   };
