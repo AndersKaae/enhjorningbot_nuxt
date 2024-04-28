@@ -20,6 +20,8 @@ const loginStore = useLoginStore()
 const logout_session = () => {
  const sessionCookie = useCookie('access_token');
  const userCookie = useCookie('user_data');
+ const testCookie = useCookie('test');
+ testCookie.value = 'test';
  sessionCookie.value = null;
  userCookie.value = null;
  sessionCookie.expires = new Date(1970, 0, 1);
