@@ -6,16 +6,6 @@ export default function useAuth(config) {
   const userProfile = ref(null);
   const loginStore = useLoginStore()
 
-  function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-      const date = new Date();
-      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  }
-
   const getSession = async () => {
     const config = useRuntimeConfig()
     isLoading.value = true;
@@ -40,10 +30,10 @@ export default function useAuth(config) {
   const logOutUser = () => {
     const userCookie = useCookie('user_data')
     const tokenCookie = useCookie('access_token')
-    //setCookie('access_token', '', -1);
-    //setCookie('user_data', '', -1);
+    console.log(userCookie.value, tokenCookie.value)
     userCookie.value = null 
     tokenCookie.value = null 
+    console.log(userCookie.value, tokenCookie.value)
     loginStore.delUserName()
     navigateTo('/')
   };

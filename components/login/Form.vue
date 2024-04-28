@@ -110,10 +110,6 @@ const signInWithCredentials = async () => {
       await getSession(); // Gets the userProfile
       loginStore.userName = userProfile.value.logged_in_as;
       await createCookie('user_data', userProfile.value.logged_in_as);
-
-      // TODO: Get the button to update without a page refresh
-      // const router = useRouter();
-      // router.go();
       modal.closeModal()
     }
     // Handle login success, e.g., redirect or load user data
@@ -124,6 +120,7 @@ const signInWithCredentials = async () => {
     spinner.value = false
   }
 }
+
 async function createCookie(cookieName, cookieValue) {
   let tokenCookie;
   // Use the useCookie composable to manage cookies
@@ -140,6 +137,7 @@ async function createCookie(cookieName, cookieValue) {
     })
   }
   tokenCookie.value = cookieValue
+  console.log('Cookie created:', tokenCookie.value)
 }
 
 
