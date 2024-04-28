@@ -18,13 +18,12 @@ const modalStore = useModalStore()
 const loginStore = useLoginStore()
 
 const logout_session = () => {
-  const userCookie = useCookie('user_data') 
-  const tokenCookie = useCookie('access_token')
-  userCookie.value = null
-  tokenCookie.value = null
-  console.log(userCookie, tokenCookie)
-  loginStore.delUserName()
-  navigateTo('/')
+ const sessionCookie = useCookie('access_token');
+ const userCookie = useCookie('user_data');
+ sessionCookie.value = null;
+ userCookie.value = null;
+ loginStore.delUserName()
+ navigateTo('/')
 };
 
 </script>
