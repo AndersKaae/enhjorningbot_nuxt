@@ -18,10 +18,23 @@ const modalStore = useModalStore()
 const loginStore = useLoginStore()
 
 const logout_session = () => {
- const sessionCookie = useCookie('access_token');
- const userCookie = useCookie('user_data');
- const testCookie = useCookie('test');
- testCookie.value = 'test';
+let options = null;
+  if (config.public.env == 'development') {
+    options = {lifetime: -1}
+  } 
+  if (config.public.env == 'production') {
+    options = {
+      path: '/',
+      domain: '.enhjorning.bot',
+      secure: true,
+      sameSite: 'None',
+      lifetime: -1 
+    }
+  }
+
+ const sessionCookie = useCookie('access_token', options);
+ const userCookie = useCookie('user_data', options);
+
  sessionCookie.value = null;
  userCookie.value = null;
  sessionCookie.expires = new Date(1970, 0, 1);
@@ -33,18 +46,18 @@ const logout_session = () => {
 </script>
 
 <style scoped>
-  .userIcon {
-    background-color: #A020F0;
-    background-size: cover;
-    width: 50px;
-    height: 50px;
-    border-radius: 30%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    color: white;
-  }
+.userIcon {
+  background-color: #A020F0;
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: white;
+}
   .login_button {
     border: 1px solid #A020F0;
     padding: 10px;
