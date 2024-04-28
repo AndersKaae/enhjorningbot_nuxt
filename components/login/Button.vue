@@ -22,6 +22,8 @@ const logout_session = () => {
  const userCookie = useCookie('user_data');
  sessionCookie.value = null;
  userCookie.value = null;
+ sessionCookie.expires = new Date(1970, 0, 1);
+ userCookie.expires = new Date(1970, 0, 1);
  loginStore.delUserName()
  navigateTo('/')
 };
